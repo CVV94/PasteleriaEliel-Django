@@ -1,0 +1,22 @@
+{% extends "principalPage/estructura/base.html" %}
+{% load static %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'css/principalPage/header/nav.css' %}">
+<link rel="stylesheet" href="{% static 'css/principalPage/main/main.css' %}">
+<link rel="stylesheet" href="{% static 'css/principalPage/mensaje.css' %}">
+{% endblock  %}
+
+
+
+{% block header %}
+    {% include "principalPage/header/nav.html" %}
+{% endblock  %}
+
+{% block main %} 
+    {% include "principalPage/main/main.html" %}
+{% endblock  %}
+            
+{% block footer %}
+{% endblock  %}
+            

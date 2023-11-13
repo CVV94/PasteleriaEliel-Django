@@ -1,0 +1,25 @@
+{% load static %}
+<nav class='container'>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+
+            
+                <div class="nav-menu">
+                    <div class="nav-logo">
+                        <ul>
+                            <li><img src="{% static 'imagen/logo/logo.webp' %}" alt="logo"></li>
+                        </ul>
+                    </div>
+                    <div class="nav-link">
+                        <ul>
+                            <li><a href="#">Inicio</a></li>
+                            <li>Carta</li>
+                            <li>Contacto</li>
+                            <li>Ingresar</li>
+                            <li><a href="{% url 'interfazAdministrador' %}">Administrador</a></li>
+                        </ul>
+                    </div>
+                </div>
+        </div>
+    </div>
+</nav>

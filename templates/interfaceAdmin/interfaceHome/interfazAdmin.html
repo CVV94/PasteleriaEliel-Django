@@ -1,0 +1,79 @@
+{% extends "principalPage/estructura/base.html" %}
+{% load static %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'css/interfazAdmin/styles.css' %}">
+{% endblock  %}
+
+
+{% block header %}
+
+    <nav class='nav1'>
+        <ul>
+            <li><img src="{% static "productos/imagen/logo.webp" %}" width="180" alt="logo" class='nav-logo' /></li>
+            
+        </ul>
+        <ul>
+            <li >
+                <button  class="menu-btn" id="Productos-btn"> <img src="{% static "productos/imagen/iconos/icono_panadero.png" %}" alt="icono" class='iconoPanadero'>Productos
+                    <img src="{% static "productos/imagen/iconos/icon-arrow-down.svg" %}" alt="icono" id="Productos-btn-arrow">
+                </button>
+                <ul id="Productos-ul" class="Admin-ul">
+                    <li>
+                        <img src="{% static "productos/imagen/iconos/registrarProductos.png" %}" alt="icono" class="Admin-img">
+                        
+                        <a href="#"><span>Registrar Productos</span></a>
+                    </li>
+                    
+                    <li>
+                        <img src="{% static "productos/imagen/iconos/listado_Productos.png" %}" alt="icono" class="Admin-img">
+                        <a href="#"><span>Listar Productos</span></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul>
+            <li >
+                <button  class="menu-btn" id="Cliente-btn"> <img src="{% static "productos/imagen/iconos/icono_cliente.png" %}" alt="icono" class='iconoPanadero'>Clientes
+                    <img src="{% static "productos/imagen/iconos/icon-arrow-down.svg" %}" alt="icono" id="Cliente-btn-arrow">
+                </button>
+                <ul id="Cliente-ul" class="Admin-ul">
+                    <li>
+                        <img src="{% static "productos/imagen/iconos/registrarProductos.png" %}" alt="icono" class="Admin-img">
+                        <span>Registrar Cliente</span>
+                    </li>
+                    
+                    <li>
+                        <img src="{% static "productos/imagen/iconos/listado_Productos.png" %}" alt="icono" class="Admin-img">
+                        <span>Lista de Clientes</span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        
+    </nav>
+{% endblock  %}
+
+    
+
+{% block main %}
+    <main>
+    <div class="menu-right">
+        <nav class='nav2'>
+            <div>
+                <h1>Hola este es el segundo nav de la muerte</h1>
+            </div>
+        </nav>
+
+    </div>
+    </main>
+        
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static "productos/js/botonDesplegable.js" %}"></script>
+{% endblock  %}
+
+
+
+
