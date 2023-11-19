@@ -1,0 +1,35 @@
+{% extends "interfaceAdmin/interfaceHome/interfazAdmin.html" %}
+{% block formulario %}
+
+<div class="row">
+    <div class="col-sm-12 col-md-12 ">
+        <form class="form" method="post" action="{% url 'registrarImagen' %}">
+            {% csrf_token %}
+            
+            <p class="title">Registrar Imagen</p>
+            <p class="message">Un Producto puede Tener mas de una imagen</p>
+        
+            <label>
+                <span>Imagen</span>
+                {{ form_imagen.imagen }}
+            </label>
+        
+            <label>
+                <span>Id Producto</span>
+                {{ form_imagen.id_producto }}
+            </label>
+        
+            <!-- Otros campos según sea necesario -->
+        
+            <button class="submit" type="submit">Submit</button>
+           
+        </form>
+
+    </div>
+</div>
+
+
+        
+  
+  
+  {% endblock  %}

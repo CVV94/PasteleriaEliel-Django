@@ -15,24 +15,24 @@
 body{
     background: #FAF6F3;
 }
-header{
+/* header{
     background: #FAF6F3;
     overflow: hidden;
 
-}
+} */
 
-.nav-logo li img{
+/* .nav-logo li img{
     width: 60px;
     height: 60px;
 
-}
+} */
 
 ul{
     list-style: none;   
 }
-li{
+/* li{
     margin-left: 15px;
-}
+} */
 a{
     text-decoration: none;
     /* color: black; */

@@ -3,76 +3,106 @@
 
 {% block link %}
 <link rel="stylesheet" href="{% static 'css/interfazAdmin/styles.css' %}">
+{% comment %} <link rel="stylesheet" href="{% static 'css/interfazAdmin/main.css' %}"> {% endcomment %}
+<link rel="stylesheet" href="{% static 'css/interfazAdmin/form.css' %}">
 {% endblock  %}
 
 
 {% block header %}
+    {% comment %} <div class="col-sm-12 colmd-3"> {% endcomment %}
 
-    <nav class='nav1'>
-        <ul>
-            <li><img src="{% static "productos/imagen/logo.webp" %}" width="180" alt="logo" class='nav-logo' /></li>
-            
-        </ul>
-        <ul>
-            <li >
-                <button  class="menu-btn" id="Productos-btn"> <img src="{% static "productos/imagen/iconos/icono_panadero.png" %}" alt="icono" class='iconoPanadero'>Productos
-                    <img src="{% static "productos/imagen/iconos/icon-arrow-down.svg" %}" alt="icono" id="Productos-btn-arrow">
-                </button>
-                <ul id="Productos-ul" class="Admin-ul">
-                    <li>
-                        <img src="{% static "productos/imagen/iconos/registrarProductos.png" %}" alt="icono" class="Admin-img">
-                        
-                        <a href="#"><span>Registrar Productos</span></a>
-                    </li>
-                    
-                    <li>
-                        <img src="{% static "productos/imagen/iconos/listado_Productos.png" %}" alt="icono" class="Admin-img">
-                        <a href="#"><span>Listar Productos</span></a>
-                    </li>
+      <header class="sidebar">
+
+        <div class="logo-details">
+            <!-- <i class='bx bxl-c-plus-plus'></i> -->
+            <img src="{% static "imagen/logo/logoPasteleriaEliel.png" %}" class='bx logo' alt="logo">
+            <span class="logo_name">Pasteleria Eliel</span>
+        </div>
+        <ul class="nav-links">
+            <li>
+                <a href="#">
+                    <i class='bx bxs-dashboard' ></i>
+                    <span class="link_name">Dashboard</span>
+                </a>
+                <ul class="sub-menu blanck">
+                    <li><a class="link_name" href="#">Dashboard</a></li>
                 </ul>
             </li>
-        </ul>
-        <ul>
-            <li >
-                <button  class="menu-btn" id="Cliente-btn"> <img src="{% static "productos/imagen/iconos/icono_cliente.png" %}" alt="icono" class='iconoPanadero'>Clientes
-                    <img src="{% static "productos/imagen/iconos/icon-arrow-down.svg" %}" alt="icono" id="Cliente-btn-arrow">
-                </button>
-                <ul id="Cliente-ul" class="Admin-ul">
-                    <li>
-                        <img src="{% static "productos/imagen/iconos/registrarProductos.png" %}" alt="icono" class="Admin-img">
-                        <span>Registrar Cliente</span>
-                    </li>
-                    
-                    <li>
-                        <img src="{% static "productos/imagen/iconos/listado_Productos.png" %}" alt="icono" class="Admin-img">
-                        <span>Lista de Clientes</span>
-                    </li>
+            <li>
+                <div class="iocn-link">
+                    <a href="{% url "listadoProductos" %}">
+                        <i class='bx bxs-category'></i>
+                        <span class="link_name">Productos</span>
+                    </a>
+                    <i class='bx bx-chevron-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="{% url "listadoProductos" %}">Productos</a></li>
+                    <li><a href="{% url "registrarProducto" %}">Registrar Productos</a></li>
+                    <li><a href="{% url "registrarPrecio" %}">Registrar Precio</a></li>
+                    <li><a href="{% url "registrarImagen" %}">Registrar Imagen</a></li>
                 </ul>
             </li>
+            <li>
+                <div class="iocn-link">
+                    <a href="">
+                        <i class='bx bxs-user-circle' ></i>
+                        <span class="link_name">Usuarios</span>
+                    </a>
+                    <i class='bx bx-chevron-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">Usuarios</a></li>
+                    <li><a href="">Registrar Usuario</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bxs-pie-chart-alt-2'></i>
+                    <span class="link_name">Compras</span>
+                </a>
+                <ul class="sub-menu blanck">
+                    <li><a class="link_name" href="#">Compras</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bxs-truck'></i>
+                    <span class="link_name">Envios</span>
+                </a>
+                <ul class="sub-menu blanck">
+                    <li><a class="link_name" href="#">Envios</a></li>
+                </ul>
+            </li>
+
         </ul>
-        
-    </nav>
+      </header>
+
+    {% comment %} </div> {% endcomment %}
 {% endblock  %}
 
     
 
 {% block main %}
-    <main>
-    <div class="menu-right">
-        <nav class='nav2'>
-            <div>
-                <h1>Hola este es el segundo nav de la muerte</h1>
-            </div>
-        </nav>
+ <main>           
+<section class="home-section">
+  <div class="home-content">
+      <i class='bx bx-menu'></i>
+      <!-- <span class="text">Menú</span> -->
+  </div>
+  {% block formulario %}
 
-    </div>
-    </main>
+  
+  {% endblock  %}
+</section>
+</main>    
+                               
         
 {% endblock %}
 
-{% block javascript %}
-<script src="{% static "productos/js/botonDesplegable.js" %}"></script>
-{% endblock  %}
+{% comment %} {% block javascript %} {% endcomment %}
+{% comment %} <script src="{% static "js/interfaceAdmin/botonDesplegable.js" %}"></script> {% endcomment %}
+{% comment %} {% endblock  %} {% endcomment %}
 
 
 

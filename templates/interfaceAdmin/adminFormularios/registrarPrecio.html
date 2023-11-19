@@ -1,0 +1,47 @@
+{% extends "interfaceAdmin/interfaceHome/interfazAdmin.html" %}
+{% block formulario %}
+
+<div class="row">
+    <div class="col-sm-12 col-md-12 ">
+        <form class="form" method="post" action="{% url 'registrarPrecio' %}">
+            {% csrf_token %}
+            
+            <p class="title">Registrar Precios</p>
+            <p class="message">Un Producto puede Tener mas de un precio</p>
+        
+            <div class="flex">
+                <label>
+                    <span>Cantidad de Personas</span>
+                    {{ form_valor.cantidad_de_Personas }}
+                </label>
+        
+                <label>
+                    <span>Precio</span>
+                    {{ form_valor.precio }}
+                </label>
+            </div>
+        
+            <label>
+                <span>Stock</span>
+                {{ form_valor.stock }}
+            </label>
+        
+            <label>
+                <span>Id Producto</span>
+                {{ form_valor.id_producto }}
+            </label>
+        
+            <!-- Otros campos según sea necesario -->
+        
+            <button class="submit" type="submit">Submit</button>
+           
+        </form>
+
+    </div>
+</div>
+
+
+        
+  
+  
+  {% endblock  %}

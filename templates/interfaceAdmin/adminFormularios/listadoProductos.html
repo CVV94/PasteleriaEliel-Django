@@ -1,0 +1,49 @@
+{% extends "interfaceAdmin/interfaceHome/interfazAdmin.html" %}
+{% block formulario %}
+
+<div class="container">
+    <div class="listadoProductos">
+        <h1>Listado de Productos</h1>
+        <table id="example" class="display" style="width:100%">
+            <tr>
+                <th>ID Producto</th>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Descripción</th>
+                <th>Imágenes</th>
+                <th>Precio</th>
+                <th>Stock</th>
+            </tr>
+            {% for producto in result %}
+            <tr>
+                <td>{{ producto.id_producto }}</td>
+                <td>{{ producto.nombre }}</td>
+                <td>{{ producto.tipo }}</td>
+                <td>{{ producto.descripcion }}</td>
+                <td>
+                    <!-- Iterar a través de las imágenes asociadas al producto -->
+                        <img src="../../media/{{ producto.presentacionproducto__imagen }}" alt="Imagen del Producto" with='100' height='100'>
+      
+                </td>
+                <td>
+                    <!-- Iterar a través de los valores asociados al producto -->
+                  
+                        {{ producto.valor__precio }}
+                   
+                </td>
+                <td>
+                    <!-- Iterar a través de los valores asociados al producto -->
+                    
+                        {{ producto.valor__stock }}
+                   
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+        
+  
+  
+  {% endblock  %}
