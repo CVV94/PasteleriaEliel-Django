@@ -63,19 +63,41 @@
             <li>
                 <a href="#">
                     <i class='bx bxs-pie-chart-alt-2'></i>
-                    <span class="link_name">Compras</span>
+                    <span class="link_name">Proveedores</span>
                 </a>
                 <ul class="sub-menu blanck">
-                    <li><a class="link_name" href="#">Compras</a></li>
+                    <li><a class="link_name" href="{% url "listadoProveedores" %}">Proveedores</a></li>
+                    <li><a href="{% url "registrarProveedor" %}">Registrar Proveedor</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bxs-pie-chart-alt-2'></i>
+                    <span class="link_name">Ingredientes</span>
+                </a>
+                <ul class="sub-menu blanck">
+                    <li><a class="link_name" href="{% url "listadoIngredientes" %}">Ingredientes</a></li>
+                    <li><a href="{% url "registrarIngrediente" %}">Registrar Ingrediente</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bxs-pie-chart-alt-2'></i>
+                    <span class="link_name">Envíos</span>
+                </a>
+                <ul class="sub-menu blanck">
+                    <li><a class="link_name" href="{% url "listadoEnvios" %}">Envíos</a></li>
+                    <li><a href="{% url "registrarEnvio" %}">Registrar Envío</a></li>
                 </ul>
             </li>
             <li>
                 <a href="#">
                     <i class='bx bxs-truck'></i>
-                    <span class="link_name">Envios</span>
+                    <span class="link_name">Compras</span>
                 </a>
                 <ul class="sub-menu blanck">
-                    <li><a class="link_name" href="#">Envios</a></li>
+                    <li><a class="link_name" href="{% url "listadoCompras" %}">Compras</a></li>
+                    <li><a href="{% url "registrarIngrediente" %}">Registrar Compra</a></li>
                 </ul>
             </li>
 
