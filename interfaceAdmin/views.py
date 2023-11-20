@@ -51,11 +51,20 @@ def registrarImagen(request):
     return render(request,'interfaceAdmin/adminFormularios/registrarImagen.html',{'form_imagen':form_imagen})
 
 
+
+
 def listadoProductos(request):
-    result = Producto.objects.values('id_producto', 'nombre', 'tipo', 'descripcion', 'presentacionproducto__imagen','valor__stock', 'valor__precio').\
-    filter(presentacionproducto__id_producto=F('id_producto')).\
-    filter(valor__id_producto=F('id_producto'))
-    return render(request,'interfaceAdmin/adminFormularios/listadoProductos.html',{'result':result})
+    productos = Producto.objects.filter(estado='ACTIVO').values(
+        'id_producto', 'nombre', 'tipo', 'descripcion'
+    ).annotate(
+        stock=F('valor__stock'), 
+        imagen=F('presentacionproducto__imagen'), 
+        precio=F('valor__precio')
+    )
+
+    return render(request, 'interfaceAdmin/adminFormularios/listadoProductos.html', {'productos': productos})
+
+
 
 
 def editarProductos(request,id_producto):
@@ -72,3 +81,4 @@ def eliminarProductos(request,id_producto):
     producto= Producto.objects.get(id_producto=id_producto)
     producto.delete()
     return redirect('listadoProducto')
+

@@ -3,7 +3,7 @@
 
 <div class="row">
     <div class="col-sm-12 col-md-12 ">
-        <form class="form" method="post" action="{% url 'registrarImagen' %}">
+        <form class="form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             
             <p class="title">Registrar Imagen</p>

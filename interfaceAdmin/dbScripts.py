@@ -1,7 +1,10 @@
 from django.shortcuts import render,redirect
 from .models import Producto
 
-def RegistrarPasteleriaTradicional(request):
+def scriptsRegistros(request):
+    return render(request,"scripts/scripts.html")
+
+def scriptsRegistrarProductos(request):
     
     productos = [
     Producto(nombre='Primavera', tipo='Pastelería Tradicional', descripcion='BIZCOCHO BLANCO, PULPA DE MANGO Y SALSA DE FRUTILLA.', estado='Activo'),
@@ -34,7 +37,102 @@ def RegistrarPasteleriaTradicional(request):
     Producto(nombre='Choco Torta', tipo='Pastelería Tradicional', descripcion='BIZCOCHO DE CHOCOLATE , CREMA DE FRAMBUESA, CREMA MORA Y MANJAR.', estado='Activo'),
     Producto(nombre='Dominga', tipo='Pastelería Tradicional', descripcion='BIZCOCHO BLANCO , REMOJO 3 LECHE , RELLENA DE CREMA PASTELERA, DURAZNO, MANGO Y CREMA', estado='Activo'),
     Producto(nombre='Tropical', tipo='Pastelería Tradicional', descripcion='BIZCOCHO BLANCO, REMOJO DE COCO TRES LECHE, RELLENA DE PIÑA EN TROZO, CREMA DE COCO CON PULPA DE MARACUYÁ Y MANGO.', estado='Activo'),
-    ]
 
+    Producto(nombre='Bubo ( Molde Cloud )', tipo='Tortas Modernas', descripcion='MOUSSE DE CHOCOLATE BLANCO CON TOQUES DE LIMA LIMÓN, SUAVE INSERT DE JALEA EXÓTICA MARACUYÁ, MANGO, BIZCOCHO DE COCO AL VAPOR.', estado='Activo'),
+    Producto(nombre='Bubo Ti Amo', tipo='Tortas Modernas', descripcion='BIZCOCHO DE COCO AL VAPOR, JALEA EXÓTICA MANGO Y MARACUYÁ, MOUSSE DE CHOCOLATE BLANCO Y LIMA LIMÓN.', estado='Activo'),
+    Producto(nombre='Riviera ( Molde Cloud )', tipo='Tortas Modernas', descripcion='MOUSSE DE CHOCOLATE NEGRO RIVIERA, CURD DE MARACUYÁ, COMPOTA DE FRAMBUESA Y BIZCOCHO SACHER.', estado='Activo'),
+    Producto(nombre='Riviera Ti Amo', tipo='Tortas Modernas', descripcion='MOUSSE DE CHOCOLATE NEGRO RIVIERA, CURD DE MARACUYÁ, COMPOTA DE FRAMBUESA Y BIZCOCHO SACHER.', estado='Activo'),
+    Producto(nombre='Osmosé', tipo='Tortas Modernas', descripcion='ESPONJA DE ALMENDRA, CREMA LIGERA DE RON AÑEJO, ESPONJA DE ALMENDRA, BAVAROISE DE CHOCOLATE DE LECHE.', estado='Activo'),
+    Producto(nombre='Frescura', tipo='Tortas Modernas', descripcion='BIZCOCHO CAPUCHINA DE LIMÓN, CURD DE LIMÓN, BAVAROISE DE AVELLANA EUROPEA Y PLANILÉ DE ALMENDRAS.', estado='Activo'),
+    Producto(nombre='Selva Negra', tipo='Tortas Modernas', descripcion='MOUSSE CARIBEÑO, BIZCOCHO ESPONJOSO DE CHOCOLATE, KIROH DE CHOCOLATE CREMOSO Y GELATINA DE CEREZA.', estado='Activo'),
+    Producto(nombre='Casa Blanca ( Molde Cloud )', tipo='Tortas Modernas', descripcion='MOUSE DE CHOCOLATE NEGRO CON FRAMBUESA Y CREMBRULE DE PISTACHO, CONFITE DE FRAMBUESA CON CHAMPAGNE Y BIZCHOCHO DE CHOCOLATE.', estado='Activo'),
+    Producto(nombre='Inspiración de café ( Molde Cloud )', tipo='Tortas Modernas', descripcion='MOUSSE DE CAFÉ, GANACHE DE VAINILLA, SUAVE CARAMELO Y FINANCIERO DE CHOCOLATE.', estado='Activo'),
+    Producto(nombre='Torta De Cacao Y Maní', tipo='Tortas Modernas', descripcion='BIZCOCHO DE CACAO Y MANÍ, MOUSSE DE CHOCOLATE MANELAKA DE GIANDUJA DE MANÍ, TOFFEE SALADO SUAVE.', estado='Activo'),
+    Producto(nombre='Torta de Avellana y Toffee', tipo='Tortas Modernas', descripcion='BIZCOCHO DE AVELLANA, MOUSSE DE CAFÉ, MANELAKA TIPO GIANDUJA, TOFFEE, PRALINÉ DE AVELLANA.', estado='Activo'),
+    Producto(nombre='Pasión ( Molde Cubik )', tipo='Tortas Modernas', descripcion='MOUSSE DE NARANJA, MERMELADA DE MANGO MARACUYÁ Y CILANTRO, ESPONJA DE ALMENDRA.', estado='Activo'),
+    Producto(nombre='Greys', tipo='Tortas Modernas', descripcion='BIZCOCHO DE CHÓCLATE, CREMA LIGERA EARLY GREY, GANACHE DE CHOCOLATE, GLASEADO DE CHOCOLATE Y CACAO.', estado='Activo'),
+    Producto(nombre='Torta de Avellana', tipo='Tortas Modernas', descripcion='BIZCOCHO PLALINÉ DE AVELLANA CON GANACHE PLANILÉ DE AVELLANA Y RELLENO CRUJIENTE DE AVELLANA.', estado='Activo'),
+    Producto(nombre='Torta de Avellana con Naranja', tipo='Tortas Modernas', descripcion='BIZCOCHO DE AVELLANA CON PASTA SABLÉ AVELLANA, PLALINÉ AVELLANA Y ALMENDRA, CARAMELO SALADO, COMPOTA DE NARANJA, MOUSE DE AVELLANA E IMPRESIÓN DE MANTEQUILLA.', estado='Activo'),
+    Producto(nombre='Lemon chelo', tipo='Tortas Modernas', descripcion='PATE SUCRE, PAN GENOVÉS, CONFITADO DE LIMÓN, Y MERENGUE SUIZO.', estado='Activo'),
+    Producto(nombre='Muselina de maracuyá', tipo='Tortas Modernas', descripcion='PATE SUCRE, PAN GENOVÉS, GEL DE MARACUYÁ, CREMOSO DE MARACUYÁ, NATA MONTADA DE MARACUYÁ Y MERENGUE SUIZO.', estado='Activo'),
+    Producto(nombre='Bubo ( Molde Cubik )', tipo='Tortas Modernas', descripcion='MOUSSE DE CHOCOLATE BLANCO CON TOQUES DE LIMA LIMÓN, SUAVE INSERT DE JALEA EXÓTICA MARACUYÁ, MANGO, BIZCOCHO DE COCO AL VAPOR.', estado='Activo'),
+    Producto(nombre='Pasión ( Molde Buble )', tipo='Tortas Modernas', descripcion='MOUSSE DE NARANJA, MERMELADA DE MANGO MARACUYÁ Y CILANTRO, ESPONJA DE ALMENDRA.', estado='Activo'),
+    Producto(nombre='Pasión ( Molde Metalase )', tipo='Tortas Modernas', descripcion='MOUSSE DE NARANJA, MERMELADA DE MANGO MARACUYÁ Y CILANTRO, ESPONJA DE ALMENDRA.', estado='Activo'),
+    Producto(nombre='Pasión ( Molde Cloud )', tipo='Tortas Modernas', descripcion='MOUSSE DE NARANJA, MERMELADA DE MANGO MARACUYÁ Y CILANTRO, ESPONJA DE ALMENDRA.', estado='Activo'),
+    Producto(nombre='Magmu love ( Molde Cloud )', tipo='Tortas Modernas', descripcion='PASTEL DE CHOCOLATE, TIERRA DE AVELLANA, TIERRA CRUJIENTES DE AVELLANA, CREMA DE MANGO, GELATINA DE MANGO Y MOUSSE DE CHOCOLATE DE LECHE.', estado='Activo'),
+    Producto(nombre='Magmu Love Ti Amo', tipo='Tortas Modernas', descripcion='PASTEL DE CHOCOLATE, TIERRA DE AVELLANA, TIERRA CRUJIENTES DE AVELLANA, CREMA DE MANGO, GELATINA DE MANGO Y MOUSSE DE CHOCOLATE DE LECHE.', estado='Activo'),
+    Producto(nombre='Black Velvet', tipo='Tortas Modernas', descripcion='BLACK VELVET BIZCOCHO DE CHOCOLATE CAFÉ Y COÑAC CON CREMA MASCARPONE OREO Y CARAMELO CON GANACHE DE CHOCOLATE.', estado='Activo'),
+
+    Producto(nombre='Riviera', tipo='mini tortas Modernas', descripcion='MOUSSE DE CHOCOLATE NEGRO RIVIERA, CURD DE MARACUYÁ, COMPOTA DE FRAMBUESA Y BIZCOCHO SACHER.', estado='activo'),
+    Producto(nombre='Casa Blanca', tipo='mini tortas Modernas', descripcion='MOUSSE DE CHOCOLATE Y FRAMBUESA, CREMEBRULE DE PISTACHO, CONFITE DE FRAMBUESA CON CHAMPAGNE Y BIZCOCHO DE CHOCOLATE.', estado='activo'),
+    Producto(nombre='Frasiet Eliel', tipo='mini tortas Modernas', descripcion='MOUSSE DE FRUTILLA, COMPOTA DE FRUTILLA Y ALBACA, CURD DE MANGO PERFUMADO CON POMELO RICA RICA CON BASE ESPONJA DE ALMENDRA.', estado='activo'),
+    Producto(nombre='Bubo', tipo='mini tortas Modernas', descripcion='MOUSSE DE CHOCOLATE BLANCO CON TOQUES DE LIMA LIMÓN, SUAVE INSERTO DE JALEA EXÓTICA MARACUYÁ MANGO, BIZCOCHO DE COCO AL VAPOR.', estado='activo'),
+    Producto(nombre='Inspiración de Café', tipo='mini tortas Modernas', descripcion='MOUSSE DE CAFÉ, GANACHE DE VAINILLA, SUAVE CARAMELO, FINANCIERO DE CHOCOLATE CON GALLETAS DE CAFÉ.', estado='activo'),
+    Producto(nombre='Pasión', tipo='mini tortas Modernas', descripcion='MOUSSE DE NARANJA, MERMELADA DE MANGO MARACUYÁ Y CILANTRO, ESPONJA DE ALMENDRA, BASE DE PATE SUCRÉE.', estado='activo'),
+    Producto(nombre='Bubo Ti Voglio Bene', tipo='mini tortas Modernas', descripcion='MOUSSE DE CHOCOLATE BLANCO CON TOQUES DE LIMA LIMÓN, SUAVE INSERTO DE JALEA EXÓTICA MARACUYÁ, MANGO, BIZCOCHO DE COCO AL VAPOR EN UN MOLDE DE 270ML.', estado='activo'),
+    Producto(nombre='Bomba Rocher', tipo='mini tortas Modernas', descripcion='CONTIENE PRALINE DE AVELLANA, GANACHE DE CHOCOLATE ABATONKA Y MOUSSE DE CHOCOLATE DE LECHE Y CAFÉ.', estado='activo'),
+    Producto(nombre='Rosa', tipo='mini tortas Modernas', descripcion='PASTEL DE CHOCOLATE, CREMA DE MANGO, GELATINA DE MANGO Y MOUSSE DE CHOCOLATE DE LECHE.', estado='activo'),
+    Producto(nombre='Lady', tipo='mini tortas Modernas', descripcion='GEL DE FRUTILLA CON MENTA, CREMA BATIDA DE FRUTILLA BISCOCHO CON ALBACA Y GANACHE DE FRUTILLA.', estado='activo'),
+    Producto(nombre='Frambuesa vainilla', tipo='mini tortas Modernas', descripcion='MASA SABLE, FRANCIPANE DE ALMENDRA Y FRAMBUESA, CON CREMA DIPLOMÁTICA Y GEL DE FRAMBUESA.', estado='activo'),
+    Producto(nombre='Primavera', tipo='mini tortas Modernas', descripcion='MASA SABLE BAÑADA CON CHOCOLATE BLANCO, FRAMCIPANE DE LIMÓN Y ARÁNDANO CREMOSO DE LIMÓN CON VAINILLA GANACHE MONTADA DE LIMÓN.', estado='activo'),
+    Producto(nombre='Coco Nut', tipo='mini tortas Modernas', descripcion='COMPOTA EXÓTICA (PIÑA, MANGO, MARACUYÁ Y MALIBU) NATA DE COCO, BAÑO DE CHOCOLATE, BABA REMOJADO EN SIROPE DE MARACUYÁ Y RON MALIBU.', estado='activo'),
+    Producto(nombre='Magmu Love', tipo='mini tortas Modernas', descripcion='PASTEL DE CHOCOLATE, TIERRA DE AVELLANA, TIERRA CRUJIENTES DE AVELLANA, CREMA DE MANGO, GELATINA DE MANGO Y MOUSSE DE CHOCOLATE DE LECHE.', estado='activo'),
+    Producto(nombre='Bahibe', tipo='mini tortas Modernas', descripcion='GELATINA DE FRUTAS TROPICALES LIMÓN, PIÑA, MANGO Y MARACUYÁ, BIZCOCHO ESPONJOSO DE AVELLANA GLUTEN FREE, MOUSSE DE CHOCOLATE SIN ADICIÓN DE HUEVO, BAÑO ROCHER.', estado='activo'),
+    Producto(nombre='Manzana', tipo='mini tortas Modernas', descripcion='NATA DE MANZANA, GANACHE DE MANZANA, RELLENO DE MANZANA ENELDO, COMPOTA DE MANZANA, BAÑO DE CHOCOLATE CROCANTE GLASEADO ROJO.', estado='activo'),
+    Producto(nombre='Avellana', tipo='mini tortas Modernas', descripcion='NATA MONTADA DE AVELLANA, SUAVE CARAMELO CREMOSO, PRALINÉ DE AVELLANA, CORTEZA DE CHOCOLATE DE LECHE, SUAVE ESPONJA DE AVELLANA Y ESCAMA DE COBERTURA DARK.', estado='activo'),
+    Producto(nombre='Limón', tipo='mini tortas Modernas', descripcion='GANACHE DE LIMÓN, LIMÓN CONFITADO, CAVIAR DE LIMÓN, GEL DE LIMÓN, MENTA FRESCA Y COBERTURA DE CHOCOLATE.', estado='activo'),
+    Producto(nombre='Frutilla', tipo='mini tortas Modernas', descripcion='NATA MONTADA CON NOTAS DE ALBAHACA PAPRIKA EN SU CENTRO UN GELÉE DE FRUTILLA Y COMPOTA DE FRUTILLA.', estado='activo'),
+    Producto(nombre='Naranja', tipo='mini tortas Modernas', descripcion='CAVIAR DE NARANJA, MERMELADA DE NARANJA, NARANJA CONFITADA (PIEL DE NARANJA) Y MENTA FRESCA.', estado='activo'),
+
+    Producto(nombre='Avellana Fundent', tipo='tartas Modernas', descripcion='MASA SABLE CACAO, BIZCOCHO DE AVELLANA , GANACHE MONTADA DE AVELLANA, CREMOSO DE PRALINÉ, PRALINÉ DE AVELLANA Y AVELLANAS TOSTADAS', estado='activo'),
+    Producto(nombre='Duoma firenze', tipo='tartas Modernas', descripcion='MASA SABLE CACAO, BAÑO CHOCOLATE ROCHER, FRANGIPANE DE CACAO Y NARANJA, COMPOTA DE NARANJA, GANACHE MONTADO DE BITTER, CREMOSO DE NARANJA Y BAÑADO EN GLASÉ ESPEJO', estado='activo'),
+    Producto(nombre='Costa maya', tipo='tartas Modernas', descripcion='MASA SABLE CON BAÑO DE CHOCOLATE BLANCO Y COCO, GLEIFICADO DE MANGO MARACUYÁ, CREMOSO MANGO Y MARACUYÁ', estado='activo'),
+    Producto(nombre='Appel crumble', tipo='tartas Modernas', descripcion='BASE STREUSEL DE AVELLANA, FRANGIPANE DE AVELLANA Y CANELA, COMPOTA DE MANZANA EN TROZOS', estado='activo'),
+    Producto(nombre='Caramel coffi', tipo='tartas Modernas', descripcion='MASA SABLE CACAO, BIZCOCHO FRANGIPANE DE CAFÉ, CARAMELO DE CAFÉ Y GANACHE MONTADO DE CAFÉ', estado='activo'),
+    Producto(nombre='Maní Chocolate', tipo='tartas Modernas', descripcion='MASA SABLE CACAO, CREMOSO CHOCOLATE DE LECHE, TOFI DE MANÍ, GANACHE DE MANÍ, MOUSSE DE CHOCOLATE BITTER Y MANÍ, SUMERGIDO EN BAÑO DE CHOCOLATE DE LECHE', estado='activo'),
+    Producto(nombre='Frambuesa vainilla', tipo='tartas Modernas', descripcion='.', estado='activo'),
+    Producto(nombre='Lemon Cake', tipo='tartas Modernas', descripcion='CONTIENE BIZCOCHO DE LIMÓN RELLENO DE COMPOTA DE FRAMBUESA UN BAÑO ROCHER CON CREMOSO DE LIMÓN CON DECORACIÓN DE GEL DE LIMÓN', estado='activo'),
+    Producto(nombre='Blond', tipo='tartas Modernas', descripcion='CONTIENE UNA BASE DE CRUMBEL DULCEY CON UN CREME BRULEE DULCEY Y MOUSSE DE CHOCOLATE DE LECHE CON CAFÉ SU DECORACIÓN ES GEL DE LIMÓN Y MENTA', estado='activo'),
+
+    Producto(nombre='Macarrons de Café', tipo='Macarrons', descripcion='MACARRÓN DE NARANJA CROCANTE POR FUERA, HÚMEDO POR DENTRO RELLENO DE UN SUAVE GANACHE DE CAFÉ.', estado='activo'),
+    Producto(nombre='Macarrons de Caramelo', tipo='Macarrons', descripcion='MACARRÓN DE NARANJA CROCANTE POR FUERA, HÚMEDO POR DENTRO RELLENO DE UN SUAVE GANACHE DE CARAMELO.', estado='activo'),
+    Producto(nombre='Macarrons de Chocolate', tipo='Macarrons', descripcion='MACARRÓN DE NARANJA CROCANTE POR FUERA, HÚMEDO POR DENTRO RELLENO DE UN SUAVE GANACHE DE CHOCOLATE.', estado='activo'),
+    Producto(nombre='Macarrons de Coco Nuss', tipo='Macarrons', descripcion='MACARRÓN DE NARANJA CROCANTE POR FUERA, HÚMEDO POR DENTRO RELLENO DE UN SUAVE GANACHE DE COCO.', estado='activo'),
+    Producto(nombre='Macarrons de Vainilla', tipo='Macarrons', descripcion='MACARRÓN DE NARANJA CROCANTE POR FUERA, HÚMEDO POR DENTRO RELLENO DE UN SUAVE GANACHE DE VAINILLA.', estado='activo'),
+    Producto(nombre='Macarrons de Limón', tipo='Macarrons', descripcion='MACARRÓN DE NARANJA CROCANTE POR FUERA, HÚMEDO POR DENTRO RELLENO DE UN SUAVE GANACHE DE LIMÓN.', estado='activo'),
+    Producto(nombre='Macarrons de Maracuyá', tipo='Macarrons', descripcion='MACARRÓN DE NARANJA CROCANTE POR FUERA, HÚMEDO POR DENTRO RELLENO DE UN SUAVE GANACHE DE MARACUYÁ.', estado='activo'),
+    Producto(nombre='Macarrons de Naranja', tipo='Macarrons', descripcion='MACARRÓN DE NARANJA CROCANTE POR FUERA, HÚMEDO POR DENTRO RELLENO DE UN SUAVE GANACHE DE NARANJA.', estado='activo'),
+    Producto(nombre='Macarrons de Frutilla', tipo='Macarrons', descripcion='MACARRÓN DE NARANJA CROCANTE POR FUERA, HÚMEDO POR DENTRO RELLENO DE UN SUAVE GANACHE DE FRUTILLA.', estado='activo'),
+    Producto(nombre='Macarrons de Frambuesa', tipo='Macarrons', descripcion='MACARRÓN DE NARANJA CROCANTE POR FUERA, HÚMEDO POR DENTRO RELLENO DE UN SUAVE GANACHE DE FRAMBUESA.', estado='activo'),
+    Producto(nombre='Macarrons de Yogurt Frutilla', tipo='Macarrons', descripcion='MACARRÓN DE NARANJA CROCANTE POR FUERA, HÚMEDO POR DENTRO RELLENO DE UN SUAVE GANACHE DE YOGURT Y FRUTILLA.', estado='activo'),
+    Producto(nombre='Macarrons de Lavanda', tipo='Macarrons', descripcion='MACARRÓN DE NARANJA CROCANTE POR FUERA, HÚMEDO POR DENTRO RELLENO DE UN SUAVE GANACHE DE LAVANDA.', estado='activo'),
+    Producto(nombre='Macarrons de Lima', tipo='Macarrons', descripcion='MACARRÓN DE NARANJA CROCANTE POR FUERA, HÚMEDO POR DENTRO RELLENO DE UN SUAVE GANACHE DE LIMA.', estado='activo'),
+    Producto(nombre='Macarrons de Avellana', tipo='Macarrons', descripcion='MACARRÓN DE NARANJA CROCANTE POR FUERA, HÚMEDO POR DENTRO RELLENO DE UN SUAVE GANACHE DE AVELLANA.', estado='activo'),
+    Producto(nombre='Macarrons de Pistacho', tipo='Macarrons', descripcion='MACARRÓN DE NARANJA CROCANTE POR FUERA, HÚMEDO POR DENTRO RELLENO DE UN SUAVE GANACHE DE PISTACHO.', estado='activo'),
+    Producto(nombre='Macarrons de Maracuyá con Coco', tipo='Macarrons', descripcion='MACARRÓN DE NARANJA CROCANTE POR FUERA, HÚMEDO POR DENTRO RELLENO DE UN SUAVE GANACHE DE MARACUYÁ Y COCO.', estado='activo'),
+
+    Producto(nombre='Pie de limón', tipo='Kuchen', descripcion='BASE AZUCARADA, CREMA DE LIMÓN Y SUAVE MERENGUE.', estado='activo'),
+    Producto(nombre='Kuchen de Frambuesa', tipo='Kuchen', descripcion='BASE DE MASA AZUCARADA, CREMA PASTELERA Y COMPOTA DE FRAMBUESA.', estado='activo'),
+    Producto(nombre='Kuchen Frutos del bosque', tipo='Kuchen', descripcion='BASE DE MASA AZUCARADA, CREMA PASTELERA Y COMPOTA DE FRUTOS DEL BOSQUES.', estado='activo'),
+    Producto(nombre='Kuchen de Manzana', tipo='Kuchen', descripcion='BASE DE MASA AZUCARADA, MANZANA EN TROZOS SALTEADA CON TOQUES DE LIMÓN, VAINILLA Y CREMA PASTELERA', estado='activo'),
+    Producto(nombre='Crumble de Frutilla', tipo='Kuchen', descripcion='BASE DE MASA AZUCARADA CON CREMA DE MANTEQUILLA, SALSA DE FRUTILLA Y MIGAS CRUJIENTE', estado='activo'),
+    Producto(nombre='Crumble de Arándano', tipo='Kuchen', descripcion='BASE DE MASA AZUCARADA, SALSA DE ARÁNDANOS Y MIGAS', estado='activo'),
+    Producto(nombre='Tarta Ph', tipo='Kuchen', descripcion='BASE AZUCARADA CON UNA SUAVE CREMA DE COCO Y ALMENDRA, CON TOQUE DE PISCO.', estado='activo'),
+    Producto(nombre='Pie de Mango', tipo='Kuchen', descripcion='BASE AZUCARADA, CREMA DE MANGO Y SUAVE MERENGUE.', estado='activo'),
+    Producto(nombre='Pie de Maracuya', tipo='Kuchen', descripcion='BASE AZUCARADA, CREMA DE MARACUYÁ Y SUAVE MERENGUE.', estado='activo'),
+
+    Producto(nombre='Pie Limón', tipo='Sheesecake', descripcion='BASE AZUCARADA, CREMA DE LIMÓN Y SUAVE MERENGUE.', estado='activo'),
+    Producto(nombre='Tarta Ph', tipo='Sheesecake', descripcion='BASE AZUCARADA CON UNA SUAVE CREMA DE COCO Y ALMENDRA, CON TOQUE DE PISCO.', estado='activo'),
+    Producto(nombre='Cheesecake de pistacho', tipo='Sheesecake', descripcion='BASE AZUCARADA, CHESSECAKE DE PISTACHO Y FRAMBUESA', estado='activo'),
+    Producto(nombre='Cheesecake de Maracuya', tipo='Sheesecake', descripcion='BASE AZUCARADA, CHEESECAKE DE MARACUYÁ', estado='activo'),
+    Producto(nombre='Cheesecake de Oreo', tipo='Sheesecake', descripcion='BASE AZUCARADA DE OREO, CHEESECAKE DE OREO', estado='activo'),
+    Producto(nombre='Cheescake de Café', tipo='Sheesecake', descripcion='QUESO CREMA, CAFÉ, TRUFA Y BASE DE CHOCOLATE', estado='activo'),
+    Producto(nombre='Pie de Mango', tipo='Sheesecake', descripcion='BASE AZUCARADA, CREMA DE MANGO Y SUAVE MERENGUE.', estado='activo'),
+    Producto(nombre='Pie de Maracuya', tipo='Sheesecake', descripcion='BASE AZUCARADA, CREMA DE MARACUYÁ Y SUAVE MERENGUE.', estado='activo'),
+    Producto(nombre='Cheesecake de galleta Lotus', tipo='Sheesecake', descripcion='BASE DE PATE SUCRE, UNA CAPA DE GALLETA LOTUS, MOUSE DE QUESO CREMA CON TOQUES DE VAINILLA, VELO DE GALLETA LOTUS.', estado='activo'),
+    Producto(nombre='Cheesecake Jules Destrooper', tipo='Sheesecake', descripcion='BASE DE PATE SUCRE, MOUSE DE QUESO CREMA CON TOQUES DE VAINILLA Y GALLETA JULES DESTROOPER', estado='activo'),
+    Producto(nombre='Tiramisú', tipo='Sheesecake', descripcion='BISCOCHO BLANCO EN ALMÍBAR DE CAFÉ Y AMARETTO, BASE DE GALLETA Y MOUSE DE QUESO CREMA Y AMARETTO.', estado='activo'),
+]
+    
     Producto.objects.bulk_create(productos)
     return redirect('scripts')

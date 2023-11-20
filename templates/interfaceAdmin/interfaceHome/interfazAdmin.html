@@ -5,6 +5,10 @@
 <link rel="stylesheet" href="{% static 'css/interfazAdmin/styles.css' %}">
 {% comment %} <link rel="stylesheet" href="{% static 'css/interfazAdmin/main.css' %}"> {% endcomment %}
 <link rel="stylesheet" href="{% static 'css/interfazAdmin/form.css' %}">
+
+{% comment %} <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"> {% endcomment %}
+<link rel="stylesheet" href="{% static "DataTables-1.13.8/datatables.min.css" %}">
+
 {% endblock  %}
 
 
@@ -100,9 +104,12 @@
         
 {% endblock %}
 
-{% comment %} {% block javascript %} {% endcomment %}
-{% comment %} <script src="{% static "js/interfaceAdmin/botonDesplegable.js" %}"></script> {% endcomment %}
-{% comment %} {% endblock  %} {% endcomment %}
+{% block dataTable %}
+<script src="{% static "DataTables-1.13.8/jQuery-3.7.0/jquery-3.7.0.min.js" %}"></script>
+<script src="{% static "DataTables-1.13.8/datatables.min.js" %}"></script>
+<script src="{% static "js/dataTable/index.js" %}"></script>
+{% endblock  %}
+
 
 
 
