@@ -1,0 +1,35 @@
+{% extends "interfaceAdmin/interfaceHome/interfazAdmin.html" %}
+{% block formulario %}
+
+<div class="container">
+    <div class="listadoCompras">
+        <h1>Listado de Compras</h1>
+        <table id="example" class="display" style="width:100%">
+            <tr>
+                <th>ID Compra</th>
+                <th>ID Cliente</th>
+                <th>ID Carrito de Compras</th>
+                <th>Estado de Pago</th>
+                <th>Fecha de Compra</th>
+                <th>Total de Compra</th>
+                <th>Dirección</th>
+            </tr>
+            {% for compra in compras %}
+            <tr>
+                <td>{{ compra.id_compra }}</td> 
+                <td>{{ compra.id_cliente }}</td>
+                <td>{{ compra.id_carrito }}</td>
+                <td>{{ compra.id_estadopago }}</td>
+                <td>{{ compra.fecha_compra }}</td>
+                <td>{{ compra.total_compra }}</td>
+                <td>{{ compra.direccion }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+        
+  
+  
+  {% endblock  %}

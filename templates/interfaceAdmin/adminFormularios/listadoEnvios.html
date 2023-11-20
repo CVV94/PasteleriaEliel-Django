@@ -1,0 +1,31 @@
+{% extends "interfaceAdmin/interfaceHome/interfazAdmin.html" %}
+{% block formulario %}
+
+<div class="container">
+    <div class="listadoEnvios">
+        <h1>Listado de Envios</h1>
+        <table id="example" class="display" style="width:100%">
+            <tr>
+                <th>ID Envio</th>
+                <th>ID Compra</th>
+                <th>ID Estado Envio</th>
+                <th>Fecha de Envio</th>
+                <th>Fecha de Entrega</th>
+            </tr>
+            {% for envio in envios %}
+            <tr>
+                <td>{{ envio.id_envio }}</td> 
+                <td>{{ envio.id_compra }}</td>
+                <td>{{ envio.id_estadoenvio }}</td>
+                <td>{{ envio.fecha_envio }}</td>
+                <td>{{ envio.fecha_entrega }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+        
+  
+  
+  {% endblock  %}

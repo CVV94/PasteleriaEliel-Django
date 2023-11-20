@@ -1,0 +1,33 @@
+{% extends "interfaceAdmin/interfaceHome/interfazAdmin.html" %}
+{% block formulario %}
+
+<div class="container">
+    <div class="listadoIngredientes">
+        <h1>Listado de Ingredientes</h1>
+        <table id="example" class="display" style="width:100%">
+            <tr>
+                <th>ID Ingrediente</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Unidad de medida</th>
+                <th>Precio</th>
+                <th>Stock</th>
+            </tr>
+            {% for ingrediente in ingredientes %}
+            <tr>
+                <td>{{ ingrediente.id_ingrediente }}</td> 
+                <td>{{ ingrediente.nombre }}</td>
+                <td>{{ ingrediente.descripcion }}</td>
+                <td>{{ ingrediente.unidad_medida }}</td>
+                <td>{{ ingrediente.precio }}</td>
+                <td>{{ ingrediente.stock }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+        
+  
+  
+  {% endblock  %}

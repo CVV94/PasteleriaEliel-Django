@@ -1,0 +1,31 @@
+{% extends "interfaceAdmin/interfaceHome/interfazAdmin.html" %}
+{% block formulario %}
+
+<div class="container">
+    <div class="listadoProveedores">
+        <h1>Listado de Proveedores</h1>
+        <table id="example" class="display" style="width:100%">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Dirección</th>
+                <th>Teléfono</th>
+                <th>Web</th>
+            </tr>
+            {% for proveedor in proveedores %}
+            <tr>
+                <td>{{ proveedor.id_proveedor }}</td> 
+                <td>{{ proveedor.nombre }}</td>
+                <td>{{ proveedor.direccion }}</td>
+                <td>{{ proveedor.telefono }}</td>
+                <td>{{ proveedor.web }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+        
+  
+  
+  {% endblock  %}

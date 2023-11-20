@@ -1,0 +1,44 @@
+{% extends "interfaceAdmin/interfaceHome/interfazAdmin.html" %}
+{% block formulario %}
+
+<div class="row">
+    <div class="col-sm-12 col-md-12 ">
+        <form class="form" method="post" action="{% url 'registrarIngrediente' %}">
+            {% csrf_token %}
+            
+            <p class="title">Registrar Ingrediente</p>
+            <p class="message">Signup now and get full access to our app.</p>
+        
+            <div class="flex">
+                <label>
+                    {{ form_producto.nombre }}
+                    <span>Nombre</span>
+                </label>
+            </div>
+        
+            <label>
+                <span>Descripción</span>
+                {{ form_ingrediente.descripcion }}
+            </label>
+        
+            <label>
+                <span>Unidad de Medida</span>
+                {{ form_ingrediente.unidad_medida }}
+            </label>
+
+            <label>
+                <span>Precio</span>
+                {{ form_ingrediente.precio }}
+            </label>
+
+            <label>
+                <span>Stock</span>
+                {{ form_ingrediente.stock }}
+            </label>
+        
+            <button class="submit" type="submit">Submit</button>
+           
+        </form>
+
+    </div>
+</div>
