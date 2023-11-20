@@ -81,3 +81,4 @@ def eliminarProductos(request,id_producto):
     producto= Producto.objects.get(id_producto=id_producto)
     producto.delete()
     return redirect('listadoProducto')
+
