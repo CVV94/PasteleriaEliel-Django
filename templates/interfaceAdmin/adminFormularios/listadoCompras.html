@@ -1,0 +1,46 @@
+{% extends "interfaceAdmin/interfaceHome/interfazAdmin.html" %}
+{% block formulario %}
+
+<div class="container">
+    <h1>Listado de Compras</h1>
+    <div class="row">
+        <div class="col-ms-12 col-md-12 col-lg-12">
+            <div class="table-responsive">
+                <table class="table" id="datatable-products">
+                    <thead>
+                        <tr>
+                            <th class="centered">#</th>
+                            <th class="centered">ID</th>
+                            <th class="centered">ID Cliente</th>
+                            <th class="centered">ID Carrito de Compras</th>
+                            <th class="centered">Estado de Pago</th>
+                            <th class="centered">Fecha de Compra</th>
+                            <th class="centered">Total de Compra</th>
+                            <th class="centered">Dirección</th>
+                        </tr>
+                    </thead>
+                    <tbody id="datatable-products">
+                         {% for compra in compras %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ compra.id_compra }}</td> 
+                                <td>{{ compra.id_cliente }}</td>
+                                <td>{{ compra.id_carrito }}</td>
+                                <td>{{ compra.id_estadopago }}</td>
+                                <td>{{ compra.fecha_compra }}</td>
+                                <td>{{ compra.total_compra }}</td>
+                                <td>{{ compra.direccion }}</td>
+                            </tr>
+                        {% endfor %} 
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+  
+  
+  {% endblock  %}

@@ -1,0 +1,39 @@
+{% extends "interfaceAdmin/interfaceHome/interfazAdmin.html" %}
+{% block formulario %}
+
+<div class="row">
+    <div class="col-sm-12 col-md-12 ">
+        <form class="form" method="post" action="{% url 'registrarProveedor' %}">
+            {% csrf_token %}
+            
+            <p class="title">Registrar Proveedor</p>
+            <p class="message">Signup now and get full access to our app.</p>
+        
+            <div class="flex">
+                <label>
+                    {{ form_proveedor.nombre }}
+                    <span>Nombre</span>
+                </label>
+            </div>
+        
+            <label>
+                <span>Dirección</span>
+                {{ form_proveedor.direccion }}
+            </label>
+        
+            <label>
+                <span>Teléfono</span>
+                {{ form_proveedor.telefono }}
+            </label>
+
+            <label>
+                <span>Web</span>
+                {{ form_proveedor.web }}
+            </label>
+        
+            <button class="submit" type="submit">Submit</button>
+           
+        </form>
+
+    </div>
+</div>

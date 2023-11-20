@@ -1,0 +1,42 @@
+{% extends "interfaceAdmin/interfaceHome/interfazAdmin.html" %}
+{% block formulario %}
+
+<div class="container">
+    <h1>Listado de Proveedores</h1>
+    <div class="row">
+        <div class="col-ms-12 col-md-12 col-lg-12">
+            <div class="table-responsive">
+                <table class="table" id="datatable-products">
+                    <thead>
+                        <tr>
+                            <th class="centered">#</th>
+                            <th class="centered">ID</th>
+                            <th class="centered">Nombre</th>
+                            <th class="centered">Dirección</th>
+                            <th class="centered">Teléfono</th>
+                            <th class="centered">Web</th>
+                        </tr>
+                    </thead>
+                    <tbody id="datatable-products">
+                         {% for proveedor in proveedores %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ proveedor.id_proveedor }}</td> 
+                                <td>{{ proveedor.nombre }}</td>
+                                <td>{{ proveedor.direccion }}</td>
+                                <td>{{ proveedor.telefono }}</td>
+                                <td>{{ proveedor.web }}</td>
+                            </tr>
+                        {% endfor %} 
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+  
+  
+  {% endblock  %}

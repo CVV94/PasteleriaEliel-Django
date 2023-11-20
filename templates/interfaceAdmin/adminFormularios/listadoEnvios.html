@@ -1,0 +1,42 @@
+{% extends "interfaceAdmin/interfaceHome/interfazAdmin.html" %}
+{% block formulario %}
+
+<div class="container">
+    <h1>Listado de Envíos</h1>
+    <div class="row">
+        <div class="col-ms-12 col-md-12 col-lg-12">
+            <div class="table-responsive">
+                <table class="table" id="datatable-products">
+                    <thead>
+                        <tr>
+                            <th class="centered">#</th>
+                            <th class="centered">ID</th>
+                            <th class="centered">ID Compra</th>
+                            <th class="centered">ID Estado de Envío</th>
+                            <th class="centered">Fecha de Envío</th>
+                            <th class="centered">Fecha de Entrega</th>
+                        </tr>
+                    </thead>
+                    <tbody id="datatable-products">
+                         {% for envio in envios %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ envio.id_envio }}</td> 
+                                <td>{{ envio.id_compra }}</td>
+                                <td>{{ envio.id_estadoenvio }}</td>
+                                <td>{{ envio.fecha_envio }}</td>
+                                <td>{{ envio.fecha_entrega }}</td>
+                            </tr>
+                        {% endfor %} 
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+  
+  
+  {% endblock  %}

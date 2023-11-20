@@ -1,0 +1,44 @@
+{% extends "interfaceAdmin/interfaceHome/interfazAdmin.html" %}
+{% block formulario %}
+
+<div class="container">
+    <h1>Listado de Ingredientes</h1>
+    <div class="row">
+        <div class="col-ms-12 col-md-12 col-lg-12">
+            <div class="table-responsive">
+                <table class="table" id="datatable-products">
+                    <thead>
+                        <tr>
+                            <th class="centered">#</th>
+                            <th class="centered">ID</th>
+                            <th class="centered">Nombre</th>
+                            <th class="centered">Descripción</th>
+                            <th class="centered">Unidad de Medida</th>
+                            <th class="centered">Precio</th>
+                            <th class="centered">Stock</th>
+                        </tr>
+                    </thead>
+                    <tbody id="datatable-products">
+                         {% for ingrediente in ingredientes %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ ingrediente.id_ingrediente }}</td> 
+                                <td>{{ ingrediente.nombre }}</td>
+                                <td>{{ ingrediente.descripcion }}</td>
+                                <td>{{ ingrediente.unidad_medida }}</td>
+                                <td>{{ ingrediente.precio }}</td>
+                                <td>{{ ingrediente.stock }}</td>
+                            </tr>
+                        {% endfor %} 
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+  
+  
+  {% endblock  %}

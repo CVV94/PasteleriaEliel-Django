@@ -1,5 +1,5 @@
 from django import forms
-from .models import Producto,PresentacionProducto,Valor
+from .models import Producto,PresentacionProducto,Valor, Proveedor, Ingrediente, Compra, Envio, Estadoenvio
 
 class ProductoForm(forms.ModelForm):
     class Meta:
@@ -26,3 +26,25 @@ class ValorForm(forms.ModelForm):
         fields=('__all__')
 
 
+class ProveedorForm(forms.ModelForm):
+    class Meta:
+        model=Proveedor
+        fields=('__all__')
+
+
+class IngredienteForm(forms.ModelForm):
+    class Meta:
+        model=Ingrediente
+        fields=('__all__')
+
+
+class CompraForm(forms.ModelForm):
+    class Meta:
+        model=Compra
+        fields=('__all__')
+
+
+class EnvioForm(forms.ModelForm):
+    class Meta:
+        model=Envio
+        fields=('__all__')
