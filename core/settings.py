@@ -34,7 +34,12 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'www.vasquez-carlos.com',
+    '.vasquez-carlos.com',
+    'vasquez-carlos.com',
+    '18.228.168.194',
+]
 
 
 # Application definition
@@ -87,10 +92,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pasteleriaeliel',
-        'USER': 'root',
-        'PASSWORD': ''
+        'ENGINE':'django.db.backends.mysql',
+        'NAME':'pasteleriaeliel',
+        'USER':'admin',
+        'PASSWORD':'eliel123',
+        'HOST':'pasteleriaeliel.c81whvbcfjwq.sa-east-1.rds.amazonaws.com',
+        'PORT':'3306'
     }
 }
 
@@ -143,7 +150,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# if not DEBUG:
+if not DEBUG:
 #     EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 #     EMAIL_HOST = env('EMAIL_HOST') 
 #     EMAIL_PORT = env('EMAIL_PORT')
@@ -152,10 +159,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     EMAIL_USE_TLS = env('EMAIL_USE_TLS')
 #     DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
 
-#     SESSION_COOKIE_SECURE = True
-#     SECURE_BROWSER_XSS_FILTER = True
-#     SECURE_CONTENT_TYPE_NOSNIFF = True
-#     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-#     SECURE_REDIRECT_EXEMPT =[]
-#     SECURE_SSL_REDIRECT = True
-#     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO','https')
+    SESSION_COOKIE_SECURE = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_REDIRECT_EXEMPT =[]
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO','https')
