@@ -38,7 +38,7 @@ ALLOWED_HOSTS = [
     'www.vasquez-carlos.com',
     '.vasquez-carlos.com',
     'vasquez-carlos.com',
-    '18.228.168.194',
+    '127.0.0.1',
 ]
 
 
