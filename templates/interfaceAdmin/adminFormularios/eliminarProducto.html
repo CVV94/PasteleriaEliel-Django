@@ -1,0 +1,26 @@
+{% extends "interfaceAdmin/interfaceHome/interfazAdmin.html" %}
+{% block formulario %}
+
+<div class="container">
+    <h1>{{title}}</h1>
+    <div class="row">
+        <div class="col-ms-12 col-md-12 col-lg-12">
+            <div class="table-responsive">
+                <form action="" method='post'>
+                    {% csrf_token %}
+                    <div class="alert alert-danger" role="alert">
+                    ¿Estas Seguro de Eliminar el Producto {{object.nombre}}?
+                      </div>
+                    <button type="submit" class='btn btn-danger'>Aceptar</button>
+                    <a href="{{ list_url }}" class='btn btn-info'>Cancelar</a>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+  
+  
+  {% endblock  %}

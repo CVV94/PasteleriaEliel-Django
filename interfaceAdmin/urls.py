@@ -1,14 +1,21 @@
 from django.urls import path
 from . import views
+from .views import ProductoListView,ProductoUpdateView,ProductoCreateView,ProductoDeleteView,ImagenesListView,ImagenesUpdateView,ImagenCreateView,ImagenDeleteView
 from . import dbScripts
 urlpatterns = [
     path('interface/',views.interfaceAdmin,name='interfazAdministrador'),
-    path('registrar/producto',views.registrarProducto,name='registrarProducto'),
+    path('registrar/producto',ProductoCreateView.as_view(),name='registrarProducto'),
     path('registrar/valor',views.registrarValor,name='registrarPrecio'),
-    path('registrar/imagen',views.registrarImagen,name='registrarImagen'),
+    path('registrar/imagen',ImagenCreateView.as_view(),name='registrar_imagen'),
     path('listado/productos',views.listadoProductos,name='listadoProductos'),
     path('scripts/productos',dbScripts.scriptsRegistrarProductos,name='scriptsRegistrarProductos'),
     path('scripts/Registros',dbScripts.scriptsRegistros,name='scripts'),
+    path('listado/producto',ProductoListView.as_view(),name='listadoDeProductos'),
+    path('listado/imagenes',ImagenesListView.as_view(),name='listado_imagenes'),
+    path('editar/imagen/<int:pk>/',ImagenesUpdateView.as_view(),name='editar_imagenes'),
+    path('actualizar/producto/<int:pk>/',ProductoUpdateView.as_view(),name='actualizar_producto'),
+    path('eliminar/producto/<int:pk>/',ProductoDeleteView.as_view(),name='eliminar_producto'),
+    path('eliminar/imagen/<int:pk>/',ImagenDeleteView.as_view(),name='eliminar_imagen'),
 
     path('listado/ingredientes',views.listadoIngredientes, name='listadoIngredientes'),
     path('registrar/ingrediente', views.registrarIngrediente, name='registrarIngrediente'),

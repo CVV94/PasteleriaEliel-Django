@@ -1,29 +1,43 @@
+from pyexpat.errors import messages
+from typing import Any
+from django.views.generic import ListView,UpdateView,CreateView,DeleteView
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,redirect
 from .forms import ProductoForm,CargarImagenForm,ValorForm, ProveedorForm, IngredienteForm, EnvioForm, CompraForm
-from .models import Producto, Proveedor, Ingrediente, Compra, Envio, Estadoenvio, Cliente, CarritoCompra, Estadopago
+from .models import Producto, Proveedor, Ingrediente, Compra, Envio, Estadoenvio, Cliente, CarritoCompra, Estadopago, PresentacionProducto
 from django.db.models import F
+from django.urls import reverse_lazy
+import os
+from django.http import Http404
 
 # Create your views here.
 def interfaceAdmin(request):
     return render(request,'interfaceAdmin/interfaceHome/interfazAdmin.html')
 
+class ProductoCreateView(CreateView):
+    model = Producto
+    template_name = 'interfaceAdmin/adminFormularios/registrarProductos.html'
+    form_class = ProductoForm
+    success_url = reverse_lazy('listadoDeProductos') 
+    context_object_name = 'productos'
 
-def registrarProducto(request):
-    form_producto = ProductoForm()
-    mensaje = {}
+    def form_valid(self, form):
+        nombre_select = form.cleaned_data['nombre']
+        nombre_producto = Producto.objects.filter(nombre=nombre_select)
 
-    if request.method == 'POST':
-        nombreSelect = request.POST.get('nombre')
-        form_producto = ProductoForm(request.POST)
-        nombreProducto = Producto.objects.filter(nombre=nombreSelect)
-        
-        if nombreProducto:
-            mensaje['mensajeProducto'] = 'El Producto (' + str(nombreSelect) + ') ya existe'
-        elif form_producto.is_valid():
-            form_producto.save()
-            mensaje['mensajeProducto'] = 'El Producto (' + str(nombreSelect) + ') se guardó correctamente'
+        if nombre_producto:
+            mensaje = f'El Producto ({nombre_select}) ya existe'
+            return render(self.request, self.template_name, {'form': form, 'mensaje': mensaje})
+        else:
+            form.save()
+            mensaje = f'El Producto ({nombre_select}) se ha registrado correctamente'
+            return render(self.request, self.template_name, {'form': form, 'mensaje': mensaje})
 
-    return render(request,'interfaceAdmin/adminFormularios/registrarProductos.html',{'form_producto':form_producto})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'Registrar Productos'
+        return context    
 
 def registrarValor(request):
     form_valor = ValorForm()
@@ -38,20 +52,60 @@ def registrarValor(request):
     return render(request,'interfaceAdmin/adminFormularios/registrarPrecio.html',{'form_valor':form_valor})
 
 
-def registrarImagen(request):
-    form_imagen = CargarImagenForm()
-    mensaje = {}
+class ImagenCreateView(CreateView):
+    model = PresentacionProducto
+    template_name = 'interfaceAdmin/adminFormularios/registrarImagen.html'
+    form_class = CargarImagenForm
+    success_url = reverse_lazy('listado_imagenes') 
+    context_object_name='imagenes'
 
-    if request.method == 'POST':
-        form_imagen = CargarImagenForm(request.POST, request.FILES)
-        if form_imagen.is_valid():
-            form_imagen.save()
-            mensaje['mensajeImagen'] = 'La Imagen se registró correctamente'
+    def form_valid(self,form):
+        imagenSelect= form.cleaned_data['imagen']
+        form.save()
+        mensaje=f'La Imegen({imagenSelect}) se registro correctamente'
+        form_class= self.get_form_class()
+        form=form_class
+        context=self.get_context_data()
+        context.update({'form':form,'mensaje':mensaje})
+        return self.render_to_response(context)
 
-    return render(request,'interfaceAdmin/adminFormularios/registrarImagen.html',{'form_imagen':form_imagen})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Registrar Imagen'
+        return context
+    
+class ImagenDeleteView(DeleteView):
+    model = PresentacionProducto
+    template_name = 'interfaceAdmin/adminFormularios/eliminarImagen.html'
+    success_url = reverse_lazy('listado_imagenes')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'Eliminar Imagen'
+        context["list_url"] = reverse_lazy('listado_imagenes')
+        return context
 
+    def delete(self, request, *args, **kwargs):
+        try:
+            self.object = self.get_object()
+            ruta = 'media/' + str(self.object.imagen)
+            if os.path.exists(ruta):
+                os.remove(ruta)
+            #Delegar a la clase padre la eliminacion como tambien que funcione la funcion
+            return super().delete(request, *args, **kwargs)
+        except Http404:
+            return self.handle_no_permission()
+        except Exception as e:
+            # Log the exception for debugging purposes
+            print(f"Error deleting image: {e}")
+            return self.handle_no_permission()
 
+    def handle_no_permission(self):
+        pk = self.kwargs.get('pk') #ruta de mi urls accediendo desde la vista
+        return self.render_to_response({
+            'r1': f'La imagen {pk} no existe o no se puede eliminar'
+        })
+    
 
 def listadoProductos(request):
     productos = Producto.objects.filter(estado='ACTIVO').values(
@@ -64,25 +118,62 @@ def listadoProductos(request):
 
     return render(request, 'interfaceAdmin/adminFormularios/listadoProductos.html', {'productos': productos})
 
+class ImagenesListView(ListView):
+    model= PresentacionProducto
+    template_name='interfaceAdmin/adminFormularios/listadoDeImagenes.html'
+    context_object_name='imagenes'
 
+    def get_queryset(self):
+        return PresentacionProducto.objects.all()
+    
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'Listado de Imagenes'
+        return context
+    
+class ImagenesUpdateView(UpdateView):
+    model=PresentacionProducto
+    form_class=CargarImagenForm 
+    template_name='interfaceAdmin/adminFormularios/registrarImagen.html'
+    success_url= reverse_lazy('listado_imagenes')
 
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'Actualizar Imagen'
+        return context
+    
 
-def editarProductos(request,id_producto):
-    producto=Producto.objects.get(id_producto=id_producto)
-    form = ProductoForm(instance=producto)
-    if request.method == 'POST':
-        form = ProductoForm(request.POST, instance=producto)
-        if form.is_valid():
-            form.save()
-        return redirect('listadoProducto')
-    return render(request,'item22App/editarProducto.html',{'form':form})
+    
 
-def eliminarProductos(request,id_producto):
-    producto= Producto.objects.get(id_producto=id_producto)
-    producto.delete()
-    return redirect('listadoProducto')
+class ProductoListView(ListView):
+    model= Producto
+    template_name='interfaceAdmin/adminFormularios/listadoDeProductos.html'
+    context_object_name='productos'
 
+    def get_queryset(self):
+        return Producto.objects.all()
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Listado de Productos"
+        return context
+    
+class ProductoUpdateView(UpdateView):
+    model= Producto
+    form_class= ProductoForm
+    template_name='interfaceAdmin/adminFormularios/registrarProductos.html'
+    success_url= reverse_lazy("listadoDeProductos")
 
+class ProductoDeleteView(DeleteView):
+        model= Producto
+        template_name='interfaceAdmin/adminFormularios/eliminarProducto.html'
+        success_url= reverse_lazy('listadoDeProductos')
+
+        def get_context_data(self, **kwargs) -> dict[str, Any]:
+            context = super().get_context_data(**kwargs)
+            context["title"] = 'Eliminar Producto'
+            context["list_url"] = reverse_lazy('listadoDeProductos')
+            return context
 
 # PROVEEDORES
 def listadoProveedores(request):
