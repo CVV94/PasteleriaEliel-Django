@@ -1,0 +1,46 @@
+{% extends "interfaceAdmin/interfaceHome/interfazAdmin.html" %}
+{% block formulario %}
+
+<div class="container">
+    <h1>{{title}}</h1>
+    <div class="row">
+        <div class="col-ms-12 col-md-12 col-lg-12">
+            <div class="table-responsive">
+                <table class="table" id="datatable-products">
+                    <thead>
+                        <tr>
+                            <th class="centered">#</th>
+                            <th class="centered">ID</th>
+                            <th class="centered">Imagen</th>
+                            <th class="centered">Id Producto</th>
+                            <th class="centered">Opciones</th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="datatable-products">
+                         {% for i in imagenes %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ i.id_presentacion }}</td> 
+                                <td> <img src="../media/{{ i.imagen }}" alt="imagen"></td>
+                                <td>{{ i.id_producto }}</td>
+                                
+                                <td><a href="{% url "editar_imagenes" i.pk %}" class='btn btn-primary  '>Editar</a>
+                                    <a href="{% url "eliminar_imagen" i.pk %}" class='btn btn-danger'>Eliminar</a>
+                                </td>
+                                 
+
+                            </tr>
+                        {% endfor %} 
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+  
+  
+  {% endblock  %}
