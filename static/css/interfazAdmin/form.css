@@ -3,6 +3,7 @@
     flex-direction: column;
     gap: 20px;
     max-width: 480px;
+    height: 100%;
     background-color: #fff;
     padding: 10px;
     border-radius: 20px;
@@ -13,13 +14,14 @@
   
   .title {
     font-size: 28px;
-    color: royalblue;
+    color: rgb(65, 84, 225);
     font-weight: 600;
     letter-spacing: -1px;
     position: relative;
     display: flex;
     align-items: center;
     padding-left: 30px;
+    margin-top: 20px;
   }
   
   .title::before,.title::after {

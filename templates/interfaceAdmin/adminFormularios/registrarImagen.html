@@ -3,25 +3,29 @@
 
 <div class="row">
     <div class="col-sm-12 col-md-12 ">
-        <form class="form" method="post" enctype="multipart/form-data">
+
+        {% if mensaje %}
+        <div class="alert alert-success" role="alert">
+            {{mensaje}}
+        </div>
+        {% endif %}
+        <form class="form" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             
-            <p class="title">Registrar Imagen</p>
-            <p class="message">Un Producto puede Tener mas de una imagen</p>
-        
+          <p class="title">{{ title }}</p>
             <label>
                 <span>Imagen</span>
-                {{ form_imagen.imagen }}
+                {{ form.imagen }}
             </label>
         
             <label>
                 <span>Id Producto</span>
-                {{ form_imagen.id_producto }}
+                {{ form.id_producto }}
             </label>
         
             <!-- Otros campos según sea necesario -->
         
-            <button class="submit" type="submit">Submit</button>
+            <button class="submit" type="submit">Guardar</button>
            
         </form>
 
