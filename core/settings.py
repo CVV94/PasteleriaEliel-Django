@@ -10,6 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import django_heroku
+django_heroku.settings(locals())
+
 from pathlib import Path
 import os
 import environ
@@ -59,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_heroku.middleware.HerokuConnectMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -86,12 +90,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pasteleriaeliel',
-        'USER': 'root',
-        'PASSWORD': ''
-    }
+    'default': dj_database_url.config(default='postgres://user:password@localhost/dbname')
 }
 
 #Email que se visualiza en consola de prueba

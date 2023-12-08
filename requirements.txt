@@ -2,3 +2,6 @@ django
 django-environ
 pymysql
 Pillow
+gunicorn
+django_heroku
+dj-database-url
