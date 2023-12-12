@@ -96,10 +96,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'pasteleriaeliel',
-        'USER': 'admin',
-        'PASSWORD': 'pasteleriaeliel123',
-        'HOST': 'pasteleriaeliel.c81whvbcfjwq.sa-east-1.rds.amazonaws.com',
-        'PORT': 3306,
+        'USER': 'root',
+        'PASSWORD': '',
     }
 }
 
