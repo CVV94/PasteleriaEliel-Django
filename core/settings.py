@@ -10,11 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-import django_heroku
-django_heroku.settings(locals())
-
-from pathlib import Path
+import dj_database_url
 import os
+import django_heroku
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent.parent
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# django_heroku.settings(locals())
+
+
 import environ
 
 env = environ.Env()
@@ -25,19 +29,18 @@ pymysql.install_as_MySQLdb()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = 'django-insecure-g_$wbm@z)llq(o!bsrdgdxuw_l(#*9#ma886c+4*bmxw^m%xo'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG')
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -62,7 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_heroku.middleware.HerokuConnectMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -90,7 +93,14 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default='postgres://user:password@localhost/dbname')
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'pasteleriaeliel',
+        'USER': 'admin',
+        'PASSWORD': 'pasteleriaeliel123',
+        'HOST': 'pasteleriaeliel.c81whvbcfjwq.sa-east-1.rds.amazonaws.com',
+        'PORT': 3306,
+    }
 }
 
 #Email que se visualiza en consola de prueba
@@ -130,9 +140,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS =[os.path.join(BASE_DIR,'static')]
-STATIC_ROOT = os.path.join(BASE_DIR,'static_root')
+STATIC_URL = '/static/'
+STATICFILES_TMP =os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+os.makedirs(STATICFILES_TMP, exist_ok=True)
+os.makedirs(STATIC_ROOT, exist_ok=True)
+
+STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
@@ -158,3 +173,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     SECURE_REDIRECT_EXEMPT =[]
 #     SECURE_SSL_REDIRECT = True
 #     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO','https')
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
