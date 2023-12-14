@@ -2,8 +2,6 @@
 {% load static %}
 
 {% block link %}
-<link rel="stylesheet" href="{% static 'css/principalPage/header/nav.css' %}">
-<link rel="stylesheet" href="{% static 'css/principalPage/main/main.css' %}">
 <link rel="stylesheet" href="{% static 'css/principalPage/mensaje.css' %}">
 <link rel="stylesheet" href="{% static 'css/principalPage/animation.css' %}">
 {% endblock  %}
@@ -21,5 +19,6 @@
 {% endblock  %}
             
 {% block footer %}
+    {% include "principalPage/footer/footer.html" %}
 {% endblock  %}
             

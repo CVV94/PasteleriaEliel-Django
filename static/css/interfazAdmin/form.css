@@ -91,7 +91,12 @@
     transition: 0.3s ease;
   }
   span{
-    color: grey;
+    color:grey;
+  }
+
+  span a{
+    color:white;
+    text-decoration: none;
   }
   
   .form label .input:placeholder-shown + span {
@@ -136,3 +141,4 @@
       opacity: 0;
     }
   }
+

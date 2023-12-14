@@ -6,6 +6,8 @@
     <div class="row">
         <div class="col-ms-12 col-md-12 col-lg-12">
             <div class="table-responsive">
+                {% if productos %}
+
                 <table class="table" id="datatable-products">
                     <thead>
                         <tr>
@@ -20,20 +22,25 @@
                         </tr>
                     </thead>
                     <tbody id="datatable-products">
-                         {% for producto in productos %}
-                            <tr>
-                                <td>{{ forloop.counter }}</td>
-                                <td>{{ producto.id_producto }}</td>
-                                <td>{{ producto.nombre }}</td>
-                                <td>{{ producto.tipo }}</td>
-                                <td>{{ producto.descripcion }}</td>
-                                <td>{{ producto.stock }}</td>
-                                <td><img src="../media/{{ producto.imagen }}" alt="Imagen del Producto"></td>
-                                <td>{{ producto.precio }}</td>
-                            </tr>
+                        {% for producto in productos %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ producto.id_producto }}</td>
+                            <td>{{ producto.nombre }}</td>
+                            <td>{{ producto.tipo }}</td>
+                            <td>{{ producto.descripcion }}</td>
+                            <td>{{ producto.stock }}</td>
+                            <td><img src="../media/{{ producto.imagen }}" alt="Imagen del Producto"></td>
+                            <td>{{ producto.precio }}</td>
+                        </tr>
                         {% endfor %} 
                     </tbody>
                 </table>
+                {% else %}
+                <div class="alert alert-danger" role="alert">
+                    No existem productos registrados completamente como (PRODUCTO,IMAGEN,PRECIO)
+                </div>
+                {% endif %}
 
             </div>
         </div>

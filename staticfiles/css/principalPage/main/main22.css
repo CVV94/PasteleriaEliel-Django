@@ -13,11 +13,11 @@
     /* margin-left: 20px; */
 /* } */ 
 
-a:hover{
+/* a:hover{
     color: red;
     border-bottom: 1px solid red;
     
-}
+} */
 
 .title{
     color: rgb(255, 255, 255);
@@ -104,7 +104,7 @@ a:hover{
 
 
 
-.materialesDeTrabajo{
+/* .materialesDeTrabajo{
     text-align: justify;
     width: 100%;
     margin: 0 auto;
@@ -117,20 +117,8 @@ a:hover{
 }
 .materialesDeTrabajo p{
     font-size: 1rem;
-}
+} */
 
-
-.materiales-link {
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
-}
-.materiales-link li a{
-    color: #000;
-}
-.materiales-link li a:hover{
-  color: #f50505;
-}
 
 .tarjeta{
     display: none;
@@ -186,7 +174,7 @@ a:hover{
 }
 
 /* Formulario */
-.form {
+ .form {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -387,4 +375,4 @@ a:hover{
    .fancy:hover .bottom-key-2 {
     right: 0;
     width: 0;
-  }
+  } 

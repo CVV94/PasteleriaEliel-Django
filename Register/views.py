@@ -1,23 +1,30 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth import login as auth_login ,authenticate,login,logout
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group,User
+
 
 
 def registro_cliente(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
+        username = request.POST['username']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+
+        if password1 == password2:
+            user = User.objects.create_user(username=username, password=password1)
             # Asignar al grupo de clientes
             grupo_cliente, creado = Group.objects.get_or_create(name='Clientes')
             user.groups.add(grupo_cliente)
+            user = authenticate(request, username=username, password=password1)
             auth_login(request, user)  # Iniciar sesión automáticamente después del registro
             # Redirigir a la página de inicio o a una sección específica para clientes
-            return redirect('seccion_cliente')
-    else:
-        form = UserCreationForm()
-    return render(request, 'Register/cliente/registro_cliente.html', {'form': form})
+            return redirect('home')
+        else:
+            # Las contraseñas no coinciden, maneja el error aquí
+            mensaje='Las contraseñas no coinciden'
+            return render(request, 'Register/cliente/registro_cliente.html', {'mensaje':mensaje})
+    return render(request, 'Register/cliente/registro_cliente.html')
 
 def login_cliente(request):
     if request.method == 'POST':

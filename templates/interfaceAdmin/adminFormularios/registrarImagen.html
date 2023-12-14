@@ -9,31 +9,33 @@
             {{mensaje}}
         </div>
         {% endif %}
+        {% if form.id_producto %}
         <form class="form" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             
-          <p class="title">{{ title }}</p>
+            <p class="title">{{ title }}</p>
             <label>
                 <span>Imagen</span>
                 {{ form.imagen }}
             </label>
-        
+            
             <label>
                 <span>Id Producto</span>
                 {{ form.id_producto }}
             </label>
-        
+            
             <!-- Otros campos según sea necesario -->
-        
+            
             <button class="submit" type="submit">Guardar</button>
-           
+            
         </form>
+        {% else %}
+        <div class="alert alert-danger" role="alert">
+            No existem un producto creado para asociarle un imagen
+           </div>
+        {% endif %}
 
     </div>
 </div>
-
-
-        
-  
   
   {% endblock  %}
