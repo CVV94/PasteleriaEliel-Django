@@ -250,3 +250,19 @@ def eliminarCompra(request,id_compra):
     compra= Compra.objects.get(id_compra=id_compra)
     compra.delete()
     return redirect('interfaceAdmin/adminFormularios/listadoCompras.html')
+
+
+
+def listadoProductosCarta(request):
+    productos = Producto.objects.all()
+    return render(request, 'interfaceCliente/carta.html', {'productos': productos})
+
+
+def homeCliente(request):
+    return render(request, 'interfaceCliente/index.html')
+
+def homeProductos(request):
+    return render(request, 'interfaceCliente/inicioCliente.html')
+
+def carta(request):
+    return render(request, 'interfaceCliente/carta.html')

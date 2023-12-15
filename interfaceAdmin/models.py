@@ -18,7 +18,7 @@ class Producto(models.Model):
 class PresentacionProducto(models.Model):
     id_presentacion = models.AutoField(db_column='ID_PRESENTACION',primary_key=True)
     imagen= models.ImageField(db_column='IMAGEN',upload_to='img_producto/')
-    id_producto = models.ForeignKey(Producto,models.DO_NOTHING,db_column='ID_PRODUCTO')
+    id_producto = models.ForeignKey(Producto,models.DO_NOTHING,db_column='ID_PRODUCTO', related_name='presentaciones')
 
     class Meta:
         managed = True
@@ -29,7 +29,7 @@ class Valor(models.Model):
     cantidad_de_Personas = models.IntegerField(db_column='CANTIDAD_DE_PERSONAS')
     precio = models.DecimalField(db_column='PRECIO',decimal_places=2,max_digits=9)
     stock = models.IntegerField(db_column='STOCK')
-    id_producto = models.ForeignKey(Producto,models.DO_NOTHING,db_column='ID_PRODUCTO')
+    id_producto = models.ForeignKey(Producto,models.DO_NOTHING,db_column='ID_PRODUCTO', related_name='valores')
 
     class Meta:
         managed = True
