@@ -28,7 +28,10 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         {% if user.is_authenticated %}
-                        <li><a class="dropdown-item" href="{% url "cerrar_sesion" %}">Cerrar sesión</a></li>
+                            <li><a class="dropdown-item" href="{% url "cerrar_sesion" %}">Cerrar sesión</a></li>
+                            {% if user.is_superuser %}
+                                <li><a class="dropdown-item" href="{% url "interfazAdministrador" %}">Administrador</a></li>
+                            {% endif %}
                         {% else %}
                         <li><a class="dropdown-item" href="{% url "login_cliente" %}">Ingresar</a></li>
                         <li><a class="dropdown-item" href="{% url "registro_cliente" %}">Registrarse</a></li>

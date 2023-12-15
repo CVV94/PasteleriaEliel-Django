@@ -1,4 +1,6 @@
 from django.db import models
+from django.forms import ValidationError
+import os
 
 # Create your models here.
 class Producto(models.Model):
@@ -15,9 +17,16 @@ class Producto(models.Model):
     def __str__(self):
         return f'{self.id_producto}'
 
+def validate_image_file_extension(value):
+    ext = os.path.splitext(value.name)[1]  # [0] returns path+filename
+    valid_extensions = ['.jpg', '.png','.jpeg','.gif','.svg']
+    if not ext.lower() in valid_extensions:
+        raise ValidationError('Unsupported file extension.')
+    
+
 class PresentacionProducto(models.Model):
     id_presentacion = models.AutoField(db_column='ID_PRESENTACION',primary_key=True)
-    imagen= models.ImageField(db_column='IMAGEN',upload_to='img_producto/')
+    imagen= models.ImageField(db_column='IMAGEN',upload_to='img_producto/', validators=[validate_image_file_extension])
     id_producto = models.ForeignKey(Producto,models.DO_NOTHING,db_column='ID_PRODUCTO')
 
     class Meta:

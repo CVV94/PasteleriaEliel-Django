@@ -1,3 +1,4 @@
+from pyexpat.errors import messages
 from django.shortcuts import render,redirect
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth import login as auth_login ,authenticate,login,logout
@@ -27,18 +28,22 @@ def registro_cliente(request):
     return render(request, 'Register/cliente/registro_cliente.html')
 
 def login_cliente(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                # Redirigir a la sección de clientes
-                return redirect('seccion_cliente')
-    else:
-        form = AuthenticationForm()
+    form = AuthenticationForm(request, data=(request.POST if request.method == 'POST' else None))
+    
+    if form.is_valid():
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
+        user = authenticate(username=username, password=password)
+        
+        if user is None:
+            messages.error(request, "Invalid username or password.")
+        elif user.is_superuser:
+            login(request, user)
+            return redirect('interfazAdministrador')
+        elif user.groups.filter(name='Clientes').exists():
+            login(request, user)
+            return redirect('seccion_cliente')
+
     return render(request, 'Register/cliente/login.html', {'form': form})
 
 def cerrar_sesion(request):
