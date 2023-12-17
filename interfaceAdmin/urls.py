@@ -29,6 +29,7 @@ urlpatterns = [
     path('eliminarProveedor/<int:id_proveedor>',views.eliminarProveedor, name='eliminarProveedor'),
 
     path('listado/envios',views.listadoEnvios, name='listadoEnvios'),
+    path('edit-envios/<int:id_envio>/', views.editEnvios, name='edit_envios'),
     
     path('registrar/envio', views.registrarEnvio, name='registrarEnvio'),
     path('editarEnvio/<int:id_envio>', views.editarEnvio, name='editarEnvio'),

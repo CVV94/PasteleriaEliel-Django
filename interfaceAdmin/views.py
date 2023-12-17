@@ -4,7 +4,7 @@ from django.views.generic import ListView,UpdateView,CreateView,DeleteView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,redirect
-from .forms import ProductoForm,CargarImagenForm,ValorForm, ProveedorForm, IngredienteForm, EnvioForm, CompraForm
+from .forms import ProductoForm,CargarImagenForm,ValorForm, ProveedorForm, IngredienteForm, EnvioForm, CompraForm,EstadoEnvioForm
 from .models import Producto, Proveedor, Ingrediente, Compra, Envio, Estadoenvio, Cliente, CarritoCompra, Estadopago, PresentacionProducto,Valor
 from django.db.models import F
 from django.urls import reverse_lazy
@@ -284,6 +284,27 @@ def listadoEnvios(request):
         'envios':envios
         }
     return render(request,'interfaceAdmin/adminFormularios/listadoEnvios.html', data)
+
+def editEnvios(request, id_envio):
+    envio = Envio.objects.select_related('id_compra','id_estadoenvio').get(pk=id_envio)
+    if request.method == 'POST':
+        envio_form = EnvioForm(request.POST, instance=envio)
+        compra_form = CompraForm(request.POST, instance=envio.id_compra)
+        estadoenvio_form = EstadoEnvioForm(request.POST, instance=envio.id_estadoenvio)
+        if envio_form.is_valid() and compra_form.is_valid() and estadoenvio_form.is_valid():
+            envio_form.save()
+            compra_form.save()
+            estadoenvio_form.save()
+            return redirect('listadoEnvios') 
+    else:
+        envio_form = EnvioForm(instance=envio)
+        compra_form = CompraForm(instance=envio.id_compra)
+        estadoenvio_form = EstadoEnvioForm(instance=envio.id_estadoenvio)
+    return render(request, 'interfaceAdmin/adminFormularios/registroDeListadoEnvios.html', { 
+        'compra_form': compra_form,
+        'envio_form': envio_form,
+        'estadoenvio_form': estadoenvio_form,
+    })
 
 
 def registrarEnvio(request):

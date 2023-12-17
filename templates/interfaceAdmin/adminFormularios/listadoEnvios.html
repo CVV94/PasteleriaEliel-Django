@@ -24,6 +24,7 @@
                             <th class="centered">Total Compra</th>
                             <th class="centered">Dirección</th>
                             <th class="centered">Estado de Envio</th>
+                            <th class="centered">Opciones</th>
                         </tr>
                     </thead>
                     <tbody id="datatable-products">
@@ -40,6 +41,7 @@
                                 <td>{{ envio.id_compra.total_compra|precio_formateadoVenta }}</td>
                                 <td>{{ envio.id_compra.direccion }}</td>
                                 <td>{{ envio.id_estadoenvio.nombre }}</td>
+                                <td><a href="{% url 'edit_envios' envio.id_envio %}">Editar</a></td>
                             </tr>
                         {% endfor %} 
                     </tbody>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+  <h2>Editar envío</h2>
+  <form method="POST">
+    {% csrf_token %}
+    {{ envio_form.as_p }}
+    <h2>Editar compra</h2>
+    {{ compra_form.as_p }}
+
+    <h2>Editar estado de envío</h2>
+    {{ estadoenvio_form.as_p }}
+    <button type="submit">Guardar cambios</button>
+  </form>
+
+    
+</body>
+</html>

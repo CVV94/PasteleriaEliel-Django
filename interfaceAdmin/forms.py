@@ -48,3 +48,8 @@ class EnvioForm(forms.ModelForm):
     class Meta:
         model=Envio
         fields=('__all__')
+
+class EstadoEnvioForm(forms.ModelForm):
+    class Meta:
+        model=Estadoenvio
+        fields=('__all__')
