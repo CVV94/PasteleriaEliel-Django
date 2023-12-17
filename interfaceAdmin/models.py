@@ -6,8 +6,8 @@ import os
 class Producto(models.Model):
     Estados=[('ACTIVO','activo'),('DESACTIVO','desactivo')]
     id_producto = models.AutoField(db_column='ID_PRODUCTO', primary_key=True)
-    nombre = models.CharField(db_column='NOMBRE',max_length=20)
-    tipo = models.CharField(db_column='TIPO',max_length=20)
+    nombre = models.CharField(db_column='NOMBRE',max_length=100)
+    tipo = models.CharField(db_column='TIPO',max_length=100)
     estado = models.CharField(db_column='ESTADO',max_length=20,choices=Estados,default='activo')
     descripcion= models.CharField(db_column='DESCRIPCION',max_length=250)
     
@@ -133,30 +133,46 @@ class Compra(models.Model):
         db_table = 'compra'
 
 
-class Envio(models.Model):
-    id_envio = models.AutoField(db_column='ID_ENVIO', primary_key=True)  
-    id_compra = models.ForeignKey(Compra, models.DO_NOTHING, db_column='ID_COMPRA')  
-    id_estadoenvio = models.ForeignKey('Estadoenvio', models.DO_NOTHING, db_column='ID_ESTADOENVIO')  
-    fecha_envio = models.DateField(db_column='FECHA_ENVIO')  
-    fecha_entrega = models.DateField(db_column='FECHA_ENTREGA')  
-
-    class Meta:
-        managed = True
-        db_table = 'envio'
-
-
 class Estadoenvio(models.Model):
-    id_estadoenvio = models.AutoField(db_column='ID_ESTADOENVIO', primary_key=True)  
-    nombre = models.CharField(db_column='NOMBRE', max_length=20)  
+    ESTADO_CHOICES = [
+        ('P', 'Pendiente'),
+        ('E', 'En camino'),
+        ('R', 'Recibido'),
+    ]
+    id_estadoenvio = models.AutoField(db_column='ID_ESTADOENVIO', primary_key=True)
+    nombre = models.CharField(db_column='NOMBRE', max_length=8, choices=ESTADO_CHOICES,default='P')
 
     class Meta:
         managed = True
         db_table = 'estadoenvio'
 
+class Envio(models.Model):
+    id_envio = models.AutoField(db_column='ID_ENVIO', primary_key=True)
+    id_compra = models.ForeignKey(Compra, models.DO_NOTHING, db_column='ID_COMPRA')
+    id_estadoenvio = models.ForeignKey(Estadoenvio, models.DO_NOTHING, db_column='ID_ESTADOENVIO')
+    fecha_envio = models.DateField(db_column='FECHA_ENVIO')
+    fecha_entrega = models.DateField(db_column='FECHA_ENTREGA')
+    recibido_por = models.CharField(max_length=200, blank=True, null=True)
+    rut = models.CharField(max_length=10)
+
+    class Meta:
+        managed = True
+        db_table = 'envio'
+
+    def __str__(self):
+        return f'Seguimiento N° {self.id_envio}'
+
 
 class Estadopago(models.Model):
+    ESTADO_CHOICES = [
+        ('P', 'Pendiente'),
+        ('S', 'Exitoso'),
+        ('F', 'Fallido'),
+    ]
     id_estadopago = models.AutoField(db_column='ID_ESTADOPAGO', primary_key=True)  
-    nombre = models.CharField(db_column='NOMBRE', max_length=20)  
+    estado = models.BooleanField(default=False)  
+    detalles_pago = models.CharField(max_length=200, blank=True, null=True)
+    estado_pago = models.CharField(db_column='ESTADO_PAGO', max_length=1, choices=ESTADO_CHOICES, default='P')
 
     class Meta:
         managed = True

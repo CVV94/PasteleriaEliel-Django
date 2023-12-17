@@ -1,4 +1,6 @@
 {% extends "interfaceAdmin/interfaceHome/interfazAdmin.html" %}
+{% load humanize %}
+{% load app_filters %}
 {% block formulario %}
 
 <div class="container">
@@ -31,7 +33,7 @@
                             <td>{{ producto.descripcion }}</td>
                             <td>{{ producto.stock }}</td>
                             <td><img src="../media/{{ producto.imagen }}" alt="Imagen del Producto"></td>
-                            <td>{{ producto.precio }}</td>
+                            <td>{{ producto.precio|precio_formateadoVenta }}</td>
                         </tr>
                         {% endfor %} 
                     </tbody>

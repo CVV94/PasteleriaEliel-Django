@@ -1,17 +1,18 @@
 from django.urls import path
 from . import views
-from .views import ProductoListView,ProductoUpdateView,ProductoCreateView,ProductoDeleteView,ImagenesListView,ImagenesUpdateView,ImagenCreateView,ImagenDeleteView
+from .views import ProductoListView,ProductoUpdateView,ProductoCreateView,ProductoDeleteView,ImagenesListView,ImagenesUpdateView,ImagenCreateView,ImagenDeleteView,ClienteListView,ValorCreateView
 from . import dbScripts
 urlpatterns = [
     path('interface/',views.interfaceAdmin,name='interfazAdministrador'),
     path('registrar/producto',ProductoCreateView.as_view(),name='registrarProducto'),
-    path('registrar/valor',views.registrarValor,name='registrarPrecio'),
+    path('registrar/valor',ValorCreateView.as_view(),name='registrarPrecio'),
     path('registrar/imagen',ImagenCreateView.as_view(),name='registrar_imagen'),
     path('listado/productos',views.listadoProductos,name='listadoProductos'),
     path('scripts/productos',dbScripts.scriptsRegistrarProductos,name='scriptsRegistrarProductos'),
     path('scripts/Registros',dbScripts.scriptsRegistros,name='scripts'),
     path('listado/producto',ProductoListView.as_view(),name='listadoDeProductos'),
     path('listado/imagenes',ImagenesListView.as_view(),name='listado_imagenes'),
+    path('listado/cliente',ClienteListView.as_view(),name='listado_clientes'),
     path('editar/imagen/<int:pk>/',ImagenesUpdateView.as_view(),name='editar_imagenes'),
     path('actualizar/producto/<int:pk>/',ProductoUpdateView.as_view(),name='actualizar_producto'),
     path('eliminar/producto/<int:pk>/',ProductoDeleteView.as_view(),name='eliminar_producto'),
@@ -28,6 +29,7 @@ urlpatterns = [
     path('eliminarProveedor/<int:id_proveedor>',views.eliminarProveedor, name='eliminarProveedor'),
 
     path('listado/envios',views.listadoEnvios, name='listadoEnvios'),
+    
     path('registrar/envio', views.registrarEnvio, name='registrarEnvio'),
     path('editarEnvio/<int:id_envio>', views.editarEnvio, name='editarEnvio'),
     path('eliminarEnvio/<int:id_envio>',views.eliminarEnvio, name='eliminarEnvio'),

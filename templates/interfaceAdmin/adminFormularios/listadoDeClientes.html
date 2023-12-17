@@ -6,43 +6,35 @@
     <div class="row">
         <div class="col-ms-12 col-md-12 col-lg-12">
             <div class="table-responsive">
-                {% if productos %}
-
+                {% if clientes %}
                 <table class="table" id="datatable-products">
                     <thead>
                         <tr>
                             <th class="centered">#</th>
                             <th class="centered">ID</th>
                             <th class="centered">Nombre</th>
-                            <th class="centered">Tipo</th>
-                            <th class="centered">Descripción</th>
-                            <th class="centered">Estado</th>
-                            <th class="centered">Opciones</th>
+                            <th class="centered">Apellido</th>
+                            <th class="centered">Email</th>
+                            <th class="centered">Telefono</th>
                             
                         </tr>
                     </thead>
                     <tbody id="datatable-products">
-                        {% for p in productos %}
+                        {% for p in clientes %}
                         <tr>
                             <td>{{ forloop.counter }}</td>
-                            <td>{{ p.id_producto }}</td> 
+                            <td>{{ p.id_cliente }}</td> 
                             <td>{{ p.nombre }}</td>
-                            <td>{{ p.tipo }}</td>
-                            <td>{{ p.descripcion }}</td>
-                            <td>{{ p.estado }}</td>
-                            
-                            <td><a href="{% url "actualizar_producto" p.pk %}" class='btn btn-primary  mb-2'>Editar</a>
-                                <a href="{% url "eliminar_producto" p.pk %}" class='btn btn-danger'>Eliminar</a>
-                            </td>
-                            
-                            
+                            <td>{{ p.apellido}}</td>
+                            <td>{{ p.email }}</td>
+                            <td>{{ p.telefono }}</td>                       
                         </tr>
                         {% endfor %} 
                     </tbody>
                 </table>
                 {% else %}
                 <div class="alert alert-danger" role="alert">
-                   No existen productos registrados
+                   No existen clientes registrados
                   </div>
                 {% endif %}
 

@@ -1,0 +1,106 @@
+{% extends "principalPage/estructura/base.html" %}
+{% load static %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'css/principalPage/estadoEnvio.css' %}">
+{% endblock  %}
+
+
+
+{% block header %}
+    {% include "principalPage/header/nav.html" %}
+
+{% endblock  %}
+
+{% block main %} 
+<main>
+    <div class="container card-envio ">
+        <div class="row">
+            
+            <form method="get" action="{% url "envios_cliente" %}">
+                <h3 class="title-envio1">Realizar Seguimiento en Linea</h3>
+                <div class="group busqueda col-md-12">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" class="icon">
+                      <g>
+                        <path
+                          d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"
+                        ></path>
+                      </g>
+                    </svg>
+                    <input class="input" type="search" placeholder="N°......." name="id_envio" value="{% if envio %}{{ envio.id_envio }}{% endif %}" />
+                  </div>
+            </form>
+            
+              
+            
+            
+            <div>
+                {% if envio %}
+                <h3 class="title-envio2">Estado</h3>
+                <ul>
+                    <li>Envió : {{ envio.id_estadoenvio.get_nombre_display }}</li>
+                    <li>Recibido Por: {{ envio.recibido_por }}</li>
+                    <li>Rut: {{ envio.rut }}</li>
+                </ul>
+                
+                <ul>
+                    <li>Seguimiento N°</li>
+                    <li>{{ envio.id_envio }}</li>
+                </ul>
+            </div>
+            <div class="container tracking-container">
+                <div class="progress-container">
+                    <progress id="progressBar" value="0" max="100"></progress>
+                    <div id="progressMarker"></div> 
+                </div>
+                <div class="estado-container mt-5 mb-5">
+                    <div class="estado" style="left: 33%;">Pendiente</div>
+                    <div class="estado" style="left: 66%;">En camino</div>
+                    <div class="estado" style="left: 100%;">Recibido</div>
+                </div>
+            </div>
+            {% else %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-danger">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</main>
+
+<script>
+    var estado = '{% if envio %}{{ envio.id_estadoenvio.nombre }}{% endif %}';  
+    var progressBar = document.getElementById('progressBar');  
+    var progressMarker = document.getElementById('progressMarker');  
+
+switch (estado) {
+    case 'P':
+        progressBar.value = 33;
+        progressMarker.style.left = "33%";
+        break;
+    case 'E':
+        progressBar.value = 66;
+        progressMarker.style.left = "66%";
+        break;
+    case 'R':
+        progressBar.value = 100;
+        progressMarker.style.left = "100%";
+        break;
+    default:
+        progressBar.value = 0;
+        progressMarker.style.left = "0%";
+}
+</script>
+
+    
+{% endblock  %}
+            
+{% block footer %}
+    {% include "principalPage/footer/footer.html" %}
+{% endblock  %}
+            
+

@@ -1,4 +1,6 @@
 {% extends "interfaceAdmin/interfaceHome/interfazAdmin.html" %}
+{% load humanize %}
+{% load app_filters %}
 {% block formulario %}
 
 <div class="container">
@@ -6,15 +8,22 @@
     <div class="row">
         <div class="col-ms-12 col-md-12 col-lg-12">
             <div class="table-responsive">
+                {% if envios %}
+                
                 <table class="table" id="datatable-products">
                     <thead>
                         <tr>
                             <th class="centered">#</th>
-                            <th class="centered">ID</th>
-                            <th class="centered">ID Compra</th>
-                            <th class="centered">ID Estado de Envío</th>
-                            <th class="centered">Fecha de Envío</th>
+                            <th class="centered">Id Envio</th>
+                            <th class="centered">Fecha de Envio</th>
                             <th class="centered">Fecha de Entrega</th>
+                            <th class="centered">Id Cliente</th>
+                            <th class="centered">Id Carrito</th>
+                            <th class="centered">Id Estado de Pago</th>
+                            <th class="centered">Fecha de Compra</th>
+                            <th class="centered">Total Compra</th>
+                            <th class="centered">Dirección</th>
+                            <th class="centered">Estado de Envio</th>
                         </tr>
                     </thead>
                     <tbody id="datatable-products">
@@ -22,14 +31,25 @@
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td>{{ envio.id_envio }}</td> 
-                                <td>{{ envio.id_compra }}</td>
-                                <td>{{ envio.id_estadoenvio }}</td>
-                                <td>{{ envio.fecha_envio }}</td>
-                                <td>{{ envio.fecha_entrega }}</td>
+                                <td>{{ envio.fecha_envio|date:"d/m/Y" }}</td>
+                                <td>{{ envio.fecha_entrega|date:"d/m/Y" }}</td>
+                                <td>{{ envio.id_compra.id_cliente }}</td>
+                                <td>{{ envio.id_compra.id_carrito.id_carrito }}</td>
+                                <td>{{ envio.id_compra.id_estadopago.id_estadopago }}</td>
+                                <td>{{ envio.id_compra.fecha_compra|date:"d/m/Y" }}</td>
+                                <td>{{ envio.id_compra.total_compra|precio_formateadoVenta }}</td>
+                                <td>{{ envio.id_compra.direccion }}</td>
+                                <td>{{ envio.id_estadoenvio.nombre }}</td>
                             </tr>
                         {% endfor %} 
                     </tbody>
                 </table>
+                {% else %}
+                <div class="alert alert-danger" role="alert">
+                    No existe una lista completa de (Compra,Envio,Estado de Envio)
+                   </div>
+
+                {% endif %}
 
             </div>
         </div>

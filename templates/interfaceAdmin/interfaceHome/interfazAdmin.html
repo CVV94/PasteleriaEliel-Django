@@ -59,8 +59,8 @@
                     <i class='bx bx-chevron-down arrow'></i>
                 </div>
                 <ul class="sub-menu">
-                    <li><a class="link_name" href="#">Usuarios</a></li>
-                    <li><a href="">Registrar Usuario</a></li>
+                    <li><a class="link_name" href="{% url "listado_clientes" %}">Usuarios</a></li>
+                    <li><a href="{% url 'listado_clientes' %}">Listado de Perfiles</a></li>
                 </ul>
             </li>
             <li>
@@ -84,11 +84,14 @@
                 </ul>
             </li>
             <li>
-                <a href="#">
-                    <i class='bx bxs-pie-chart-alt-2'></i>
-                    <span class="link_name">Envíos</span>
-                </a>
-                <ul class="sub-menu blanck">
+                <div class="iocn-link">
+                    <a href="{% url "listadoEnvios" %}">
+                        <i class='bx bxs-truck' style='color:#ececec'></i>
+                        <span class="link_name">Envíos</span>
+                    </a>
+                    <i class='bx bx-chevron-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
                     <li><a class="link_name" href="{% url "listadoEnvios" %}">Envíos</a></li>
                     <li><a href="{% url "registrarEnvio" %}">Registrar Envío</a></li>
                 </ul>

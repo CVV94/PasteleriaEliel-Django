@@ -5,7 +5,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,redirect
 from .forms import ProductoForm,CargarImagenForm,ValorForm, ProveedorForm, IngredienteForm, EnvioForm, CompraForm
-from .models import Producto, Proveedor, Ingrediente, Compra, Envio, Estadoenvio, Cliente, CarritoCompra, Estadopago, PresentacionProducto
+from .models import Producto, Proveedor, Ingrediente, Compra, Envio, Estadoenvio, Cliente, CarritoCompra, Estadopago, PresentacionProducto,Valor
 from django.db.models import F
 from django.urls import reverse_lazy
 import os
@@ -38,18 +38,23 @@ class ProductoCreateView(CreateView):
         context = super().get_context_data(**kwargs)
         context["title"] = 'Registrar Productos'
         return context    
+    
+class ValorCreateView(CreateView):
+    model = Valor
+    template_name = 'interfaceAdmin/adminFormularios/registrarPrecio.html'
+    form_class = ValorForm
+    success_url = reverse_lazy('registrarPrecio') 
+    context_object_name = 'form'
 
-def registrarValor(request):
-    form_valor = ValorForm()
-    mensaje = {}
+    def form_valid(self, form):
+        valor=form.save()
+        mensaje = f'El Valor: {valor.precio} se ha registrado correctamente'
+        return render(self.request, self.template_name, {'form': form, 'mensaje': mensaje})
 
-    if request.method == 'POST':
-        form_valor = ValorForm(request.POST)
-        if form_valor.is_valid():
-            form_valor.save()
-            mensaje['mensajeValor'] = 'El Valor se registró correctamente'
-
-    return render(request,'interfaceAdmin/adminFormularios/registrarPrecio.html',{'form_valor':form_valor})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'Registrar Productos'
+        return context    
 
 
 class ImagenCreateView(CreateView):
@@ -174,6 +179,19 @@ class ProductoDeleteView(DeleteView):
             context["title"] = 'Eliminar Producto'
             context["list_url"] = reverse_lazy('listadoDeProductos')
             return context
+        
+class ClienteListView(ListView):
+    model= Cliente
+    template_name='interfaceAdmin/adminFormularios/listadoDeClientes.html'
+    context_object_name='clientes'
+
+    def get_queryset(self):
+        return Cliente.objects.all()
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Listado de Clientes"
+        return context
 
 # PROVEEDORES
 def listadoProveedores(request):
@@ -261,15 +279,12 @@ def eliminarIngrediente(request,id_ingrediente):
 
 # ENVIOS
 def listadoEnvios(request):
-    envios = Envio.objects.all()
-    compras = Compra.objects.all()
-    estadoenvios = Estadoenvio.objects.all()
+    envios = Envio.objects.select_related('id_compra','id_estadoenvio').all()
     data = {
-        'envios':envios,
-        'compras':compras,
-        'estadoenvios':estadoenvios
+        'envios':envios
         }
     return render(request,'interfaceAdmin/adminFormularios/listadoEnvios.html', data)
+
 
 def registrarEnvio(request):
     form = EnvioForm()
@@ -297,9 +312,6 @@ def eliminarEnvio(request,id_envio):
     envio= Ingrediente.objects.get(id_envio=id_envio)
     envio.delete()
     return redirect('interfaceAdmin/adminFormularios/listadoEnvios.html')
-
-
-
 
 # COMPRAS
 def listadoCompras(request):

@@ -132,6 +132,59 @@ def scriptsRegistrarProductos(request):
     Producto(nombre='Cheesecake de galleta Lotus', tipo='Sheesecake', descripcion='BASE DE PATE SUCRE, UNA CAPA DE GALLETA LOTUS, MOUSE DE QUESO CREMA CON TOQUES DE VAINILLA, VELO DE GALLETA LOTUS.', estado='activo'),
     Producto(nombre='Cheesecake Jules Destrooper', tipo='Sheesecake', descripcion='BASE DE PATE SUCRE, MOUSE DE QUESO CREMA CON TOQUES DE VAINILLA Y GALLETA JULES DESTROOPER', estado='activo'),
     Producto(nombre='Tiramisú', tipo='Sheesecake', descripcion='BISCOCHO BLANCO EN ALMÍBAR DE CAFÉ Y AMARETTO, BASE DE GALLETA Y MOUSE DE QUESO CREMA Y AMARETTO.', estado='activo'),
+
+    Producto(nombre='Pan Hallula', tipo='Panadería', descripcion='1 KG', estado='activo'),
+    Producto(nombre='Pan Amasado', tipo='Panadería', descripcion='1 KG', estado='activo'),
+    Producto(nombre='Pan Integral', tipo='Panadería', descripcion='1 KG', estado='activo'),
+    Producto(nombre='Pan Marraqueta', tipo='Panadería', descripcion='1 KG', estado='activo'),
+    Producto(nombre='Pan Ciabatta', tipo='Panadería', descripcion='1 KG', estado='activo'),
+    Producto(nombre='Ciabatta Rustico', tipo='Panadería', descripcion='MASA MADRE, ELABORACIÓN PROPIA SIN MATERIA GRASA.', estado='activo'),
+
+    Producto(nombre='Medialuna', tipo='Bollería', descripcion='CLÁSICA MEDIA LUNA ARGENTINA CON SUAVES NOTAS A MANTEQUILLA Y BAÑO EN ALMÍBAR', estado='activo'),
+    Producto(nombre='Croissant de Frambuesa', tipo='Bollería', descripcion='CLÁSICO CROISSANT FRANCÉS CON NOTAS LÁCTICAS BICOLOR RELLENO DE MASCARPONE Y GEL DE FRAMBUESA.', estado='activo'),
+    Producto(nombre='Croissant ( Queso Aceituna )', tipo='Bollería', descripcion='CLÁSICO CROISSANT FRANCÉS CON NOTAS LÁCTICAS BICOLOR RELLENO DE QUESO MOZARELA, ACEITUNA.', estado='activo'),
+    Producto(nombre='Croissant ( Queso Orégano )', tipo='Bollería', descripcion='CLÁSICO CROISSANT FRANCÉS CON NOTAS LÁCTICAS BICOLOR RELLENO DE QUESO MOZARELA Y ORÉGANO.', estado='activo'),
+    Producto(nombre='Croissant de Vainilla', tipo='Bollería', descripcion='CLÁSICO CROISSANT FRANCÉS CON NOTAS LÁCTICAS BICOLOR RELLENO CON NATA DE VAINILLA TAHITÍ', estado='activo'),
+    Producto(nombre='Pan de Chocolate', tipo='Bollería', descripcion='NOTAS SUAVES DE MANTEQUILLA ENROLLADA CON CHOCOLATE DE LECHE.', estado='activo'),
+    Producto(nombre='Croissant de Maracuya', tipo='Bollería', descripcion='CLÁSICO CROISSANT FRANCÉS CON NOTAS LÁCTICAS BICOLOR RELLENO CON CURD DE MARACUYÁ', estado='activo'),
+    Producto(nombre='Croissant de Pistacho', tipo='Bollería', descripcion='CLÁSICO CROISSANT FRANCÉS CON NOTAS LÁCTICAS BICOLOR RELLENO CON NATA DE PISTACHO', estado='activo'),
+    Producto(nombre='Croissant de Naranja', tipo='Bollería', descripcion='CLÁSICO CROISSANNT FRANCES DE COLOR, RELLENA CON CURD DE NARANJA', estado='activo'),
+    Producto(nombre='Pan Suizo', tipo='Bollería', descripcion='MASA LAMINADA CON MANTEQUILLA, RELLENA DE CREMA PASTELERA Y PASAS CON ESENCIA DE HABA TONKA', estado='activo'),
+    Producto(nombre='Berlines rellenos de crema de pistacho', tipo='Bollería', descripcion='', estado='activo'),
+    Producto(nombre='Berlines rellenos de crema pastelera', tipo='Bollería', descripcion='', estado='activo'),
+    Producto(nombre='Berlines rellenos de crema de manjar', tipo='Bollería', descripcion='', estado='activo'),
+    Producto(nombre='Repollitos rellenos de crema pastelera', tipo='Bollería', descripcion='', estado='activo'),
+
+    Producto(nombre='Barras de Avellana', tipo='Barras', descripcion='BIZCOCHO ULTRA ESPONJOSO DE AVELLANA, CRUJIENTE DE AVELLANA Y PRALINÉ, CREMOSO DE AVELLANA, BAVAROISE DE CHOCOLATE DE LECHE, ESPONJOSO DE VAINILLA.', estado='activo'),
+    Producto(nombre='Barras de Pistacho', tipo='Barras', descripcion='BIZCOCHO SACHER DE CHOCOLATE, COMPOTA DE FRAMBUESA, CRUJIENTE DE PISTACHO, CRÉME BRULÉ DE PISTACHO Y NATA MONTADA DE PISTACHO.', estado='activo'),
+    Producto(nombre='Inspiración de Frambuesa', tipo='Barras', descripcion='FONDANT DE CHOCOLATE, COMPOTA DE FRAMBUESA, CREMOSO DE INSPIRACIÓN FRAMBUESA DE CHOCOLATE, NOTAS DE VAINILLA DE TAHITÍ Y BAÑO ROCHER DE FRAMBUESA.', estado='activo'),
+    Producto(nombre='Caramelia', tipo='Barras', descripcion='FONDANT DE CHOCOLATE, COMPOTA DE MANZANA CON VAINILLA DE TAHITÍ Y CREMOSO DULCEY, MOUSSE CHOCOLATE DE LECHE CARAMELIA. NOTAS DE GALLETA SALADA.', estado='activo'),
+    Producto(nombre='Nuss Kuss', tipo='Barras', descripcion='ESPONJA DE COCO AL VAPOR, TURRÓN DE AVELLANA EUROPEA, GANACHE DE CHOCOLATE NEGRO, NATA DE CHOCOLATE DE LECHE, NATA DE VAINILLA, BARRAS DE CHOCOLATE DE LECHE Y PRALINÉ DE AVELLANA.', estado='activo'),
+    Producto(nombre='Carrot Cake', tipo='Barras', descripcion='DELICIOSO QUEQUE DE ZANAHORIA QUE POR DENTRO TRAE UNA COMPOTA DE MANGO Y PIÑA JUNTO CON QUESO CREMA Y POR FUERA CONTIENE UNA GANACHE DE CHOCOLATE BLANCO.', estado='activo'),
+
+
+    Producto(nombre='Pecan', tipo='Cookies', descripcion='CENTRO DE CHOCOLATE NEGRO DE 56 CARAMELIZADA, NUECES Y CHIPS DE CHOCOLATE', estado='activo'),
+    Producto(nombre='Red Velvet', tipo='Cookies', descripcion='DE COLOR INTENSO, CON SABOR A CACAO Y CHIPS DE CHOCOLATE BLANCO.', estado='activo'),
+    Producto(nombre='Avellana y Cacao', tipo='Cookies', descripcion='SUPERFICIE CROCANTE Y CHEWY, CON AVELLANAS TOSTADAS Y SABOR INTENSO A CHOCOLATE.', estado='activo'),
+    Producto(nombre='Galletas de Mantequilla', tipo='Cookies', descripcion='GALLETAS RELLENAS CON MANJAR Y COCO', estado='activo'),
+    Producto(nombre='Galleta Avellana Caramelo', tipo='Cookies', descripcion='CLÁSICA GALLETA DE CHIPS DE CHOCOLATE AVELLANA TOSTADA Y CARAMELO', estado='activo'),
+    Producto(nombre='Inspiración de pistacho', tipo='Cookies', descripcion='GALLETA DE PISTACHO CON CENTRO DE CHOCOLATE DE FRAMBUESA', estado='activo'),
+    Producto(nombre='Galleta de Maní', tipo='Cookies', descripcion='GALLETA DE MANÍ CON CHIP DE CHOCOLATE NEGRO', estado='activo'),
+    Producto(nombre='Galleta de Chocolate', tipo='Cookies', descripcion='GALLETA DE MANTEQUILLA RELLENA DE MANJAR Y CUBIERTA DE CHOCOLATE DE LECHE.', estado='activo'),
+    Producto(nombre='Galleta de Oreo', tipo='Cookies', descripcion='CREMOSO DE VAINILLA, GALLETON HÚMEDO Y TROZOS DE OREO', estado='activo'),
+    Producto(nombre='Galleta de Chubi', tipo='Cookies', descripcion='', estado='activo'),
+    Producto(nombre='Galleta de Tifany"s', tipo='Cookies', descripcion='', estado='activo'),
+
+
+    Producto(nombre='Panqueque de Chocolate', tipo='Panqueques', descripcion='PANQUEQUE DE CHOCOLATE, CREMA Y GUINDA (FRAMBUESA O FRUTILLA OPCIONAL)', estado='activo'),
+    Producto(nombre='Panqueque de Naranja', tipo='Panqueques', descripcion='PANQUEQUE DE VAINILLA CON CREMA DE NARANJA (FRAMBUESA, FRUTILLA O TRUFA OPCIONAL)', estado='activo'),
+
+
+    Producto(nombre='Frutilla', tipo='Tortas Heladas', descripcion='MERENGUE SECO, CREMA SALSA DE FRUTILLA', estado='activo'),
+    Producto(nombre='Frambuesa', tipo='Tortas Heladas', descripcion='MERENGUE SECO CREMA FRAMBUESA', estado='activo'),
+    Producto(nombre='Mango', tipo='Tortas Heladas', descripcion='MERENGUE SECO CREMA MANGO', estado='activo'),
+    Producto(nombre='Piña', tipo='Tortas Heladas', descripcion='MERENGUE SECO CREMA PIÑA.', estado='activo'),
+             
 ]
     
     Producto.objects.bulk_create(productos)

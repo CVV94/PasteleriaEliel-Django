@@ -1,4 +1,5 @@
 {% load static %}
+{% load group_tags %}
 <header>
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -16,7 +17,10 @@
                     <a class="nav-link" href="#">Carta</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="#">Contacto</a>
+                    <a class="nav-link" href="#Contacto">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="{% url "envios_cliente" %}">Estado de Envio</a>
                     </li>
                     <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -29,6 +33,9 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         {% if user.is_authenticated %}
                             <li><a class="dropdown-item" href="{% url "cerrar_sesion" %}">Cerrar sesión</a></li>
+                            {% if user|in_group:"Clientes" %}
+                                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                            {% endif %}
                             {% if user.is_superuser %}
                                 <li><a class="dropdown-item" href="{% url "interfazAdministrador" %}">Administrador</a></li>
                             {% endif %}
