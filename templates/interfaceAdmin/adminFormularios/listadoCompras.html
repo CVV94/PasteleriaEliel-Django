@@ -1,4 +1,6 @@
 {% extends "interfaceAdmin/interfaceHome/interfazAdmin.html" %}
+{% load humanize %}
+{% load app_filters %}
 {% block formulario %}
 
 <div class="container">
@@ -25,10 +27,10 @@
                                 <td>{{ forloop.counter }}</td>
                                 <td>{{ compra.id_compra }}</td> 
                                 <td>{{ compra.id_cliente }}</td>
-                                <td>{{ compra.id_carrito }}</td>
-                                <td>{{ compra.id_estadopago }}</td>
-                                <td>{{ compra.fecha_compra }}</td>
-                                <td>{{ compra.total_compra }}</td>
+                                <td>{{ compra.id_carrito.id_carrito }}</td>
+                                <td>{{ compra.id_estadopago.id_estadopago }}</td>
+                                <td>{{ compra.fecha_compra|date:"d/m/Y"  }}</td>
+                                <td>{{ compra.total_compra|precio_formateadoVenta }}</td>
                                 <td>{{ compra.direccion }}</td>
                             </tr>
                         {% endfor %} 
