@@ -1,7 +1,8 @@
 from django.shortcuts import render,redirect
-from .forms import ProductoForm,CargarImagenForm,ValorForm, ProveedorForm, IngredienteForm, EnvioForm, CompraForm
-from .models import Producto, Proveedor, Ingrediente, Compra, Envio, Estadoenvio, Cliente, CarritoCompra, Estadopago
+from .forms import ProductoForm,CargarImagenForm,ValorForm, ProveedorForm, IngredienteForm, EnvioForm, CompraForm, CalificacionForm
+from .models import Producto, Proveedor, Ingrediente, Compra, Envio, Estadoenvio, Cliente, CarritoCompra, Estadopago, PresentacionProducto, Valor, Calificacion
 from django.db.models import F
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 def interfaceAdmin(request):
@@ -258,8 +259,38 @@ def listadoProductosCarta(request):
     return render(request, 'interfaceCliente/carta.html', {'productos': productos})
 
 
-def homeCliente(request):
-    return render(request, 'interfaceCliente/index.html')
+def detalleProducto(request, id_producto):
+    producto = get_object_or_404(Producto, pk=id_producto)
+    presentacion = PresentacionProducto.objects.filter(id_producto=id_producto).first()
+    valor = Valor.objects.filter(id_producto=id_producto).first()
+    calificaciones = Calificacion.objects.filter(id_producto=id_producto)
+
+    calificacion_form = CalificacionForm()
+
+    if request.method == 'POST':
+        calificacion_form = CalificacionForm(request.POST)
+        if calificacion_form.is_valid():
+            # Crear un nuevo objeto Calificacion pero aún no lo guardes en la base de datos
+            nueva_calificacion = calificacion_form.save(commit=False)
+            nueva_calificacion.id_producto = producto  # Asigna el producto actual a la calificación
+            # Aquí puedes asignar el cliente si tienes esa información
+            nueva_calificacion.save()  # Guarda el objeto en la base de datos
+            return redirect('nombre_de_tu_url_para_detalleProducto', id_producto=id_producto)  # Redirige a la misma página
+
+    precio_formato_clp = "{:,.0f}".format(valor.precio).replace(",", ".")
+
+    context = {
+        'producto': producto,
+        'presentacion': presentacion,
+        'precio_formato_clp': precio_formato_clp,
+        'calificaciones': calificaciones,
+        'calificacion_form': calificacion_form,
+    }
+    return render(request, 'interfaceCliente/productoDetalle.html', context)
+
+
+# def homeCliente(request):
+#     return render(request, 'interfaceCliente/index.html')
 
 def homeProductos(request):
     return render(request, 'interfaceCliente/inicioCliente.html')

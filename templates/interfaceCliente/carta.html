@@ -10,56 +10,33 @@
 		/>
 		<title>Pastelería Eliel</title>
         <link rel="stylesheet" href="{% static 'css/principalPage/home/styles.css' %}">
+		<link rel="stylesheet" href="{% static 'css/principalPage/producto/header.css' %}">
+		<link rel="stylesheet" href="{% static 'css/principalPage/producto/navbar.css' %}">
 	</head>
 	<body>
-		<header>
-			<div class="container-hero">
-				<div class="container hero">
-					<div class="customer-support">
-						<i class="fa-solid fa-headset"></i>
-						<div class="content-customer-support">
-							<span class="text">Soporte al cliente</span>
-							<span class="number">123-456-7890</span>
-						</div>
-					</div>
-
-					<div class="container-logo">
-						<i class="fa-solid fa-mug-hot"></i>
-						<h1 class="logo"><a href="/">Pastelería Eliel</a></h1>
-					</div>
-
-					<div class="container-user">
-						<i class="fa-solid fa-user"></i>
-						<i class="fa-solid fa-basket-shopping"></i>
-						<div class="content-shopping-cart">
-							<span class="text">Carrito</span>
-							<span class="number">(0)</span>
-						</div>
-					</div>
-				</div>
+		<header class="header">
+			<div class="header__navigation">
+			  <img class="header__menu" src="./images/icon-menu.svg" alt="menu icon">
+			  <img class="header__logo" src="{% static 'imagen/logo/logoIcono.png' %}" alt="logo">
+			  <nav class="navbar">
+				<ul class="navbar__items">
+				  <li><a class="navbar__link" href="#">Collections</a></li>
+				  <li><a class="navbar__link" href="#">Men</a></li>
+				  <li><a class="navbar__link" href="#">Women</a></li>
+				  <li><a class="navbar__link" href="#">About</a></li>
+				  <li><a class="navbar__link" href="#">Contact</a></li>
+				</ul>
+			  </nav>
 			</div>
-
-			<div class="container-navbar">
-				<nav class="navbar container">
-					<i class="fa-solid fa-bars"></i>
-					<ul class="menu">
-						<li><a href="#">Inicio</a></li>
-						<li><a href="#">Carta</a></li>
-						<li><a href="#">Contacto</a></li>
-						<li><a href="#">Ingresar</a></li>
-						<li><a href="#">Registrar</a></li>
-						<li><a href="#">Administrador</a></li>
-					</ul>
-
-					<form class="search-form">
-						<input type="search" placeholder="Buscar..." />
-						<button class="btn-search">
-							<i class="fa-solid fa-magnifying-glass"></i>
-						</button>
-					</form>
-				</nav>
+	  
+			<div class="header__cart-avatar">
+			  <div class="header__cart">
+				<div class="header__cart--notification">0</div>
+				<img src="{% static 'imagen/icono/icon-cart.svg' %}" alt="">
+			  </div>
+			  <img class="header__avatar" src="{% static 'imagen/icono/icono_cliente.png' %}" alt="">
 			</div>
-		</header>
+		  </header>
 
 
 		<main class="main-content">
@@ -109,7 +86,9 @@
                                     <i class="fa-solid fa-star"></i>
                                     <i class="fa-regular fa-star"></i>
                                 </div>
-                                <h3>{{ producto.nombre }}</h3>
+								<a href="{% url 'detalleProducto' producto.id_producto %}">
+                                	<h3>{{ producto.nombre }}</h3>
+								</a>
                                 <span class="add-cart">
                                     <i class="fa-solid fa-basket-shopping"></i>
                                 </span>
