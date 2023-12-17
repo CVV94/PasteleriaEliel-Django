@@ -1,7 +1,8 @@
 from django.shortcuts import render,redirect
-from .forms import ProductoForm,CargarImagenForm,ValorForm, ProveedorForm, IngredienteForm, EnvioForm, CompraForm, CalificacionForm
-from .models import Producto, Proveedor, Ingrediente, Compra, Envio, Estadoenvio, Cliente, CarritoCompra, Estadopago, PresentacionProducto, Valor, Calificacion
+from .forms import ProductoForm,CargarImagenForm,ValorForm, ProveedorForm, IngredienteForm, EnvioForm, CompraForm, CalificacionForm, DetalleCarritoForm
+from .models import Producto, Proveedor, Ingrediente, Compra, Envio, Estadoenvio, Cliente, CarritoCompra, Estadopago, PresentacionProducto, Valor, Calificacion, DetalleCarritoCompraProducto
 from django.db.models import F
+from django.contrib import messages
 from django.shortcuts import get_object_or_404
 
 # Create your views here.
@@ -254,46 +255,94 @@ def eliminarCompra(request,id_compra):
 
 
 
+
+# PROCESO DE COMPRA
+
 def listadoProductosCarta(request):
     productos = Producto.objects.all()
     return render(request, 'interfaceCliente/carta.html', {'productos': productos})
 
+def format_precio_clp(precio):
+    return "{:,.0f}".format(precio).replace(",", ".")
+
 
 def detalleProducto(request, id_producto):
     producto = get_object_or_404(Producto, pk=id_producto)
-    presentacion = PresentacionProducto.objects.filter(id_producto=id_producto).first()
-    valor = Valor.objects.filter(id_producto=id_producto).first()
+    form_carrito = DetalleCarritoForm(request.POST or None)
+    form_calificacion = CalificacionForm(request.POST or None)
     calificaciones = Calificacion.objects.filter(id_producto=id_producto)
-
-    calificacion_form = CalificacionForm()
+    valor = Valor.objects.filter(id_producto=id_producto).first()
 
     if request.method == 'POST':
-        calificacion_form = CalificacionForm(request.POST)
-        if calificacion_form.is_valid():
-            # Crear un nuevo objeto Calificacion pero aún no lo guardes en la base de datos
-            nueva_calificacion = calificacion_form.save(commit=False)
-            nueva_calificacion.id_producto = producto  # Asigna el producto actual a la calificación
-            # Aquí puedes asignar el cliente si tienes esa información
-            nueva_calificacion.save()  # Guarda el objeto en la base de datos
-            return redirect('nombre_de_tu_url_para_detalleProducto', id_producto=id_producto)  # Redirige a la misma página
+        if 'agregar_carrito' in request.POST and form_carrito.is_valid():
+            id_cliente = request.user.id
+            carrito, _ = CarritoCompra.objects.get_or_create(id_cliente=id_cliente)
+            detalle, created = DetalleCarritoCompraProducto.objects.get_or_create(
+                id_carrito=carrito,
+                id_producto=producto,
+                defaults={'cantidad': form_carrito.cleaned_data['cantidad'], 'precio_unitario': valor.precio}
+            )
+            if not created:
+                detalle.cantidad += form_carrito.cleaned_data['cantidad']
+                detalle.save()
+            return redirect('detalleProducto', id_producto=id_producto)
 
-    precio_formato_clp = "{:,.0f}".format(valor.precio).replace(",", ".")
+        elif 'agregar_calificacion' in request.POST and form_calificacion.is_valid():
+            nueva_calificacion = form_calificacion.save(commit=False)
+            nueva_calificacion.id_producto = producto
+            nueva_calificacion.save()
+            return redirect('detalleProducto', id_producto=id_producto)
+
+    precio_formato_clp = format_precio_clp(valor.precio) if valor else 'No Disponible'
 
     context = {
         'producto': producto,
-        'presentacion': presentacion,
-        'precio_formato_clp': precio_formato_clp,
+        'form_carrito': form_carrito,
+        'form_calificacion': form_calificacion,
         'calificaciones': calificaciones,
-        'calificacion_form': calificacion_form,
+        'precio_formato_clp': precio_formato_clp
     }
     return render(request, 'interfaceCliente/productoDetalle.html', context)
 
 
-# def homeCliente(request):
-#     return render(request, 'interfaceCliente/index.html')
 
-def homeProductos(request):
-    return render(request, 'interfaceCliente/inicioCliente.html')
+
+def vista_del_carrito(request):
+    # Obtener el carrito de la sesión
+    carrito = request.session.get('carrito', {})
+
+    # Recuperar información adicional de los productos y sus precios
+    detalles_del_carrito = []
+    for id_producto, cantidad in carrito.items():
+        producto = Producto.objects.get(pk=id_producto)
+        valor = Valor.objects.filter(id_producto=id_producto).first()
+        subtotal = valor.precio * cantidad if valor else 0
+
+        detalles_del_carrito.append({
+            'producto': producto,
+            'cantidad': cantidad,
+            'subtotal': subtotal
+        })
+
+    context = {
+        'detalles_del_carrito': detalles_del_carrito,
+        'total': sum(item['subtotal'] for item in detalles_del_carrito)
+    }
+    return render(request, 'interfaceCliente/descripcionCarrito.html', context)
+
+
+
+
+def descripcionCarrito(request):
+    id_cliente = request.user.id
+    carrito = CarritoCompra.objects.get(id_cliente=id_cliente)
+    detalles = carrito.detallecarritocompraproducto_set.all()
+
+    context = {
+        'detalles': detalles,
+    }
+    return render(request, 'descripcionCarrito.html', context)
+
 
 def carta(request):
     return render(request, 'interfaceCliente/carta.html')

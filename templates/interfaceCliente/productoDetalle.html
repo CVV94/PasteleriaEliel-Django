@@ -77,7 +77,7 @@
             <input class="input__number" type="text" value="0">
             <img class="input__plus" src=" {% static 'imagen/icono/icon-plus.svg' %}" alt="plus">
           </div>
-          <button class="details__button" data-precio="{{ precio_formato_clp }}"> <img src="{% static 'imagen/icono/icon-cart-white.svg' %}" alt="">Agregar al Carrito</button>
+          <button class="details__button"  name="submit_carrito" data-precio="{{ precio_formato_clp }}"> <img src="{% static 'imagen/icono/icon-cart-white.svg' %}" alt="">Agregar al Carrito</button>
         </div><br><br>
 
 
@@ -98,7 +98,7 @@
       <form method="post">
         {% csrf_token %}
         {{ calificacion_form.as_p }}
-        <button type="submit">Enviar Calificación</button>
+        <button type="submit" name="submit_calificacion">Enviar Calificación</button>
       </form>
 
 
@@ -193,6 +193,8 @@ addToCartBtn.addEventListener('click', () => {
   } else {
     console.error("Error: precio o cantidad no son números válidos.");
   }
+
+  
 });
 
 
@@ -230,10 +232,17 @@ function formatCLP(number) {
 }
 
 
-function drawProductInModal(precio, cantidad, total){
-  if (precio === undefined || cantidad === undefined || total === undefined) {
-    console.error("drawProductInModal llamado sin los parámetros necesarios.");
-    return;
+function drawProductInModal(precio, cantidad, total) {
+  // Suponiendo que tienes un div para mostrar los productos agregados
+  var carritoProductosDiv = document.getElementById('carrito-productos');
+  var productoHTML = `
+      <div>
+          <p>Producto: ${producto.nombre}</p>
+          <p>Cantidad: ${cantidad}</p>
+          <p>Subtotal: ${formatCLP(total)}</p>
+      </div>
+  `;
+  carritoProductosDiv.innerHTML += productoHTML;
 }
 
   productContainer.innerHTML = `

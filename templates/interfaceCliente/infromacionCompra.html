@@ -1,0 +1,178 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<title>Pastelería Eliel</title>
+    <link rel="stylesheet" href="{% static 'css/principalPage/home/styles.css' %}">
+		<link rel="stylesheet" href="{% static 'css/principalPage/producto/header.css' %}">
+		<link rel="stylesheet" href="{% static 'css/principalPage/producto/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/principalPage/producto/descripcionCarrito.css' %}">
+
+	</head>
+	<body>
+		<header class="header">
+			<div class="header__navigation">
+			  <img class="header__menu" src="./images/icon-menu.svg" alt="menu icon">
+			  <img class="header__logo" src="{% static 'imagen/logo/logoIcono.png' %}" alt="logo">
+			  <nav class="navbar">
+				<ul class="navbar__items">
+				  <li><a class="navbar__link" href="#">Collections</a></li>
+				  <li><a class="navbar__link" href="#">Men</a></li>
+				  <li><a class="navbar__link" href="#">Women</a></li>
+				  <li><a class="navbar__link" href="#">About</a></li>
+				  <li><a class="navbar__link" href="#">Contact</a></li>
+				</ul>
+			  </nav>
+			</div>
+	  
+			<div class="header__cart-avatar">
+			  <div class="header__cart">
+				<div class="header__cart--notification">0</div>
+				<img src="{% static 'imagen/icono/icon-cart.svg' %}" alt="">
+			  </div>
+			  <img class="header__avatar" src="{% static 'imagen/icono/icono_cliente.png' %}" alt="">
+			</div>
+		  </header>
+
+
+		<main class="main-content">
+            <div class="cesta-beneficios-actualizar" data-accion='actualizar'>
+                <span>Carrito de compras</span>
+              </div>
+              <!--Tabla-->
+              <div class="table-responsive">
+              <table 
+              class="table table-bordered table-condensed cesta" id="cesta-beneficios">
+                <thead>
+                  <th>Producto</th>
+                  <th>Cantidad</th> 
+                  <th>Valor en puntos</th>
+                  <th>Total</th>
+                </thead>
+                <tr class="beneficio" data-elemento='1'>
+                  <td>
+                    <img alt="Nombre del producto"/>
+                    <span>Nombre del producto</span><br>
+                    <span>Descripción</span><br>
+                    <span>Status</span><br>
+                    <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                  </td>
+                  <td class="cantidad">
+                    <select class="selectpicker" data-width="fit" id="cantidadNro">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                    </select>
+                    </td> 
+                  <td class="valor">50</td>
+                  <td class="total">50</td>
+                </tr>
+                
+                <tr class="totales">
+                  <td></td>
+                  <td></td> 
+                  <td class="t">Total</td>
+                  <td class="val">450 puntos</td>
+                </tr>
+              </table>
+                <div class='pie-de-cesta'>
+                  <br><br><br>
+                  <button class='btn btn-link continuar'>Continuar comprando</button>
+                  <button class='btn' style='float:right'>Pagar</button>
+                  
+                </div>
+              </div>
+		</main>
+
+		<footer class="footer">
+			<div class="container container-footer">
+				<div class="menu-footer">
+					<div class="contact-info">
+						<p class="title-footer">Información de Contacto</p>
+						<ul>
+							<li>
+								Dirección: 
+								06066
+							</li>
+							<li>Teléfono: 123-456-7890</li>
+							<li>Fax: 55555300</li>
+							<li>EmaiL: baristas@support.com</li>
+						</ul>
+						<div class="social-icons">
+							<span class="facebook">
+								<i class="fa-brands fa-facebook-f"></i>
+							</span>
+							<span class="twitter">
+								<i class="fa-brands fa-twitter"></i>
+							</span>
+							<span class="youtube">
+								<i class="fa-brands fa-youtube"></i>
+							</span>
+							<span class="pinterest">
+								<i class="fa-brands fa-pinterest-p"></i>
+							</span>
+							<span class="instagram">
+								<i class="fa-brands fa-instagram"></i>
+							</span>
+						</div>
+					</div>
+
+					<div class="information">
+						<p class="title-footer">Información</p>
+						<ul>
+							<li><a href="#">Acerca de Nosotros</a></li>
+							<li><a href="#">Información Delivery</a></li>
+							<li><a href="#">Politicas de Privacidad</a></li>
+							<li><a href="#">Términos y condiciones</a></li>
+							<li><a href="#">Contactános</a></li>
+						</ul>
+					</div>
+
+					<div class="my-account">
+						<p class="title-footer">Mi cuenta</p>
+
+						<ul>
+							<li><a href="#">Mi cuenta</a></li>
+							<li><a href="#">Historial de ordenes</a></li>
+							<li><a href="#">Lista de deseos</a></li>
+							<li><a href="#">Boletín</a></li>
+							<li><a href="#">Reembolsos</a></li>
+						</ul>
+					</div>
+
+					<div class="newsletter">
+						<p class="title-footer">Boletín informativo</p>
+
+						<div class="content">
+							<p>
+								Suscríbete a nuestros boletines ahora y mantente al
+								día con nuevas colecciones y ofertas exclusivas.
+							</p>
+							<input type="email" placeholder="Ingresa el correo aquí...">
+							<button>Suscríbete</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="copyright">
+					<p>
+						Desarrollado por Programación para el mundo &copy; 2022
+					</p>
+
+					<img src="{% static 'imagen/icono/payment.png' %}" alt="Pagos">
+				</div>
+			</div>
+		</footer>
+
+		<script
+			src="https://kit.fontawesome.com/81581fb069.js"
+			crossorigin="anonymous"
+		></script>
+	</body>
+    </html>

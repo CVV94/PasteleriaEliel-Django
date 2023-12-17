@@ -31,6 +31,6 @@ urlpatterns = [
     path('eliminarCompra/<int:id_compra>',views.eliminarCompra, name='eliminarCompra'),
 
     path('producto/<int:id_producto>/',views.detalleProducto, name='detalleProducto'),
-    path('homeProductos/',views.homeProductos, name='homeProductos'),
+    path('descripcionCarrito/',views.descripcionCarrito, name='descripcionCarrito'),
     path('carta/',views.listadoProductosCarta, name='carta'),
 ]
