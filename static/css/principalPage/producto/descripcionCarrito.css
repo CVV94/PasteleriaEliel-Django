@@ -1,0 +1,39 @@
+    table {
+        padding: 15px;
+        margin: 0;
+    } 
+  
+  .cesta-beneficios-actualizar span:nth-of-type(1) {
+    font-size: 36px;
+    padding: 15px;
+    margin: 0;
+  }
+  .cesta-beneficios-actualizar span:nth-of-type(2) {
+    font-size: 16px;
+    float: right;
+    padding-top: 25px;
+    font-weight: bold;
+  }
+  
+  .cesta-beneficios-actualizar span:nth-of-type(2) em {
+    color: green;
+    
+  }
+  
+  table th {
+    text-align: center;
+     border-bottom:1pt solid black;
+  }
+  
+  tr.totales td {
+    font-weight: bold;
+    text-align: right;
+  }
+  
+  tr td:nth-of-type(4){
+    text-align: right;
+  }
+  
+  tr td:nth-of-type(2), tr td:nth-of-type(3){
+    text-align: center;
+  }

@@ -1,0 +1,294 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<title>Pastelería Eliel</title>
+    <link rel="stylesheet" href="{% static 'css/principalPage/home/styles.css' %}">
+		<link rel="stylesheet" href="{% static 'css/principalPage/producto/header.css' %}">
+		<link rel="stylesheet" href="{% static 'css/principalPage/producto/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/principalPage/producto/descripcionCarrito.css' %}">
+
+	</head>
+	<body>
+		<header class="header">
+			<div class="header__navigation">
+			  <img class="header__menu" src="./images/icon-menu.svg" alt="menu icon">
+			  <img class="header__logo" src="{% static 'imagen/logo/logoIcono.png' %}" alt="logo">
+			  <nav class="navbar">
+				<ul class="navbar__items">
+				  <li><a class="navbar__link" href="#">Collections</a></li>
+				  <li><a class="navbar__link" href="#">Men</a></li>
+				  <li><a class="navbar__link" href="#">Women</a></li>
+				  <li><a class="navbar__link" href="#">About</a></li>
+				  <li><a class="navbar__link" href="#">Contact</a></li>
+				</ul>
+			  </nav>
+			</div>
+	  
+			<div class="header__cart-avatar">
+			  <div class="header__cart">
+				<div class="header__cart--notification">0</div>
+				<img src="{% static 'imagen/icono/icon-cart.svg' %}" alt="">
+			  </div>
+			  <img class="header__avatar" src="{% static 'imagen/icono/icono_cliente.png' %}" alt="">
+			</div>
+		  </header>
+
+
+		<main class="main-content">
+      <div class="container-products">
+        {% for detalle in detalles_del_carrito %}
+          <div class="item-carrito">
+              <img src="{{ detalle.id_producto.presentaciones.first.imagen.url }}" alt="{{ detalle.id_producto.nombre }}">
+              <div>
+                <p>Producto: {{ detalle.id_producto.nombre }}</p>
+                <p>Cantidad: {{ detalle.cantidad }}</p>
+                <p>Precio unitario: {{ detalle.precio_unitario }}</p>
+                <p>Subtotal: {{ detalle.cantidad|multiply:detalle.precio_unitario }}</p>
+              </div>
+          </div>
+          {% empty %}
+            <p>No hay productos en el carrito.</p>
+        {% endfor %}
+        <div class="total-carrito">
+            <p>Total: {{ total }}</p>
+        </div>
+      </div>
+                <div class='pie-de-cesta'>
+                  <br><br><br>
+                  <button class='btn btn-link continuar'>Continuar comprando</button>
+                  <button class='btn' style='float:right'>Pagar</button>
+                  
+                </div>
+              </div>
+		</main>
+
+		<footer class="footer">
+			<div class="container container-footer">
+				<div class="menu-footer">
+					<div class="contact-info">
+						<p class="title-footer">Información de Contacto</p>
+						<ul>
+							<li>
+								Dirección: 
+								06066
+							</li>
+							<li>Teléfono: 123-456-7890</li>
+							<li>Fax: 55555300</li>
+							<li>EmaiL: baristas@support.com</li>
+						</ul>
+						<div class="social-icons">
+							<span class="facebook">
+								<i class="fa-brands fa-facebook-f"></i>
+							</span>
+							<span class="twitter">
+								<i class="fa-brands fa-twitter"></i>
+							</span>
+							<span class="youtube">
+								<i class="fa-brands fa-youtube"></i>
+							</span>
+							<span class="pinterest">
+								<i class="fa-brands fa-pinterest-p"></i>
+							</span>
+							<span class="instagram">
+								<i class="fa-brands fa-instagram"></i>
+							</span>
+						</div>
+					</div>
+
+					<div class="information">
+						<p class="title-footer">Información</p>
+						<ul>
+							<li><a href="#">Acerca de Nosotros</a></li>
+							<li><a href="#">Información Delivery</a></li>
+							<li><a href="#">Politicas de Privacidad</a></li>
+							<li><a href="#">Términos y condiciones</a></li>
+							<li><a href="#">Contactános</a></li>
+						</ul>
+					</div>
+
+					<div class="my-account">
+						<p class="title-footer">Mi cuenta</p>
+
+						<ul>
+							<li><a href="#">Mi cuenta</a></li>
+							<li><a href="#">Historial de ordenes</a></li>
+							<li><a href="#">Lista de deseos</a></li>
+							<li><a href="#">Boletín</a></li>
+							<li><a href="#">Reembolsos</a></li>
+						</ul>
+					</div>
+
+					<div class="newsletter">
+						<p class="title-footer">Boletín informativo</p>
+
+						<div class="content">
+							<p>
+								Suscríbete a nuestros boletines ahora y mantente al
+								día con nuevas colecciones y ofertas exclusivas.
+							</p>
+							<input type="email" placeholder="Ingresa el correo aquí...">
+							<button>Suscríbete</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="copyright">
+					<p>
+						Desarrollado por Programación para el mundo &copy; 2022
+					</p>
+
+					<img src="{% static 'imagen/icono/payment.png' %}" alt="Pagos">
+				</div>
+			</div>
+		</footer>
+
+		<script
+			src="https://kit.fontawesome.com/81581fb069.js"
+			crossorigin="anonymous"
+		></script>
+	</body>
+
+
+    <script>
+/*Variables*/
+var trBeneficio = $('table tr.beneficio');
+var tdSelect = $(trBeneficio).find('td.cantidad select');
+var tdOption = $('option:selected');
+var tdValor = $(trBeneficio).find('td.valor');
+var value = 0;
+var valPts = 0; 
+var valPtsT = 0;
+var sum = 0; 
+var Totalizaciones = 0;
+var vResult = 0;
+var canjear = 'canjear';
+var actualizar = 'actualizar';
+var tt5 = $('div.cesta-beneficios-actualizar').attr('data-accion');
+var disponible, totalAlCanjear, totalAlFinalizar;
+
+/********** Eventos **********/
+$(document).ready(function(){
+  calcularTotalPorFila();
+  
+  $('#cesta-beneficios').change(function(){
+    calcularTotalPorFila();
+  })
+  
+  if(tt5 == canjear){
+    var tt6 = $(this).find('td.t').html('Puntos a canjear');
+    $(this).add('span.total4').find('b').html(totalAlFinalizar);
+    $('.continuar').remove();
+    $('select.selectpicker').attr('disabled','disabled');
+    PuntosAlCanjear();
+  }
+  
+  if(tt5 == actualizar){
+     $(this).find('span.total4').remove();
+    $('select.selectpicker').removeAttr('disabled','disabled');  
+  }
+})
+
+
+
+var addA = '<tr class="beneficio" data-elemento="';
+var addB = '"><td>'
++ '<img alt="Nombre del producto"/>'
++ '<span>Nombre del producto</span><br><span>Descripción</span><br><span>Status</span><br><button class="btn btn-default">Guardar para más tarde</button><button class="btn btn-danger">Eliminar</button></td>'
++ '<td class="cantidad">'
++ '<select class=\"selectpicker"\ data-width="fit" id="cantidadNro">'
++ '</select>'
++'</td>'
++ '<td class="valor">50</td>' 
++ '<td class="total">50</td></tr>';
+$('td.cantidad').find('select').addClass('selecpicker');
+/*Agregar fila*/
+$('.suma').on('click', function(){
+  var valXX = parseInt($('table').find('tr.beneficio:last').attr('data-elemento')) + 1;
+  ($('#cesta-beneficios').find('tr:last').prev().after(addA + valXX + addB));
+  calcularTotal();
+  print();
+  
+})
+
+/*Eliminar fila*/
+$('.btn-danger').on('click', function(){
+  var valTrElemento = $(this).parent().parent().attr('data-elemento');
+  console.log('Eliminar...' + valTrElemento);
+  $('#cesta-beneficios tr[data-elemento=\"'+valTrElemento+'"\]').remove();
+});
+
+function print(){
+$('#cesta-beneficios tr.beneficio').each(function(){
+  console.log(this);
+});
+  
+  }
+
+/********** Funciones **********/
+function calcularTotal(){
+  vResult = 0;
+  $('.total').each(function(){
+    vResult+= parseFloat($(this).text());
+    $('#cesta-beneficios tr.totales td.val').html(vResult + ' puntos');
+  });
+}
+function calcularTotalPorFila(){
+  $('tr.beneficio > td.cantidad select').change(function(){
+    value = $(this).find('option:selected').val();
+    valPts = parseInt($(this).closest('tr.beneficio').find('.valor').text());
+    valPtsT = value * valPts;
+    valPtsT = FormatoPrecio(valPtsT);
+    $(this).closest('tr.beneficio').find('.total').html(valPtsT);
+    calcularTotal();
+    Totalizar();
+    //console.log('Cantidad: ' + value + ' -Puntos: ' + valPts + ' - Total Fila: - ' + valPtsT);
+  });
+}
+Totalizar();
+
+function Totalizar(){
+  var tt = parseFloat($('#cesta-beneficios tr.disponibilidad').find('td.val').text());
+  var tt1 = parseFloat($('#cesta-beneficios tr.totales').find('td.val').text());
+  var tt3 = parseFloat(tt - tt1);
+  var tt4 = $('.total4').find('b').html(tt3);
+}
+
+function PuntosAlCanjear(){
+  disponible = parseFloat($('.disponible').find('em').text());
+  totalAlCanjear = parseFloat($('.totales').find('td.val').text());
+  totalAlFinalizar = disponible - totalAlCanjear; 
+}
+
+
+
+
+function contarElementos(vResult){
+  //var vUltimoData = 0;
+  //vResult = 1;
+  //vUltimoData= parseInt($('table').find('tr.beneficio:last').attr('data-elemento'));
+  //vResult = vResult + vUltimoData;
+  //vResult = vResult++;
+  //console.log('vResult Ultimo data = ' + vResult);
+  return vResult++;
+}
+
+
+function FormatoPrecio(vResult){
+  //vResult = (vResult/1000).toFixed(3);
+  return vResult;
+}
+
+
+
+
+/*Mobile*/
+
+    </script>
+</html>

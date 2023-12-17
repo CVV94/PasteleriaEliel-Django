@@ -1,5 +1,5 @@
 from django import forms
-from .models import Producto,PresentacionProducto,Valor, Proveedor, Ingrediente, Compra, Envio, Estadoenvio
+from .models import Producto,PresentacionProducto,Valor, Proveedor, Ingrediente, Compra, Envio, Estadoenvio, Calificacion, DetalleCarritoCompraProducto
 
 class ProductoForm(forms.ModelForm):
     class Meta:
@@ -53,3 +53,18 @@ class EstadoEnvioForm(forms.ModelForm):
     class Meta:
         model=Estadoenvio
         fields=('__all__')
+
+class CalificacionForm(forms.ModelForm):
+    class Meta:
+        model = Calificacion
+        fields = ['titulo', 'comentario', 'calificacion']  # Ajusta los campos según sea necesario
+        widgets = {
+            'titulo': forms.TextInput(attrs={'class': 'input', 'placeholder': 'Título'}),
+            'comentario': forms.Textarea(attrs={'cols': 40, 'rows': 5, 'placeholder': 'Comentario'}),
+            'calificacion': forms.NumberInput(attrs={'min': 1, 'max': 5})
+        }
+
+class DetalleCarritoForm(forms.ModelForm):
+    class Meta:
+        model = DetalleCarritoCompraProducto
+        fields = ['id_producto', 'cantidad', 'precio_unitario']

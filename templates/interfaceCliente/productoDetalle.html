@@ -1,0 +1,263 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+  {% block link %}
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="stylesheet" href="{% static 'css/principalPage/producto/main2.css' %}">
+  
+  <link rel="stylesheet" href="{% static 'css/principalPage/producto/details.css' %}">
+  <link rel="stylesheet" href="{% static 'css/principalPage/producto/gallery-modal.css' %}">
+  <link rel="stylesheet" href="{% static 'css/principalPage/producto/gallery.css' %}">
+  <link rel="stylesheet" href="{% static 'css/principalPage/producto/header.css' %}">
+  <link rel="stylesheet" href="{% static 'css/principalPage/producto/initial.css' %}">
+  <link rel="stylesheet" href="{% static 'css/principalPage/producto/input.css' %}">
+  <link rel="stylesheet" href="{% static 'css/principalPage/producto/mixins.css' %}">
+  <link rel="stylesheet" href="{% static 'css/principalPage/producto/modal-cart.css' %}">
+  <link rel="stylesheet" href="{% static 'css/principalPage/producto/modal-navbar.css' %}">
+  <link rel="stylesheet" href="{% static 'css/principalPage/producto/navbar.css' %}">
+  <link rel="stylesheet" href="{% static 'css/principalPage/producto/styles.css' %}">
+  <link rel="stylesheet" href="{% static 'css/principalPage/producto/variables.css' %}">
+  <title>Producto</title>
+  <link rel="stylesheet" href="./main.css">
+  {% endblock  %}
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    .attribution { font-size: 18px; text-align: center; }
+    .attribution a { color: hsl(228, 45%, 44%); }
+  </style>
+</head>
+<body>
+
+  <main class="main-container">
+    <header class="header">
+      <div class="header__navigation">
+        <img class="header__menu" src="./images/icon-menu.svg" alt="menu icon">
+        <img class="header__logo" src="{% static 'imagen/logo/logoIcono.png' %}" alt="logo">
+        <nav class="navbar">
+          <ul class="navbar__items">
+            <li><a class="navbar__link" href="#">Collections</a></li>
+            <li><a class="navbar__link" href="#">Men</a></li>
+            <li><a class="navbar__link" href="#">Women</a></li>
+            <li><a class="navbar__link" href="#">About</a></li>
+            <li><a class="navbar__link" href="#">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="header__cart-avatar">
+        <div class="header__cart">
+          <div class="header__cart--notification">0</div>
+          <img src="{% static 'imagen/icono/icon-cart.svg' %}" alt="">
+        </div>
+        <img class="header__avatar" src="{% static 'imagen/icono/icono_cliente.png' %}" alt="">
+      </div>
+    </header>
+
+    <section class="content">
+      <article class="gallery">
+        <div class="gallery__image-container">
+          <img class="gallery__previus" src="{% static 'imagen/icono/icon-previous.svg' %}" alt="previus">
+          <img class="gallery__next" src=" {% static 'imagen/icono/icon-next.svg' %}" alt="next">
+        </div>
+      </article>
+
+      <article class="details">
+        <h2 class="details__company">Pastelería Eliel</h2>
+        <h2 class="details__title">{{ producto.nombre }}</h2>
+        <p class="details__description">{{ producto.descripcion }}</p>
+        <div class="details__prices">
+          <p class="details__now">${{ precio_formato_clp }}</p>
+        </div>
+        <div class="details__product-quantity">
+          <div class="input">
+            <img class="input__minus" src="{% static 'imagen/icono/icon-minus.svg' %}" alt="minus">
+            <input class="input__number" type="text" value="0">
+            <img class="input__plus" src=" {% static 'imagen/icono/icon-plus.svg' %}" alt="plus">
+          </div>
+          <button class="details__button"  name="submit_carrito" data-precio="{{ precio_formato_clp }}"> <img src="{% static 'imagen/icono/icon-cart-white.svg' %}" alt="">Agregar al Carrito</button>
+        </div><br><br>
+
+
+        <div class="comentarios-y-calificaciones">
+          <h2 class="details__company">Comentarios y Calificaciones</h2>
+          {% for calificacion in calificaciones %}
+              <div class="calificacion">
+                  <p>{{ calificacion.titulo }}</p>
+                  <p>Calificación: {{ calificacion.calificacion }}/5</p>
+                  <p>{{ calificacion.comentario }}</p>
+              </div>
+          {% empty %}
+              <p>No hay comentarios aún.</p>
+          {% endfor %}
+      </div>
+    
+      <!-- Formulario para agregar una nueva calificación -->
+      <form method="post">
+        {% csrf_token %}
+        {{ calificacion_form.as_p }}
+        <button type="submit" name="submit_calificacion">Enviar Calificación</button>
+      </form>
+
+
+
+      
+
+      <div class="gallery__image-container">
+        {% if presentacion.imagen %}
+            <img src="{{ presentacion.imagen.url }}" alt="{{ producto.nombre }}">
+        {% else %}
+            <img src="{% static 'imagen/default.jpg' %}" alt="Default Image">
+        {% endif %}
+    </div>
+
+    
+
+
+  
+
+
+
+    </section>
+
+    <!-- inicio cart modal -->
+    <div class="cart-modal">
+      <p class="cart-modal__title">Carrito</p>
+      <div class="cart-modal__chekout-container">
+        <div class="cart-modal__details-container">
+          <img class="cart-modal__image" src="./images/image-product-1-thumbnail.jpg" alt="">
+          <div>
+            <p class="cart-modal__product">{{ producto.nombre }}</p>
+            <p class="cart-modal__price"><span>${{ precio_formato_clp }}</span> </p>
+          </div>
+          <img class="cart-modal__delete" src="{% static 'imagen/icono/icon-delete.svg' %}" alt="delete">
+        </div>
+        <button class="cart-modal__chekount" >Pagar</button>
+      </div>
+    </div>
+    <!-- fin cart modal -->
+
+    
+
+
+
+
+  </main>
+  
+
+  <script>
+    // Cambio de cantidad de articulos ingresado por el usuario.
+
+const minusBtn = document.querySelector('.input__minus');
+const plusBtn = document.querySelector('.input__plus');
+let userInput = document.querySelector('.input__number');
+
+let userInputNumber = 0;
+
+plusBtn.addEventListener('click', ()=>{
+    userInputNumber++;
+    userInput.value = userInputNumber;
+    console.log(userInputNumber);
+});
+
+minusBtn.addEventListener('click', ()=>{
+    userInputNumber--;
+    if(userInputNumber <= 0){
+        userInputNumber = 0;
+    }
+    userInput.value = userInputNumber;
+    console.log(userInputNumber);
+});
+
+// Agregar el total de productos al carrito cuando se presiona el boton ADD TO CART
+const addToCartBtn = document.querySelector('.details__button');
+let cartNotification = document.querySelector('.header__cart--notification');
+let lastValue = parseInt(cartNotification.innerText);
+
+addToCartBtn.addEventListener('click', () => {
+  const precio = parseFloat(addToCartBtn.getAttribute('data-precio').replace(/\./g, ''));
+  const cantidad = parseInt(userInput.value);
+  if (isNaN(cantidad) || cantidad <= 0) {
+      console.error("Cantidad no es un número válido.");
+      return;  // No continúa si la cantidad no es válida
+  }
+  const total = precio * cantidad;
+
+  if (!isNaN(total)) {
+    lastValue += cantidad;
+    cartNotification.innerText = lastValue;
+    cartNotification.style.display = 'block';
+    drawProductInModal(precio, cantidad, total);
+  } else {
+    console.error("Error: precio o cantidad no son números válidos.");
+  }
+
+  
+});
+
+
+//Mostrar el modal con el detalle del carrito
+const cartIconBtn = document.querySelector('.header__cart');
+const cartModal = document.querySelector('.cart-modal');
+// let priceModal = document.querySelector('.cart-modal__price');
+const productContainer = document.querySelector('.cart-modal__chekout-container');
+
+cartIconBtn.addEventListener('click', ()=>{
+  cartModal.classList.toggle('show');
+  if (lastValue === 0) {
+      productContainer.innerHTML = '<p class="cart-empty">El carro está vacío</p>';
+  } else {
+      // Aquí se llama a drawProductInModal sin parámetros
+      // drawProductInModal();
+  }
+});
+
+//Borrar el contenido del carrito
+function deleteProduct(){
+    const deleteProductBtn = document.querySelector('.cart-modal__delete');
+    deleteProductBtn.addEventListener('click', ()=>{
+        productContainer.innerHTML = '<p class="cart-empty">El carro está vacío</p>';
+        lastValue = 0;
+        cartNotification.innerText = lastValue;
+    });
+}
+
+
+// FUNCIONES
+
+function formatCLP(number) {
+  return number.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
+
+function drawProductInModal(precio, cantidad, total) {
+  // Suponiendo que tienes un div para mostrar los productos agregados
+  var carritoProductosDiv = document.getElementById('carrito-productos');
+  var productoHTML = `
+      <div>
+          <p>Producto: ${producto.nombre}</p>
+          <p>Cantidad: ${cantidad}</p>
+          <p>Subtotal: ${formatCLP(total)}</p>
+      </div>
+  `;
+  carritoProductosDiv.innerHTML += productoHTML;
+}
+
+  productContainer.innerHTML = `
+      <div class="cart-modal__details-container">
+          <img class="cart-modal__image" src="./images/image-product-1-thumbnail.jpg" alt="">
+          <div>
+              <p class="cart-modal__product">{{ producto.nombre }}</p>
+              <p class="cart-modal__price">$${formatCLP(total)}</p>
+          </div>
+          <img class="cart-modal__delete" src="{% static 'imagen/icono/icon-delete.svg' %}" alt="eliminar">
+      </div>
+      <button class="cart-modal__chekount" >Confirmar</button>`;
+  deleteProduct();
+}
+
+  </script>
+</body>
+</html>

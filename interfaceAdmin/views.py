@@ -4,12 +4,14 @@ from django.views.generic import ListView,UpdateView,CreateView,DeleteView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,redirect
-from .forms import ProductoForm,CargarImagenForm,ValorForm, ProveedorForm, IngredienteForm, EnvioForm, CompraForm,EstadoEnvioForm
-from .models import Producto, Proveedor, Ingrediente, Compra, Envio, Estadoenvio, Cliente, CarritoCompra, Estadopago, PresentacionProducto,Valor
+from .forms import ProductoForm,CargarImagenForm,ValorForm, ProveedorForm, IngredienteForm, EnvioForm, CompraForm,EstadoEnvioForm, DetalleCarritoForm, CalificacionForm
+from .models import Producto, Proveedor, Ingrediente, Compra, Envio, Estadoenvio, Cliente, CarritoCompra, Estadopago, PresentacionProducto,Valor, DetalleCarritoCompraProducto, Calificacion
 from django.db.models import F
 from django.urls import reverse_lazy
 import os
 from django.http import Http404
+from django.contrib import messages
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 def interfaceAdmin(request):
@@ -374,3 +376,97 @@ def eliminarCompra(request,id_compra):
     compra= Compra.objects.get(id_compra=id_compra)
     compra.delete()
     return redirect('interfaceAdmin/adminFormularios/listadoCompras.html')
+
+
+
+
+# PROCESO DE COMPRA
+
+def listadoProductosCarta(request):
+    productos = Producto.objects.all()
+    return render(request, 'interfaceCliente/carta.html', {'productos': productos})
+
+def format_precio_clp(precio):
+    return "{:,.0f}".format(precio).replace(",", ".")
+
+
+def detalleProducto(request, id_producto):
+    producto = get_object_or_404(Producto, pk=id_producto)
+    form_carrito = DetalleCarritoForm(request.POST or None)
+    form_calificacion = CalificacionForm(request.POST or None)
+    calificaciones = Calificacion.objects.filter(id_producto=id_producto)
+    valor = Valor.objects.filter(id_producto=id_producto).first()
+
+    if request.method == 'POST':
+        if 'agregar_carrito' in request.POST and form_carrito.is_valid():
+            id_cliente = request.user.id
+            carrito, _ = CarritoCompra.objects.get_or_create(id_cliente=id_cliente)
+            detalle, created = DetalleCarritoCompraProducto.objects.get_or_create(
+                id_carrito=carrito,
+                id_producto=producto,
+                defaults={'cantidad': form_carrito.cleaned_data['cantidad'], 'precio_unitario': valor.precio}
+            )
+            if not created:
+                detalle.cantidad += form_carrito.cleaned_data['cantidad']
+                detalle.save()
+            return redirect('detalleProducto', id_producto=id_producto)
+
+        elif 'agregar_calificacion' in request.POST and form_calificacion.is_valid():
+            nueva_calificacion = form_calificacion.save(commit=False)
+            nueva_calificacion.id_producto = producto
+            nueva_calificacion.save()
+            return redirect('detalleProducto', id_producto=id_producto)
+
+    precio_formato_clp = format_precio_clp(valor.precio) if valor else 'No Disponible'
+
+    context = {
+        'producto': producto,
+        'form_carrito': form_carrito,
+        'form_calificacion': form_calificacion,
+        'calificaciones': calificaciones,
+        'precio_formato_clp': precio_formato_clp
+    }
+    return render(request, 'interfaceCliente/productoDetalle.html', context)
+
+
+
+
+def vista_del_carrito(request):
+    # Obtener el carrito de la sesión
+    carrito = request.session.get('carrito', {})
+
+    # Recuperar información adicional de los productos y sus precios
+    detalles_del_carrito = []
+    for id_producto, cantidad in carrito.items():
+        producto = Producto.objects.get(pk=id_producto)
+        valor = Valor.objects.filter(id_producto=id_producto).first()
+        subtotal = valor.precio * cantidad if valor else 0
+
+        detalles_del_carrito.append({
+            'producto': producto,
+            'cantidad': cantidad,
+            'subtotal': subtotal
+        })
+
+    context = {
+        'detalles_del_carrito': detalles_del_carrito,
+        'total': sum(item['subtotal'] for item in detalles_del_carrito)
+    }
+    return render(request, 'interfaceCliente/descripcionCarrito.html', context)
+
+
+
+
+def descripcionCarrito(request):
+    id_cliente = request.user.id
+    carrito = CarritoCompra.objects.get(id_cliente=id_cliente)
+    detalles = carrito.detallecarritocompraproducto_set.all()
+
+    context = {
+        'detalles': detalles,
+    }
+    return render(request, 'descripcionCarrito.html', context)
+
+
+def carta(request):
+    return render(request, 'interfaceCliente/carta.html')
