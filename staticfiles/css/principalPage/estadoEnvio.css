@@ -1,0 +1,142 @@
+.card-envio{
+    background-color: #fcfcfc;
+    margin-top: 30px;
+    margin-bottom: 400px;
+    border-radius: 10px;
+ }
+ .title-envio1{
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+ }
+ .title-envio2{
+        margin-bottom: 20px;
+        font-weight: bold;
+        color: red;
+        margin-left: 40px;
+ }
+ .busqueda{
+     margin-top: 50px;
+     margin-bottom: 50px;
+     text-align: center;
+ }
+ .tracking-container {
+     width: 100%;
+     max-width: 500px;
+     margin-top: 60px;
+     margin-bottom: 60px;
+ }
+ .progress-container {
+     position: relative;
+     display: flex;
+     flex-direction: row;
+     margin-bottom: 10px;
+ }
+ progress{
+     width: 100%;
+     /* ...otros estilos... */
+ }
+ 
+ #progressMarker {
+     position: absolute;
+     top: 0;
+     bottom: 0;
+     width: 20px;
+     height: 20px;
+     border-radius: 50%;
+     background-color: #4caf50;
+ }
+ 
+ .marker-pendiente {
+     left: 33%;
+ }
+ 
+ .marker-en-camino {
+     left: 66%;
+ }
+ 
+ .marker-recibido {
+     left: 100%;
+ }
+
+ .estado-container {
+     position: relative;
+     height: 20px;
+     width: 100%;
+ }
+ 
+ .estado {
+     position: absolute;
+     bottom: 0;
+     transform: translateX(-50%);  /* Centra el texto en la posición left */
+ }
+
+ .estado:nth-child(1) {
+     left: 33%;
+ }
+
+ .estado:nth-child(2) {
+     left: 66%;
+ }
+
+ .estado:nth-child(3) {
+     left: 100%;
+ }
+
+ @media (max-width: 1300px) {
+     .estado {
+         font-size: 0.8em; /* Reduce el tamaño de la fuente */
+     }
+ }
+
+
+
+ .group {
+    display: flex;
+    line-height: 28px;
+    align-items: center;
+    position: relative;
+    max-width: 190px;
+    margin: 0 auto;
+    margin-bottom: 6rem;
+  }
+  
+  .input {
+    width: 100%;
+    height: 40px;
+    line-height: 28px;
+    padding: 0 1rem;
+    padding-left: 2.5rem;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    outline: none;
+    background-color: #f3f3f4;
+    color: #0d0c22;
+    transition: 0.3s ease;
+  }
+  
+  .input::placeholder {
+    color: #9e9ea7;
+  }
+  
+  .input:focus,
+  input:hover {
+    outline: none;
+    border-color: rgba(0, 48, 73, 0.4);
+    background-color: #fff;
+    box-shadow: 0 0 0 4px rgb(0 48 73 / 10%);
+  }
+  
+  .icon {
+    position: absolute;
+    left: 1rem;
+    fill: #9e9ea7;
+    width: 1rem;
+    height: 1rem;
+  }
+  
+
+
+ 
