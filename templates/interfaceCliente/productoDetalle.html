@@ -245,6 +245,12 @@ function formatCLP(number) {
 }
 
 
+// En tu archivo JavaScript
+document.querySelector('.cart-modal__chekount').addEventListener('click', function() {
+  window.location.href = "{% url 'descripcionCarrito' %}";
+});
+
+
 function drawProductInModal(precio, cantidad, total){
   if (precio === undefined || cantidad === undefined || total === undefined) {
     console.error("drawProductInModal llamado sin los parámetros necesarios.");
@@ -260,7 +266,7 @@ function drawProductInModal(precio, cantidad, total){
           </div>
           <img class="cart-modal__delete" src="{% static 'imagen/icono/icon-delete.svg' %}" alt="eliminar">
       </div>
-      <button class="cart-modal__chekount" >Confirmar</button>`;
+      <button class="cart-modal__chekount" ><a href="{% url 'descripcionCarrito' %}">Confirmar</button>`;
   deleteProduct();
 }
 

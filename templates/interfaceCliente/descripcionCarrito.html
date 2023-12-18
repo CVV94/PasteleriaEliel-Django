@@ -47,10 +47,10 @@
           <div class="item-carrito">
               <img src="{{ detalle.id_producto.presentaciones.first.imagen.url }}" alt="{{ detalle.id_producto.nombre }}">
               <div>
-                <p>Producto: {{ detalle.id_producto.nombre }}</p>
+                <p>Producto: {{ detalle.nombre }}</p>
                 <p>Cantidad: {{ detalle.cantidad }}</p>
-                <p>Precio unitario: {{ detalle.precio_unitario }}</p>
-                <p>Subtotal: {{ detalle.cantidad|multiply:detalle.precio_unitario }}</p>
+                <p>Precio unitario: {{ detalle.precio }}</p>
+                <p>Subtotal: {{ detalle.subtotal }}</p>
               </div>
           </div>
           {% empty %}

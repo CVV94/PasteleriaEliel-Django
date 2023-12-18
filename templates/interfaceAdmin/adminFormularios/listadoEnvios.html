@@ -41,7 +41,7 @@
                                 <td>{{ envio.id_compra.total_compra|precio_formateadoVenta }}</td>
                                 <td>{{ envio.id_compra.direccion }}</td>
                                 <td>{{ envio.id_estadoenvio.nombre }}</td>
-                                <td><a href="{% url 'edit_envios' envio.id_envio %}">Editar</a></td>
+                                <td><a href="{% url 'edit_envios' envio.id_envio %}" class='btn btn-success'>Editar</a></td>
                             </tr>
                         {% endfor %} 
                     </tbody>

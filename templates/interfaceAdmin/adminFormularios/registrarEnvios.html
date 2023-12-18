@@ -3,22 +3,44 @@
 
 <div class="row">
     <div class="col-sm-12 col-md-12 ">
-        <form class="form" method="post" action="{% url 'registrarEnvio' %}">
+        <form class="form" method="post">
             {% csrf_token %}
             
             <p class="title">Registrar Envios</p>
-            <p class="message">Signup now and get full access to our app.</p>
-        
-            <div class="flex">
-                <label>
-                    {{ form_envio.nombre }}
-                    <span>Fecha Envio</span>
-                </label>
-            </div>
         
             <label>
+                <span>ID ENVÍO</span>
+                {{ form.id_envio }}
+            </label>
+
+            <label>
+                <span>Fecha Envío</span>
+                {{ form.fecha_envio }}
+            </label>
+
+            <label>
                 <span>Fecha Entrega</span>
-                {{ form_proveedor.direccion }}
+                {{ form.fecha_entrega }}
+            </label>
+        
+            <label>
+                <span>Recibido Por</span>
+                {{ form.recibido_por }}
+            </label>
+        
+            <label>
+                <span>Rut</span>
+                {{ form.rut }}
+            </label>
+
+            <label>
+                <span>ID Compra</span>
+                {{ form.id_compra }}
+            </label>
+
+            <label>
+                <span>ID Estado Envío</span>
+                {{ form.id_estado_envio }}
             </label>
         
             <button class="submit" type="submit">Submit</button>

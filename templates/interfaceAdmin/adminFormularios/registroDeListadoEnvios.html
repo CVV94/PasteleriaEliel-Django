@@ -1,25 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends "interfaceAdmin/interfaceHome/interfazAdmin.html" %}
+{% load humanize %}
+{% load app_filters %}
+{% block formulario %}
 
+<div class="container">
+    <h1 class="form-envios-principal">Registro de Envios</h1>
+    <div class="row">
+        <div class="col-ms-12 col-md-12 col-lg-12">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-envios">
+                    <h2 class='title-envios'>Editar envío</h2>
+                    {{ envio_form.as_p }}
+                    
+                </div>
+                <div class="form-envios">
+                    <h2 class='title-envios'>Editar compra</h2>
+                    {{ compra_form.as_p }}
 
-  <h2>Editar envío</h2>
-  <form method="POST">
-    {% csrf_token %}
-    {{ envio_form.as_p }}
-    <h2>Editar compra</h2>
-    {{ compra_form.as_p }}
+                </div>
+                <div class="form-envios">
+                    <h2 class='title-envios'>Editar estado de envío</h2>
+                    {{ estadoenvio_form.as_p }}
 
-    <h2>Editar estado de envío</h2>
-    {{ estadoenvio_form.as_p }}
-    <button type="submit">Guardar cambios</button>
-  </form>
+                </div>
 
-    
-</body>
-</html>
+              <button type="submit" class='btn btn-success'>Guardar cambios</button>
+            </form>
+          
+
+        </div>
+    </div>
+</div>
+
+        
+  
+  
+  {% endblock  %}

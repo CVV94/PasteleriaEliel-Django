@@ -17,6 +17,7 @@
                             <th class="centered">Unidad de Medida</th>
                             <th class="centered">Precio</th>
                             <th class="centered">Stock</th>
+                            <th class="centered">Acciones</th>
                         </tr>
                     </thead>
                     <tbody id="datatable-products">
@@ -38,6 +39,8 @@
                    No existen ingredientes registrados
                   </div>
                 {% endif %}
+                <td><a class="btn btn-danger btn-sm" href="javascript:void(0);" onclick="confirmDelete('/eliminarIngrediente/{{ingrediente.id}}')"><i class="bi bi-trash3"></i></a></td>
+                <td><a class="btn btn-danger btn-sm" href="/editarIngrediente/{{Ingrediente.id}}"><i class="bi bi-pencil-fill"></i></a></td>
             </div>
         </div>
     </div>
@@ -47,3 +50,11 @@
   
   
   {% endblock  %}
+
+  <script>
+    function confirmDelete(url) {
+        if (confirm("¿Estás seguro de que quieres eliminar este elemento?")) {
+            window.location.href = url;
+        }
+    }
+</script>

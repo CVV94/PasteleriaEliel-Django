@@ -1,10 +1,14 @@
 {% extends "interfaceAdmin/interfaceHome/interfazAdmin.html" %}
+{% load humanize %}
+{% load app_filters %}
 {% block formulario %}
 
 <div class="container">
     <h1>Listado de Compras</h1>
     <div class="row">
         <div class="col-ms-12 col-md-12 col-lg-12">
+            <a href="{% url 'export_excel' %}" class="btn btn-success">Exportar a Excel</a>
+            {% comment %} <a href="{% url 'export_pdf' %}" class="btn btn-danger">Exportar a PDF</a> {% endcomment %}
             <div class="table-responsive">
                 <table class="table" id="datatable-products">
                     <thead>
@@ -25,10 +29,10 @@
                                 <td>{{ forloop.counter }}</td>
                                 <td>{{ compra.id_compra }}</td> 
                                 <td>{{ compra.id_cliente }}</td>
-                                <td>{{ compra.id_carrito }}</td>
-                                <td>{{ compra.id_estadopago }}</td>
-                                <td>{{ compra.fecha_compra }}</td>
-                                <td>{{ compra.total_compra }}</td>
+                                <td>{{ compra.id_carrito.id_carrito }}</td>
+                                <td>{{ compra.id_estadopago.get_estado_pago_display }}</td>
+                                <td>{{ compra.fecha_compra|date:"d/m/Y"  }}</td>
+                                <td>{{ compra.total_compra|precio_formateadoVenta }}</td>
                                 <td>{{ compra.direccion }}</td>
                             </tr>
                         {% endfor %} 

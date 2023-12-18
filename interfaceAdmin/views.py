@@ -2,7 +2,7 @@ from pyexpat.errors import messages
 from typing import Any
 from django.views.generic import ListView,UpdateView,CreateView,DeleteView
 from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render,redirect
 from .forms import ProductoForm,CargarImagenForm,ValorForm, ProveedorForm, IngredienteForm, EnvioForm, CompraForm,EstadoEnvioForm, DetalleCarritoForm, CalificacionForm
 from .models import Producto, Proveedor, Ingrediente, Compra, Envio, Estadoenvio, Cliente, CarritoCompra, Estadopago, PresentacionProducto,Valor, DetalleCarritoCompraProducto, Calificacion
@@ -12,12 +12,26 @@ import os
 from django.http import Http404
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from django.template.loader import get_template
+# from xhtml2pdf import pisa
+import openpyxl
 
 # Create your views here.
+def group_required(*group_names):
+    """Requires user membership in at least one of the groups passed in."""
+    def in_groups(u):
+        if u.is_authenticated:
+            if bool(u.groups.filter(name__in=group_names)) | u.is_superuser:
+                return True
+        return False
+    return user_passes_test(in_groups, login_url='login_cliente')
+
+@group_required()
 def interfaceAdmin(request):
     return render(request,'interfaceAdmin/interfaceHome/interfazAdmin.html')
 
+@method_decorator(group_required(), name='dispatch')  
 class ProductoCreateView(CreateView):
     model = Producto
     template_name = 'interfaceAdmin/adminFormularios/registrarProductos.html'
@@ -40,8 +54,9 @@ class ProductoCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'Registrar Productos'
-        return context    
-    
+        return context   
+     
+@method_decorator(group_required(), name='dispatch')     
 class ValorCreateView(CreateView):
     model = Valor
     template_name = 'interfaceAdmin/adminFormularios/registrarPrecio.html'
@@ -59,7 +74,7 @@ class ValorCreateView(CreateView):
         context["title"] = 'Registrar Productos'
         return context    
 
-
+@method_decorator(group_required(), name='dispatch')  
 class ImagenCreateView(CreateView):
     model = PresentacionProducto
     template_name = 'interfaceAdmin/adminFormularios/registrarImagen.html'
@@ -82,6 +97,7 @@ class ImagenCreateView(CreateView):
         context['title'] = 'Registrar Imagen'
         return context
     
+@method_decorator(group_required(), name='dispatch')   
 class ImagenDeleteView(DeleteView):
     model = PresentacionProducto
     template_name = 'interfaceAdmin/adminFormularios/eliminarImagen.html'
@@ -114,18 +130,19 @@ class ImagenDeleteView(DeleteView):
             'r1': f'La imagen {pk} no existe o no se puede eliminar'
         })
     
-
+@group_required()
 def listadoProductos(request):
     productos = Producto.objects.filter(estado='ACTIVO').values(
         'id_producto', 'nombre', 'tipo', 'descripcion'
     ).annotate(
-        stock=F('valor__stock'), 
-        imagen=F('presentacionproducto__imagen'), 
-        precio=F('valor__precio')
+        stock=F('valores__stock'), 
+        imagen=F('presentaciones__imagen'), 
+        precio=F('valores__precio')
     )
 
     return render(request, 'interfaceAdmin/adminFormularios/listadoProductos.html', {'productos': productos})
 
+@method_decorator(group_required(), name='dispatch')  
 class ImagenesListView(ListView):
     model= PresentacionProducto
     template_name='interfaceAdmin/adminFormularios/listadoDeImagenes.html'
@@ -139,6 +156,7 @@ class ImagenesListView(ListView):
         context["title"] = 'Listado de Imagenes'
         return context
     
+@method_decorator(group_required(), name='dispatch')    
 class ImagenesUpdateView(UpdateView):
     model=PresentacionProducto
     form_class=CargarImagenForm 
@@ -152,7 +170,7 @@ class ImagenesUpdateView(UpdateView):
     
 
     
-
+@method_decorator(group_required(), name='dispatch')  
 class ProductoListView(ListView):
     model= Producto
     template_name='interfaceAdmin/adminFormularios/listadoDeProductos.html'
@@ -166,12 +184,14 @@ class ProductoListView(ListView):
         context["title"] = "Listado de Productos"
         return context
     
+@method_decorator(group_required(), name='dispatch')     
 class ProductoUpdateView(UpdateView):
     model= Producto
     form_class= ProductoForm
     template_name='interfaceAdmin/adminFormularios/registrarProductos.html'
     success_url= reverse_lazy("listadoDeProductos")
 
+@method_decorator(group_required(), name='dispatch')  
 class ProductoDeleteView(DeleteView):
         model= Producto
         template_name='interfaceAdmin/adminFormularios/eliminarProducto.html'
@@ -183,6 +203,7 @@ class ProductoDeleteView(DeleteView):
             context["list_url"] = reverse_lazy('listadoDeProductos')
             return context
         
+@method_decorator(group_required(), name='dispatch')  
 class ClienteListView(ListView):
     model= Cliente
     template_name='interfaceAdmin/adminFormularios/listadoDeClientes.html'
@@ -197,11 +218,13 @@ class ClienteListView(ListView):
         return context
 
 # PROVEEDORES
+@group_required()
 def listadoProveedores(request):
     proveedores = Proveedor.objects.all()
     data = {'proveedores':proveedores}
     return render(request,'interfaceAdmin/adminFormularios/listadoProveedores.html', data)
 
+@group_required()
 def registrarProveedor(request):
     form_proveedor = ProveedorForm()
     mensaje = {}
@@ -219,7 +242,7 @@ def registrarProveedor(request):
 
     return render(request,'interfaceAdmin/adminFormularios/registrarProveedor.html',{'form_proveedor':form_proveedor})
 
-
+@group_required()
 def editarProveedor(request,id_proveedor):
     proveedor=Proveedor.objects.get(id_proveedor=id_proveedor)
     form = ProveedorForm(instance=proveedor)
@@ -230,6 +253,7 @@ def editarProveedor(request,id_proveedor):
         return redirect('listadoProveedores')
     return render(request,'interfaceAdmin/adminFormularios/registrarProveedor.html',{'form':form})
 
+@group_required()
 def eliminarProveedor(request,id_proveedor):
     proveedor= Proveedor.objects.get(id_proveedor=id_proveedor)
     proveedor.delete()
@@ -240,6 +264,7 @@ def eliminarProveedor(request,id_proveedor):
 
 
 # INGREDIENTES
+@group_required()
 def listadoIngredientes(request):
     ingredientes = Ingrediente.objects.all()
     productos = Producto.objects.all()
@@ -250,7 +275,7 @@ def listadoIngredientes(request):
         'proveedores':proveedores
         }
     return render(request,'interfaceAdmin/adminFormularios/listadoIngredientes.html', data)
-
+@group_required()
 def registrarIngrediente(request):
     form = IngredienteForm(request.POST)
 
@@ -274,6 +299,7 @@ def registrarIngrediente(request):
 
 
 
+@group_required()
 def editarIngrediente(request,id_ingrediente):
     ingrediente=Ingrediente.objects.get(id_ingrediente=id_ingrediente)
     form = IngredienteForm(instance=ingrediente)
@@ -285,15 +311,16 @@ def editarIngrediente(request,id_ingrediente):
     
     data = {'form' : form, 'titulo' : 'ACTUALIZAR INGREDIENTE'}
     return render(request,'interfaceAdmin/adminFormularios/registrarIngrediente.html',data)
-
+@group_required()
 def eliminarIngrediente(request,id_ingrediente):
     ingrediente= Ingrediente.objects.get(id_ingrediente=id_ingrediente)
     ingrediente.delete()
-    return redirect('interfaceAdmin/adminFormularios/listadoIngredientes.html')
+    return redirect('listadoIngredientes')
 
 
 
 # ENVIOS
+@group_required()
 def listadoEnvios(request):
     envios = Envio.objects.select_related('id_compra','id_estadoenvio').all()
     data = {
@@ -302,18 +329,29 @@ def listadoEnvios(request):
     return render(request,'interfaceAdmin/adminFormularios/listadoEnvios.html', data)
 
 
-
-
+@group_required()
 def registrarEnvio(request):
-    form = EnvioForm()
-    if request.method == 'POST' :
+    form = EnvioForm(request.POST)
+
+    if request.method == 'POST':
         form = EnvioForm(request.POST)
         if form.is_valid():
-            form.save()
-        return redirect('listadoEnvios')
-    data = {'form':form, 'titulo' : 'AGREGAR ENVIO'}
-    return render(request, 'interfaceAdmin/adminFormularios/registrarEnvio.html', data)
+            nombreSelect = form.cleaned_data['nombre']
+            nombreEnvio = Envio.objects.filter(nombre=nombreSelect)
+            if nombreEnvio.exists():
+                mensaje = 'El Envio (' + str(nombreSelect) + ') ya existe'
+            else:
+                form.save()
+                mensaje = 'El Envio (' + str(nombreSelect) + ') se guardó correctamente'
+                return redirect('listadoEnvios')
+        else:
+            mensaje = 'Hay errores en el formulario.'
+    else:
+        mensaje = ''
+    return render(request, 'interfaceAdmin/adminFormularios/registrarEnvio.html', {'form': form, 'mensaje': mensaje})
 
+
+@group_required()
 def editarEnvio(request,id_envio):
     envio=Envio.objects.get(id_envio=id_envio)
     form = EnvioForm(instance=envio)
@@ -326,12 +364,14 @@ def editarEnvio(request,id_envio):
     data = {'form' : form, 'titulo' : 'ACTUALIZAR ENVIO'}
     return render(request,'interfaceAdmin/adminFormularios/registrarEnvio.html',data)
 
+@group_required()
 def eliminarEnvio(request,id_envio):
     envio= Ingrediente.objects.get(id_envio=id_envio)
     envio.delete()
     return redirect('interfaceAdmin/adminFormularios/listadoEnvios.html')
 
 # COMPRAS
+@group_required()
 def listadoCompras(request):
     compras = Compra.objects.all()
     clientes = Cliente.objects.all()
@@ -345,6 +385,49 @@ def listadoCompras(request):
         }
     return render(request,'interfaceAdmin/adminFormularios/listadoCompras.html', data)
 
+@group_required()
+def export_compras_to_excel(request):
+    wb = openpyxl.Workbook()
+    ws = wb.active
+
+    ws.append(['#', 'ID', 'ID Cliente', 'ID Carrito de Compras', 'Estado de Pago', 'Fecha de Compra', 'Total de Compra', 'Dirección'])
+
+    for compra in Compra.objects.all():
+        ws.append([
+            compra.id_compra,
+            compra.id_compra,
+            compra.id_cliente.nombre,
+            compra.id_carrito.id_carrito,
+            compra.id_estadopago.get_estado_pago_display(),
+            compra.fecha_compra.strftime('%d/%m/%Y'),
+            '${:,.2f}'.format(compra.total_compra),
+            compra.direccion
+        ])
+
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=compras.xlsx'
+    wb.save(response)
+
+    return response
+
+@group_required()
+def export_compras_to_pdf(request):
+    template_path = 'interfaceAdmin/adminFormularios/listadoCompras.html'
+    context = {'compras': Compra.objects.all()}
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="compras.pdf"'
+
+    template = get_template(template_path)
+    html = template.render(context)
+
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+
+    if pisa_status.err:
+       return HttpResponse('Ocurrió un error al generar el archivo PDF <pre>' + html + '</pre>')
+    return response
+
+@group_required()
 def registrarCompra(request):
     form = CompraForm()
     if request.method == 'POST' :
@@ -355,6 +438,7 @@ def registrarCompra(request):
     data = {'form':form, 'titulo' : 'AGREGAR COMPRA'}
     return render(request, 'interfaceAdmin/adminFormularios/registrarCompra.html', data)
 
+@group_required()
 def editarCompra(request,id_compra):
     compra=Compra.objects.get(id_compra=id_compra)
     form = CompraForm(instance=compra)
@@ -367,6 +451,7 @@ def editarCompra(request,id_compra):
     data = {'form' : form, 'titulo' : 'ACTUALIZAR COMPRA'}
     return render(request,'interfaceAdmin/adminFormularios/registrarConpra.html',data)
 
+@group_required()
 def eliminarCompra(request,id_compra):
     compra= Compra.objects.get(id_compra=id_compra)
     compra.delete()
@@ -427,6 +512,7 @@ def detalleProducto(request, id_producto):
     if request.method == 'POST':
         if 'agregar_carrito' in request.POST and form_carrito.is_valid():
             id_cliente = Cliente.objects.filter(email=request.user.email).first()
+            
             if id_cliente:
                 carrito, _ = CarritoCompra.objects.get_or_create(id_cliente=id_cliente)
                 detalle, created = DetalleCarritoCompraProducto.objects.get_or_create(
@@ -437,7 +523,21 @@ def detalleProducto(request, id_producto):
                 if not created:
                     detalle.cantidad += form_carrito.cleaned_data['cantidad']
                     detalle.save()
+
+                carrito_info = request.session.get('carrito_info', [])
+                carrito_info.append({
+                    'id_producto': id_producto,
+                    'nombre_producto': producto.nombre,
+                    'cantidad': form_carrito.cleaned_data['cantidad'],
+                    'precio_unitario': valor.precio,
+                    'subtotal': form_carrito.cleaned_data['cantidad'] * valor.precio
+                })
+                request.session['carrito_info'] = carrito_info
+
+                messages.success(request, 'Producto agregado al carrito correctamente.')
                 return redirect('detalleProducto', id_producto=id_producto)
+            
+                
 
         elif 'agregar_calificacion' in request.POST and form_calificacion.is_valid():
             id_cliente = Cliente.objects.filter(email=request.user.email).first()
@@ -488,12 +588,13 @@ def vista_del_carrito(request):
 
 
 def descripcionCarrito(request):
-    id_cliente = request.user.id
-    carrito = CarritoCompra.objects.get(id_cliente=id_cliente)
-    detalles = carrito.detallecarritocompraproducto_set.all()
+    carrito_data = request.session.get('carrito', {})
 
     context = {
-        'detalles': detalles,
+        'detalles_del_carrito': carrito_data,
+        'total': carrito_data.get('subtotal', 0)
     }
-    return render(request, 'descripcionCarrito.html', context)
+
+    return render(request, 'interfaceCliente/descripcionCarrito.html', context)
+
 
