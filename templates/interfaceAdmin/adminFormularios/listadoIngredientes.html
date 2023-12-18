@@ -6,6 +6,7 @@
     <div class="row">
         <div class="col-ms-12 col-md-12 col-lg-12">
             <div class="table-responsive">
+                {% if ingredientes %}
                 <table class="table" id="datatable-products">
                     <thead>
                         <tr>
@@ -32,7 +33,11 @@
                         {% endfor %} 
                     </tbody>
                 </table>
-
+                {% else %}
+                <div class="alert alert-danger" role="alert">
+                   No existen ingredientes registrados
+                  </div>
+                {% endif %}
             </div>
         </div>
     </div>

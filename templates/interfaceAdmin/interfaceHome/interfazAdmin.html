@@ -64,21 +64,27 @@
                 </ul>
             </li>
             <li>
+                <div class="iocn-link">
                 <a href="{% url "listadoProveedores" %}">
                     <i class='bx bxs-pie-chart-alt-2'></i>
                     <span class="link_name">Proveedores</span>
                 </a>
+                <i class='bx bx-chevron-down arrow'></i>
+                </div>
                 <ul class="sub-menu blanck">
                     <li><a class="link_name" href="{% url "listadoProveedores" %}">Proveedores</a></li>
                     <li><a href="{% url "registrarProveedor" %}">Registrar Proveedor</a></li>
                 </ul>
             </li>
             <li>
-                <a href="{% url "listadoIngredientes" %}">
-                    <i class='bx bxs-pie-chart-alt-2'></i>
-                    <span class="link_name">Ingredientes</span>
-                </a>
-                <ul class="sub-menu blanck">
+                <div class="iocn-link">
+                    <a href="{% url "listadoIngredientes" %}">
+                        <i class='bx bxs-pie-chart-alt-2'></i>
+                        <span class="link_name">Ingredientes</span>
+                    </a>
+                    <i class='bx bx-chevron-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
                     <li><a class="link_name" href="{% url "listadoIngredientes" %}">Ingredientes</a></li>
                     <li><a href="{% url "registrarIngrediente" %}">Registrar Ingrediente</a></li>
                 </ul>

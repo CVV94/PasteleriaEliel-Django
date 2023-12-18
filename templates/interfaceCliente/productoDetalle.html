@@ -34,31 +34,41 @@
   <main class="main-container">
     <header class="header">
       <div class="header__navigation">
-        <img class="header__menu" src="./images/icon-menu.svg" alt="menu icon">
-        <img class="header__logo" src="{% static 'imagen/logo/logoIcono.png' %}" alt="logo">
-        <nav class="navbar">
-          <ul class="navbar__items">
-            <li><a class="navbar__link" href="#">Collections</a></li>
-            <li><a class="navbar__link" href="#">Men</a></li>
-            <li><a class="navbar__link" href="#">Women</a></li>
-            <li><a class="navbar__link" href="#">About</a></li>
-            <li><a class="navbar__link" href="#">Contact</a></li>
-          </ul>
-        </nav>
-      </div>
-
-      <div class="header__cart-avatar">
-        <div class="header__cart">
-          <div class="header__cart--notification">0</div>
-          <img src="{% static 'imagen/icono/icon-cart.svg' %}" alt="">
-        </div>
-        <img class="header__avatar" src="{% static 'imagen/icono/icono_cliente.png' %}" alt="">
-      </div>
+			  <img class="header__menu" src="./images/icon-menu.svg" alt="menu icon">
+			  <img class="header__logo" src="{% static 'imagen/logo/logoIcono.png' %}" alt="logo">
+			  <nav class="navbar">
+				<ul class="navbar__items">
+					<li><a class="navbar__link" href="{% url "home" %}">Inicio</a></li>
+          <li><a class="navbar__link" href="{% url "carta" %}">Volver a la Carta</a></li>
+					<li><a class="navbar__link" href="#">Contacto</a></li>
+					<li><a class="navbar__link" href="{% url "envios_cliente" %}">Estado Envío</a></li>
+				</ul>
+			  </nav>
+			</div>
+	  
+			<div class="header__cart-avatar">
+			  <div class="header__cart">
+				<div class="header__cart--notification">0</div>
+				<img src="{% static 'imagen/icono/icon-cart.svg' %}" alt="">
+			  </div>
+			  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				{% if user.is_authenticated %}
+					{{ user.username }}
+				{% else %}
+					Login
+				{% endif %}
+				</a>
+			</div>
     </header>
 
     <section class="content">
       <article class="gallery">
         <div class="gallery__image-container">
+          {% if presentacion.imagen %}
+            <img src="../media/{{ presentacion.imagen.url }}" alt="{{ producto.nombre }}">
+          {% else %}
+              No image
+          {% endif %}
           <img class="gallery__previus" src="{% static 'imagen/icono/icon-previous.svg' %}" alt="previus">
           <img class="gallery__next" src=" {% static 'imagen/icono/icon-next.svg' %}" alt="next">
         </div>
@@ -77,9 +87,11 @@
             <input class="input__number" type="text" value="0">
             <img class="input__plus" src=" {% static 'imagen/icono/icon-plus.svg' %}" alt="plus">
           </div>
-          <button class="details__button"  name="submit_carrito" data-precio="{{ precio_formato_clp }}"> <img src="{% static 'imagen/icono/icon-cart-white.svg' %}" alt="">Agregar al Carrito</button>
+          <button class="details__button" data-precio="{{ precio_formato_clp }}"> <img src="{% static 'imagen/icono/icon-cart-white.svg' %}" alt="">Agregar al Carrito</button>
         </div><br><br>
 
+  
+      
 
         <div class="comentarios-y-calificaciones">
           <h2 class="details__company">Comentarios y Calificaciones</h2>
@@ -95,11 +107,12 @@
       </div>
     
       <!-- Formulario para agregar una nueva calificación -->
-      <form method="post">
+      <form method="post" action="{% url 'detalleProducto' producto.id_producto %}">
         {% csrf_token %}
-        {{ calificacion_form.as_p }}
-        <button type="submit" name="submit_calificacion">Enviar Calificación</button>
-      </form>
+        {{ form_calificacion.as_p }}
+        <button type="submit" name="agregar_calificacion">Enviar Calificación</button>
+    </form>
+    
 
 
 
@@ -232,17 +245,10 @@ function formatCLP(number) {
 }
 
 
-function drawProductInModal(precio, cantidad, total) {
-  // Suponiendo que tienes un div para mostrar los productos agregados
-  var carritoProductosDiv = document.getElementById('carrito-productos');
-  var productoHTML = `
-      <div>
-          <p>Producto: ${producto.nombre}</p>
-          <p>Cantidad: ${cantidad}</p>
-          <p>Subtotal: ${formatCLP(total)}</p>
-      </div>
-  `;
-  carritoProductosDiv.innerHTML += productoHTML;
+function drawProductInModal(precio, cantidad, total){
+  if (precio === undefined || cantidad === undefined || total === undefined) {
+    console.error("drawProductInModal llamado sin los parámetros necesarios.");
+    return;
 }
 
   productContainer.innerHTML = `

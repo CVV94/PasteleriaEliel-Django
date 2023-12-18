@@ -57,12 +57,16 @@ class EstadoEnvioForm(forms.ModelForm):
 class CalificacionForm(forms.ModelForm):
     class Meta:
         model = Calificacion
-        fields = ['titulo', 'comentario', 'calificacion']  # Ajusta los campos según sea necesario
-        widgets = {
-            'titulo': forms.TextInput(attrs={'class': 'input', 'placeholder': 'Título'}),
-            'comentario': forms.Textarea(attrs={'cols': 40, 'rows': 5, 'placeholder': 'Comentario'}),
-            'calificacion': forms.NumberInput(attrs={'min': 1, 'max': 5})
-        }
+        fields = ['calificacion', 'titulo', 'comentario']
+        
+    def save(self, commit=True, user=None):
+        calificacion = super().save(commit=False)
+        if user:
+            calificacion.id_cliente = user.cliente
+        if commit:
+            calificacion.save()
+        return calificacion
+
 
 class DetalleCarritoForm(forms.ModelForm):
     class Meta:

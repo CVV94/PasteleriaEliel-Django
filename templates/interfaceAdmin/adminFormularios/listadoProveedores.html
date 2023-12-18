@@ -15,6 +15,7 @@
                             <th class="centered">Dirección</th>
                             <th class="centered">Teléfono</th>
                             <th class="centered">Web</th>
+                            <th class="centered">Opciones</th>
                         </tr>
                     </thead>
                     <tbody id="datatable-products">
@@ -26,11 +27,13 @@
                                 <td>{{ proveedor.direccion }}</td>
                                 <td>{{ proveedor.telefono }}</td>
                                 <td>{{ proveedor.web }}</td>
+                                <td><a class="btn btn-danger btn-sm" href="javascript:void(0);" onclick="confirmDelete('/eliminarProveedor/{{proveedor.id}}')"><i class="bi bi-trash3"></i></a></td>
+                                <td><a class="btn btn-danger btn-sm" href="/editarProveedor/{{proveedor.id}}"><i class="bi bi-pencil-fill"></i></a></td>
                             </tr>
                         {% endfor %} 
                     </tbody>
                 </table>
-
+               
             </div>
         </div>
     </div>

@@ -29,8 +29,6 @@ urlpatterns = [
     path('eliminarProveedor/<int:id_proveedor>',views.eliminarProveedor, name='eliminarProveedor'),
 
     path('listado/envios',views.listadoEnvios, name='listadoEnvios'),
-    path('edit-envios/<int:id_envio>/', views.editEnvios, name='edit_envios'),
-    
     path('registrar/envio', views.registrarEnvio, name='registrarEnvio'),
     path('editarEnvio/<int:id_envio>', views.editarEnvio, name='editarEnvio'),
     path('eliminarEnvio/<int:id_envio>',views.eliminarEnvio, name='eliminarEnvio'),
@@ -43,4 +41,12 @@ urlpatterns = [
     path('producto/<int:id_producto>/',views.detalleProducto, name='detalleProducto'),
     path('descripcionCarrito/',views.descripcionCarrito, name='descripcionCarrito'),
     path('carta/',views.listadoProductosCarta, name='carta'),
+    path('tortas-modernas/', views.tortas_modernas, name='tortas_modernas'),
+    path('pasteleria_tradicional/', views.pasteleria_tradicional, name='pasteleria_tradicional'),
+    path('panaderia/', views.panaderia, name='panaderia'),
+
+    path('tortas_heladas/', views.tortas_heladas, name='tortas_heladas'),
+    path('bolleria/', views.bolleria, name='bolleria'),
+    path('dulce_tentacion/', views.dulce_tentacion, name='dulce_tentacion'),
+    path('cheesecake/', views.cheesecake, name='cheesecake'),
 ]

@@ -3,37 +3,44 @@
 
 <div class="row">
     <div class="col-sm-12 col-md-12 ">
-        <form class="form" method="post" action="{% url 'registrarIngrediente' %}">
+        <form class="form" method="post" >
             {% csrf_token %}
             
             <p class="title">Registrar Ingrediente</p>
-            <p class="message">Signup now and get full access to our app.</p>
         
-            <div class="flex">
-                <label>
-                    {{ form_producto.nombre }}
-                    <span>Nombre</span>
-                </label>
-            </div>
+            <label>
+                <span>Producto</span>
+                {{ form.id_producto }}
+            </label>
+
+            <label>
+                <span>Proveedor</span>
+                {{ form.id_proveedor }}
+            </label>
+
+            <label>
+                <span>Nombre</span>
+                {{ form.nombre }}
+            </label>
         
             <label>
                 <span>Descripción</span>
-                {{ form_ingrediente.descripcion }}
+                {{ form.descripcion }}
             </label>
         
             <label>
                 <span>Unidad de Medida</span>
-                {{ form_ingrediente.unidad_medida }}
+                {{ form.unidad_medida }}
             </label>
 
             <label>
                 <span>Precio</span>
-                {{ form_ingrediente.precio }}
+                {{ form.precio }}
             </label>
 
             <label>
                 <span>Stock</span>
-                {{ form_ingrediente.stock }}
+                {{ form.stock }}
             </label>
         
             <button class="submit" type="submit">Submit</button>
@@ -42,3 +49,5 @@
 
     </div>
 </div>
+
+{% endblock  %}

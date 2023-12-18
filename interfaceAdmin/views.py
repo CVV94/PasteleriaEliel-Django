@@ -12,6 +12,7 @@ import os
 from django.http import Http404
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def interfaceAdmin(request):
@@ -251,14 +252,27 @@ def listadoIngredientes(request):
     return render(request,'interfaceAdmin/adminFormularios/listadoIngredientes.html', data)
 
 def registrarIngrediente(request):
-    form = IngredienteForm()
-    if request.method == 'POST' :
+    form = IngredienteForm(request.POST)
+
+    if request.method == 'POST':
         form = IngredienteForm(request.POST)
         if form.is_valid():
-            form.save()
-        return redirect('listadoIngredientes')
-    data = {'form':form, 'titulo' : 'AGREGAR INGREDIENTE'}
-    return render(request, 'interfaceAdmin/adminFormularios/registrarIngrediente.html', data)
+            nombreSelect = form.cleaned_data['nombre']
+            nombreIngrediente = Ingrediente.objects.filter(nombre=nombreSelect)
+            if nombreIngrediente.exists():
+                mensaje = 'El Ingrediente (' + str(nombreSelect) + ') ya existe'
+            else:
+                form.save()
+                mensaje = 'El Ingrediente (' + str(nombreSelect) + ') se guardó correctamente'
+                return redirect('listadoIngredientes')
+        else:
+            mensaje = 'Hay errores en el formulario.'
+    else:
+        mensaje = ''
+    return render(request, 'interfaceAdmin/adminFormularios/registrarIngrediente.html', {'form': form, 'mensaje': mensaje})
+
+
+
 
 def editarIngrediente(request,id_ingrediente):
     ingrediente=Ingrediente.objects.get(id_ingrediente=id_ingrediente)
@@ -287,26 +301,7 @@ def listadoEnvios(request):
         }
     return render(request,'interfaceAdmin/adminFormularios/listadoEnvios.html', data)
 
-def editEnvios(request, id_envio):
-    envio = Envio.objects.select_related('id_compra','id_estadoenvio').get(pk=id_envio)
-    if request.method == 'POST':
-        envio_form = EnvioForm(request.POST, instance=envio)
-        compra_form = CompraForm(request.POST, instance=envio.id_compra)
-        estadoenvio_form = EstadoEnvioForm(request.POST, instance=envio.id_estadoenvio)
-        if envio_form.is_valid() and compra_form.is_valid() and estadoenvio_form.is_valid():
-            envio_form.save()
-            compra_form.save()
-            estadoenvio_form.save()
-            return redirect('listadoEnvios') 
-    else:
-        envio_form = EnvioForm(instance=envio)
-        compra_form = CompraForm(instance=envio.id_compra)
-        estadoenvio_form = EstadoEnvioForm(instance=envio.id_estadoenvio)
-    return render(request, 'interfaceAdmin/adminFormularios/registroDeListadoEnvios.html', { 
-        'compra_form': compra_form,
-        'envio_form': envio_form,
-        'estadoenvio_form': estadoenvio_form,
-    })
+
 
 
 def registrarEnvio(request):
@@ -386,10 +381,42 @@ def listadoProductosCarta(request):
     productos = Producto.objects.all()
     return render(request, 'interfaceCliente/carta.html', {'productos': productos})
 
+def pasteleria_tradicional(request):
+    productos = Producto.objects.filter(tipo='Pastelería Tradicional', estado='ACTIVO')
+    return render(request, 'interfaceCliente/pasteleria_tradicional.html', {'productos': productos})
+
+def tortas_modernas(request):
+    productos = Producto.objects.filter(tipo='Tortas Modernas', estado='ACTIVO')
+    return render(request, 'interfaceCliente/tortas_modernas.html', {'productos': productos})
+
+def panaderia(request):
+    productos = Producto.objects.filter(tipo='Panadería', estado='ACTIVO')
+    return render(request, 'interfaceCliente/panaderia.html', {'productos': productos})
+
+def tortas_heladas(request):
+    productos = Producto.objects.filter(tipo='Tortas Heladas', estado='ACTIVO')
+    return render(request, 'interfaceCliente/tortas_heladas.html', {'productos': productos})
+
+def bolleria(request):
+    productos = Producto.objects.filter(tipo='Bollería', estado='ACTIVO')
+    return render(request, 'interfaceCliente/bolleria.html', {'productos': productos})
+
+def dulce_tentacion(request):
+    productos = Producto.objects.filter(tipo='Dulce Tentación', estado='ACTIVO')
+    return render(request, 'interfaceCliente/dulce_tentacion.html', {'productos': productos})
+
+def cheesecake(request):
+    productos = Producto.objects.filter(tipo='Cheesecake', estado='ACTIVO')
+    return render(request, 'interfaceCliente/cheesecake.html', {'productos': productos})
+
+
+
+
+
 def format_precio_clp(precio):
     return "{:,.0f}".format(precio).replace(",", ".")
 
-
+@login_required
 def detalleProducto(request, id_producto):
     producto = get_object_or_404(Producto, pk=id_producto)
     form_carrito = DetalleCarritoForm(request.POST or None)
@@ -399,25 +426,29 @@ def detalleProducto(request, id_producto):
 
     if request.method == 'POST':
         if 'agregar_carrito' in request.POST and form_carrito.is_valid():
-            id_cliente = request.user.id
-            carrito, _ = CarritoCompra.objects.get_or_create(id_cliente=id_cliente)
-            detalle, created = DetalleCarritoCompraProducto.objects.get_or_create(
-                id_carrito=carrito,
-                id_producto=producto,
-                defaults={'cantidad': form_carrito.cleaned_data['cantidad'], 'precio_unitario': valor.precio}
-            )
-            if not created:
-                detalle.cantidad += form_carrito.cleaned_data['cantidad']
-                detalle.save()
-            return redirect('detalleProducto', id_producto=id_producto)
+            id_cliente = Cliente.objects.filter(email=request.user.email).first()
+            if id_cliente:
+                carrito, _ = CarritoCompra.objects.get_or_create(id_cliente=id_cliente)
+                detalle, created = DetalleCarritoCompraProducto.objects.get_or_create(
+                    id_carrito=carrito,
+                    id_producto=producto,
+                    defaults={'cantidad': form_carrito.cleaned_data['cantidad'], 'precio_unitario': valor.precio}
+                )
+                if not created:
+                    detalle.cantidad += form_carrito.cleaned_data['cantidad']
+                    detalle.save()
+                return redirect('detalleProducto', id_producto=id_producto)
 
         elif 'agregar_calificacion' in request.POST and form_calificacion.is_valid():
-            nueva_calificacion = form_calificacion.save(commit=False)
-            nueva_calificacion.id_producto = producto
-            nueva_calificacion.save()
-            return redirect('detalleProducto', id_producto=id_producto)
+            id_cliente = Cliente.objects.filter(email=request.user.email).first()
+            if id_cliente:
+                nueva_calificacion = form_calificacion.save(commit=False)
+                nueva_calificacion.id_producto = producto
+                nueva_calificacion.id_cliente = id_cliente
+                nueva_calificacion.save()
+                return redirect('detalleProducto', id_producto=id_producto)
 
-    precio_formato_clp = format_precio_clp(valor.precio) if valor else 'No Disponible'
+    precio_formato_clp = "{:,.0f}".format(valor.precio).replace(",", ".") if valor else 'No Disponible'
 
     context = {
         'producto': producto,
@@ -427,7 +458,6 @@ def detalleProducto(request, id_producto):
         'precio_formato_clp': precio_formato_clp
     }
     return render(request, 'interfaceCliente/productoDetalle.html', context)
-
 
 
 
@@ -467,6 +497,3 @@ def descripcionCarrito(request):
     }
     return render(request, 'descripcionCarrito.html', context)
 
-
-def carta(request):
-    return render(request, 'interfaceCliente/carta.html')
