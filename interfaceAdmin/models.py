@@ -172,7 +172,7 @@ class Estadopago(models.Model):
     id_estadopago = models.AutoField(db_column='ID_ESTADOPAGO', primary_key=True)  
     estado = models.BooleanField(default=False)  
     detalles_pago = models.CharField(max_length=200, blank=True, null=True)
-    estado_pago = models.CharField(db_column='ESTADO_PAGO', max_length=1, choices=ESTADO_CHOICES, default='P')
+    estado_pago = models.CharField(db_column='ESTADO_PAGO', max_length=10, choices=ESTADO_CHOICES, default='P')
 
     class Meta:
         managed = True

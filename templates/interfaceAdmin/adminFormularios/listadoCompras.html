@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-ms-12 col-md-12 col-lg-12">
             <a href="{% url 'export_excel' %}" class="btn btn-success">Exportar a Excel</a>
-            <a href="{% url 'export_pdf' %}" class="btn btn-danger">Exportar a PDF</a>
+            {% comment %} <a href="{% url 'export_pdf' %}" class="btn btn-danger">Exportar a PDF</a> {% endcomment %}
             <div class="table-responsive">
                 <table class="table" id="datatable-products">
                     <thead>
@@ -30,7 +30,7 @@
                                 <td>{{ compra.id_compra }}</td> 
                                 <td>{{ compra.id_cliente }}</td>
                                 <td>{{ compra.id_carrito.id_carrito }}</td>
-                                <td>{{ compra.id_estadopago.id_estadopago }}</td>
+                                <td>{{ compra.id_estadopago.get_estado_pago_display }}</td>
                                 <td>{{ compra.fecha_compra|date:"d/m/Y"  }}</td>
                                 <td>{{ compra.total_compra|precio_formateadoVenta }}</td>
                                 <td>{{ compra.direccion }}</td>

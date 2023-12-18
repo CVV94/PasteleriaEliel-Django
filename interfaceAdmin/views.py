@@ -366,9 +366,9 @@ def export_compras_to_excel(request):
             compra.id_compra,
             compra.id_cliente.nombre,
             compra.id_carrito.id_carrito,
-            compra.id_estadopago.estado_pago,
+            compra.id_estadopago.get_estado_pago_display(),
             compra.fecha_compra.strftime('%d/%m/%Y'),
-            compra.total_compra,
+            '${:,.2f}'.format(compra.total_compra),
             compra.direccion
         ])
 
