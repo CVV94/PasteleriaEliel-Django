@@ -122,9 +122,9 @@ def listadoProductos(request):
     productos = Producto.objects.filter(estado='ACTIVO').values(
         'id_producto', 'nombre', 'tipo', 'descripcion'
     ).annotate(
-        stock=F('valor__stock'), 
-        imagen=F('presentacionproducto__imagen'), 
-        precio=F('valor__precio')
+        stock=F('valores__stock'), 
+        imagen=F('presentaciones__imagen'), 
+        precio=F('valores__precio')
     )
 
     return render(request, 'interfaceAdmin/adminFormularios/listadoProductos.html', {'productos': productos})
