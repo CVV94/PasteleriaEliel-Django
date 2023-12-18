@@ -12,6 +12,10 @@ import os
 from django.http import Http404
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+import openpyxl
 
 # Create your views here.
 def interfaceAdmin(request):
@@ -349,6 +353,47 @@ def listadoCompras(request):
         'estadoPagos':estadoPagos
         }
     return render(request,'interfaceAdmin/adminFormularios/listadoCompras.html', data)
+
+def export_compras_to_excel(request):
+    wb = openpyxl.Workbook()
+    ws = wb.active
+
+    ws.append(['#', 'ID', 'ID Cliente', 'ID Carrito de Compras', 'Estado de Pago', 'Fecha de Compra', 'Total de Compra', 'Dirección'])
+
+    for compra in Compra.objects.all():
+        ws.append([
+            compra.id_compra,
+            compra.id_compra,
+            compra.id_cliente.nombre,
+            compra.id_carrito.id_carrito,
+            compra.id_estadopago.estado_pago,
+            compra.fecha_compra.strftime('%d/%m/%Y'),
+            compra.total_compra,
+            compra.direccion
+        ])
+
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=compras.xlsx'
+    wb.save(response)
+
+    return response
+
+def export_compras_to_pdf(request):
+    template_path = 'interfaceAdmin/adminFormularios/listadoCompras.html'
+    context = {'compras': Compra.objects.all()}
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="compras.pdf"'
+
+    template = get_template(template_path)
+    html = template.render(context)
+
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+
+    if pisa_status.err:
+       return HttpResponse('Ocurrió un error al generar el archivo PDF <pre>' + html + '</pre>')
+    return response
+
 
 def registrarCompra(request):
     form = CompraForm()
