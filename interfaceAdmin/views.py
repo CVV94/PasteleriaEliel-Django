@@ -348,7 +348,7 @@ def registrarEnvio(request):
             mensaje = 'Hay errores en el formulario.'
     else:
         mensaje = ''
-    return render(request, 'interfaceAdmin/adminFormularios/registrarEnvio.html', {'form': form, 'mensaje': mensaje})
+    return render(request, 'interfaceAdmin/adminFormularios/registrarEnvios.html', {'form': form, 'mensaje': mensaje})
 
 
 @group_required()
