@@ -97,12 +97,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pasteleriaeliel2',
-        'USER': 'root',
-        'PASSWORD': 'admin',
-        'HOST': 'localhost',
-        'PORT': '3306'
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'nombreInicialPasteleriaDB1',
+        'USER': 'pasteleriaEliel1',
+        'PASSWORD': 'pasteleriaEliel',
+        'HOST': 'pasteleriadb.cjg6ei8karnw.sa-east-1.rds.amazonaws.com',
+        'PORT': '5432'
     }
 }
 
@@ -178,3 +178,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO','https')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+AWS_ACCESS_KEY_ID = 'AKIAXYKJSXRHBJ2MLM4G'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 's3pasteleriaeliel1'
+AWS_S3_SIGNATURE_NAME = 's3v4',
+AWS_S3_REGION_NAME = 'sa-east-1'
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL =  None
+AWS_S3_VERITY = True
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
