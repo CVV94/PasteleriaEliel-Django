@@ -24,7 +24,7 @@
                         <tr>
                             <td>{{ forloop.counter }}</td>
                             <td>{{ i.id_presentacion }}</td> 
-                            <td> <img src="../media/{{ i.imagen }}" alt="imagen"></td>
+                            <td> <img src="{{ i.imagen.url }}" alt="imagen"></td>
                             <td>{{ i.id_producto }}</td>
                             
                             <td><a href="{% url "editar_imagenes" i.pk %}" class='btn btn-primary  '>Editar</a>

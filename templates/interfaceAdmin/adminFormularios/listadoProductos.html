@@ -32,7 +32,7 @@
                             <td>{{ producto.tipo }}</td>
                             <td>{{ producto.descripcion }}</td>
                             <td>{{ producto.stock }}</td>
-                            <td><img src="../media/{{ producto.imagen }}" alt="Imagen del Producto"></td>
+                            <td><img src="{{ producto.imagen.url }}" alt="Imagen del Producto"></td>
                             <td>{{ producto.precio|precio_formateadoVenta }}</td>
                         </tr>
                         {% endfor %} 
